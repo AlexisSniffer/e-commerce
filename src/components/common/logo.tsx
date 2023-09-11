@@ -14,7 +14,7 @@ export default function Logo({ size = 'md' }: SizeProps) {
   return (
     <Link href="/">
       <Image
-        src="https://nodejs.org/static/images/logo.svg"
+        src="https://nodejs.dev/static/images/brand/logos-js-right/dark.svg"
         alt="logo"
         width={width}
         height={height}
