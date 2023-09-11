@@ -1,8 +1,9 @@
 import Logo from '@/components/common/logo'
 import SocialIcons from '@/components/common/social-icons'
 import Container from '@/components/utils/container'
-import { Col, Layout, Row } from 'antd'
-import styles from './header.module.scss'
+import styles from '@/styles/header.module.scss'
+import { Col, Layout, Row, Select } from 'antd'
+import Languages from './languages'
 
 const { Header } = Layout
 
@@ -11,8 +12,10 @@ export default function RootHeader() {
     <header>
       <Container className={styles.header}>
         <Row justify={'end'} align={'middle'} className={''}>
-          <Col>i18n</Col>
-          <Col>shop-user</Col>
+          <Col>
+            <Languages />
+          </Col>
+          <Col>menu</Col>
           <Col>
             <SocialIcons size="xs" />
           </Col>
