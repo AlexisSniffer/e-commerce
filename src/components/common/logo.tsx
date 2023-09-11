@@ -1,11 +1,8 @@
+import SizeProps from '@/types/size-props'
 import Image from 'next/image'
 import Link from 'next/link'
 
-interface LogoProps {
-  size?: 'xs' | 'md' | 'lg'
-}
-
-export default function Logo({ size = 'md' }: LogoProps) {
+export default function Logo({ size = 'md' }: SizeProps) {
   const sizeOptions = {
     xs: { width: 100, height: 30 },
     md: { width: 150, height: 50 },
