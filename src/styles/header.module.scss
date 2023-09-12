@@ -2,7 +2,8 @@
   color: #222529;
   background-color: white;
 
-  p {
-    color: blue;
+  &-top {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 }

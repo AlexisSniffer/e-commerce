@@ -3,9 +3,10 @@ import SocialIcons from '@/components/common/social-icons'
 import Container from '@/components/utils/container'
 import styles from '@/styles/header.module.scss'
 import { Col, Layout, Row, Space } from 'antd'
+import HeaderInfo from './header-info'
 import Languages from './languages'
-import MenuShop from './menu'
-import { CarFilled } from '@ant-design/icons'
+import MainMenu from './main-menu'
+import TopMenu from './top-menu'
 
 const { Header } = Layout
 
@@ -13,17 +14,20 @@ export default function RootHeader() {
   return (
     <header>
       <Container className={styles.header}>
-        <Row justify={'space-between'} align={'middle'} className={''}>
+        <Row
+          justify={'space-between'}
+          align={'middle'}
+          className={styles['header-top']}
+        >
           <Col>
             <Space direction="horizontal">
-              <CarFilled />
-              FREE Express Shipping On Orders $99+
+              <HeaderInfo />
             </Space>
           </Col>
           <Col>
             <Space direction="horizontal" size={'large'}>
               <Languages />
-              <MenuShop />
+              <TopMenu />
               <SocialIcons size="xs" />
             </Space>
           </Col>
@@ -40,7 +44,9 @@ export default function RootHeader() {
 
         <Row align={'middle'} className={''}>
           <Col>categories</Col>
-          <Col flex="auto">menu</Col>
+          <Col>
+            <MainMenu />
+          </Col>
           <Col>contacts</Col>
         </Row>
       </Container>

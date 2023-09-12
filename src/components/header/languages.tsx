@@ -12,6 +12,7 @@ const handleChange = (value: string) => {
 }
 
 export default function Languages() {
+  // FIXME: corregir tamaño de fuente del select
   return (
     <Select
       defaultValue="esp"
