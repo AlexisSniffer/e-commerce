@@ -38,7 +38,7 @@ export default function RootHeader() {
           <Col>
             <Logo />
           </Col>
-          <Col flex="auto">
+          <Col flex={'auto'} xs={0} lg={24}>
             <HeaderSearch />
           </Col>
           <Col>my-account</Col>
