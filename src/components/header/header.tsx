@@ -3,6 +3,7 @@ import SocialIcons from '@/components/common/social-icons'
 import Container from '@/components/utils/container'
 import styles from '@/styles/header.module.scss'
 import { Col, Layout, Row, Space } from 'antd'
+import Account from './account'
 import HeaderInfo from './header-info'
 import HeaderSearch from './header-search'
 import Languages from './languages'
@@ -45,7 +46,9 @@ export default function RootHeader() {
           <Col flex={'auto'} xs={0} lg={24}>
             <HeaderSearch />
           </Col>
-          <Col>my-account</Col>
+          <Col>
+            <Account />
+          </Col>
           <Col>cart</Col>
         </Row>
 
