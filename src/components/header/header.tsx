@@ -16,9 +16,9 @@ export default function RootHeader() {
     <header>
       <Container className={styles.header}>
         <Row
+          className={styles['header__top']}
           justify={'space-between'}
           align={'middle'}
-          className={styles['header-top']}
         >
           <Col>
             <Space direction="horizontal">
@@ -34,7 +34,11 @@ export default function RootHeader() {
           </Col>
         </Row>
 
-        <Row align={'middle'} gutter={{ xs: 8, sm: 16, md: 24 }} className={''}>
+        <Row
+          className={styles['header__middle']}
+          align={'middle'}
+          gutter={{ xs: 8, sm: 16, md: 24 }}
+        >
           <Col>
             <Logo />
           </Col>
@@ -45,7 +49,7 @@ export default function RootHeader() {
           <Col>cart</Col>
         </Row>
 
-        <Row align={'middle'} className={''}>
+        <Row className={styles['header__bottom']} align={'middle'}>
           <Col>categories</Col>
           <Col>
             <MainMenu />

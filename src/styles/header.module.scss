@@ -2,8 +2,30 @@
   color: #222529;
   background-color: white;
 
-  &-top {
+  &__top {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+
+    &__menu {
+      color: #666;
+      font-size: 0.8rem;
+      font-weight: 400;
+      border: none;
+      line-height: 1.5rem;
+    }
+  }
+
+  &__middle {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  &__bottom {
+    padding-top: 0.5rem;
+    padding-bottom: 0.8rem;
+  }
+
+  &__search {
+    margin-bottom: 0 !important;
   }
 }

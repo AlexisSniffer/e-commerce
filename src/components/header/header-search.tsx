@@ -1,11 +1,13 @@
 'use client'
 
+import styles from '@/styles/header.module.scss'
 import SearchProps from '@/types/search-props'
-import { Form, Input, Select, Spin } from 'antd'
+import { Form, Input } from 'antd'
 import { useRouter } from 'next/navigation'
 
 const { Search } = Input
 
+// TODO añadir categorias en filtro
 /*const categorySelect = (data: any) => {
   let categoryOptions: any = [{ value: '', label: 'Todos' }]
 
@@ -25,20 +27,16 @@ const { Search } = Input
   )
 }*/
 
+// addonBefore={data ? categorySelect(data) : <Spin />}
+
 export default function HeaderSearch() {
   const router = useRouter()
   const [form] = Form.useForm()
 
-  // TODO: añadir types
   const onFinish = (values: SearchProps) => {
     const { filter, category } = values
-
     router.push('/shop')
   }
-
-  // TODO: añadir estilos - className={styles['header-search']}
-  // TODO: añadir estilos - className={styles['header-search-item']}
-  // TODO: addonBefore={data ? categorySelect(data) : <Spin />}
 
   return (
     <Form
@@ -49,7 +47,7 @@ export default function HeaderSearch() {
         ['filter']: '',
       }}
     >
-      <Form.Item name="filter">
+      <Form.Item name="filter" className={styles['header__search']}>
         <Search
           enterButton
           size="large"

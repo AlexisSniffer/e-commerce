@@ -1,4 +1,4 @@
-import styles from '@/styles/top-menu.module.scss'
+import styles from '@/styles/header.module.scss'
 import { Menu, MenuProps } from 'antd'
 import Link from 'next/link'
 
@@ -24,7 +24,7 @@ export default function TopMenu() {
       mode="horizontal"
       items={items}
       disabledOverflow={true}
-      className={styles['top-menu']}
+      className={styles['header__top__menu']}
     />
   )
 }
