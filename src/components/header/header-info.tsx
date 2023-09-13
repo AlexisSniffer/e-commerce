@@ -1,8 +1,9 @@
 import { CarFilled } from '@ant-design/icons'
+import { Space } from 'antd'
 
 export default function HeaderInfo() {
   return (
-    <>
+    <Space direction="horizontal">
       <CarFilled style={{ color: '#3050ff' }} />
       <div
         style={{
@@ -15,6 +16,6 @@ export default function HeaderInfo() {
       >
         FREE Express Shipping On Orders $99+
       </div>
-    </>
+    </Space>
   )
 }

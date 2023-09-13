@@ -9,6 +9,7 @@ import HeaderSearch from './header-search'
 import Languages from './languages'
 import MainMenu from './main-menu'
 import TopMenu from './top-menu'
+import CartIcons from './cart-icons'
 
 const { Header } = Layout
 
@@ -21,22 +22,32 @@ export default function RootHeader() {
           justify={'space-between'}
           align={'middle'}
         >
-          <Col>
-            <Space direction="horizontal">
-              <HeaderInfo />
-            </Space>
+          <Col xs={0} sm={12} lg={8}>
+            <HeaderInfo />
           </Col>
-          <Col>
-            <Space direction="horizontal" size={'large'}>
-              <Languages />
-              <TopMenu />
-              <SocialIcons size="xs" />
-            </Space>
+          <Col xs={24} sm={12} lg={16}>
+            <Row
+              className={styles['header__middle']}
+              justify={{ xs: 'space-between', sm: 'end' }}
+              align={'middle'}
+              gutter={{ xs: 8, sm: 16, md: 24 }}
+            >
+              <Col>
+                <Languages />
+              </Col>
+              <Col flex={'0 0 auto'} xs={{ span: 0 }} lg={24}>
+                <TopMenu />
+              </Col>
+              <Col>
+                <SocialIcons size="xs" />
+              </Col>
+            </Row>
           </Col>
         </Row>
 
         <Row
           className={styles['header__middle']}
+          justify={'space-between'}
           align={'middle'}
           gutter={{ xs: 8, sm: 16, md: 24 }}
         >
@@ -46,10 +57,12 @@ export default function RootHeader() {
           <Col flex={'auto'} xs={0} lg={24}>
             <HeaderSearch />
           </Col>
-          <Col>
+          <Col flex={'0 0 auto'} xs={0} lg={24}>
             <Account />
           </Col>
-          <Col>cart</Col>
+          <Col>
+            <CartIcons />
+          </Col>
         </Row>
 
         <Row className={styles['header__bottom']} align={'middle'}>
