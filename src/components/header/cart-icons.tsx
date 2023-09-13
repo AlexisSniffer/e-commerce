@@ -9,8 +9,8 @@ import { Badge, Button, Col, Row } from 'antd'
 
 export default function CartIcons() {
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
-      <Col>
+    <Row gutter={{ xs: 24, sm: 24, md: 24 }}>
+      <Col flex={'0 0 auto'} xs={0} sm={24} lg={0}>
         <SearchOutlined style={{ fontSize: '1.7rem' }} rev={undefined} />
       </Col>
       <Col>
