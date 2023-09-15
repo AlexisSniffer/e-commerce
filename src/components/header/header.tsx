@@ -10,6 +10,7 @@ import Languages from './languages'
 import MainMenu from './main-menu'
 import TopMenu from './top-menu'
 import CartIcons from './cart-icons'
+import CategoriesMenu from './categories-menu'
 
 const { Header } = Layout
 
@@ -66,11 +67,13 @@ export default function RootHeader() {
         </Row>
 
         <Row className={styles['header__bottom']} align={'middle'}>
-          <Col>categories</Col>
+          <Col>
+            <CategoriesMenu />
+          </Col>
           <Col>
             <MainMenu />
           </Col>
-          <Col>contacts</Col>
+          <Col>[Sección de contacto]</Col>
         </Row>
       </Container>
     </header>
