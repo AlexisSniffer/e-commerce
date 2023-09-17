@@ -21,7 +21,7 @@ export default function RootHeader() {
 
   return (
     <header className={styles['header']}>
-      <Container className={styles['header__top']}>
+      <Container className={styles['top']}>
         <Row
           justify={'space-between'}
           align={'middle'}
@@ -50,7 +50,7 @@ export default function RootHeader() {
         </Row>
       </Container>
 
-      <Container className={styles['header__middle']}>
+      <Container className={styles['middle']}>
         <Row
           align={'middle'}
           justify={'space-between'}
@@ -77,9 +77,7 @@ export default function RootHeader() {
         }}
       >
         <Container
-          className={`${styles['header__bottom']} ${
-            affix ? styles.affix : null
-          }`}
+          className={`${styles['bottom']} ${affix ? styles.affix : null}`}
         >
           <Col xs={0} lg={24}>
             <Row

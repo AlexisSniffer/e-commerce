@@ -24,6 +24,10 @@ export default function TopMenu() {
       theme={{
         components: {
           Menu: {
+            colorText: '#666',
+            fontSize: 12,
+            fontWeightStrong: 400,
+            horizontalLineHeight: 1.5,
             itemHoverColor: '#262626',
             horizontalItemSelectedColor: 'none',
             colorBorderSecondary: '#fff',
@@ -32,12 +36,7 @@ export default function TopMenu() {
         },
       }}
     >
-      <Menu
-        mode="horizontal"
-        items={items}
-        disabledOverflow={true}
-        className={styles['header__top__menu']}
-      />
+      <Menu mode="horizontal" items={items} disabledOverflow={true} />
     </ConfigProvider>
   )
 }
