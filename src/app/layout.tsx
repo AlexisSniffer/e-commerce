@@ -1,4 +1,5 @@
 import RootHeader from '@/components/header/header'
+import StyledComponentsRegistry from '@/lib/antd-registry'
 import '@/styles/global.scss'
 
 export const metadata = {
@@ -14,8 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <RootHeader></RootHeader>
-        {children}
+        <StyledComponentsRegistry>
+          <RootHeader></RootHeader>
+          {children}
+        </StyledComponentsRegistry>
       </body>
     </html>
   )
