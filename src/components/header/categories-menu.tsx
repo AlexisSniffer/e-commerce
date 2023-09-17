@@ -1,12 +1,22 @@
 'use client'
 
-import { MenuOutlined } from '@ant-design/icons'
-import { Button, ConfigProvider, Dropdown, MenuProps, ThemeConfig } from 'antd'
+import { MenuOutlined, ShopOutlined } from '@ant-design/icons'
+import {
+  Button,
+  ConfigProvider,
+  Dropdown,
+  MenuProps,
+  Space,
+  ThemeConfig,
+} from 'antd'
 import CategoriesSubMenu from './categories-submenu'
 
 const theme: ThemeConfig = {
   components: {
-    Dropdown: {},
+    Dropdown: {
+      controlHeight: 40,
+      controlPaddingHorizontal: 20,
+    },
     Button: {
       borderRadius: 0,
       fontSize: 13,
@@ -18,17 +28,29 @@ const theme: ThemeConfig = {
 const items: MenuProps['items'] = [
   {
     key: '1',
-    label: 'Categoria 1',
+    label: (
+      <Space>
+        <ShopOutlined /> Categoria 1
+      </Space>
+    ),
     children: [{ key: '1-1', label: <CategoriesSubMenu /> }],
   },
   {
     key: '2',
-    label: 'Categoria 2',
+    label: (
+      <Space>
+        <ShopOutlined /> Categoria 2
+      </Space>
+    ),
     children: [{ key: '2-1', label: <CategoriesSubMenu /> }],
   },
   {
     key: '3',
-    label: 'Categoria 3',
+    label: (
+      <Space>
+        <ShopOutlined /> Categoria 3
+      </Space>
+    ),
     children: [{ key: '3-1', label: <CategoriesSubMenu /> }],
   },
 ]

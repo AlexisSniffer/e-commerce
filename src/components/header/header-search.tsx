@@ -7,28 +7,6 @@ import { useRouter } from 'next/navigation'
 
 const { Search } = Input
 
-// TODO añadir categorias en filtro
-/*const categorySelect = (data: any) => {
-  let categoryOptions: any = [{ value: '', label: 'Todos' }]
-
-  if (data.data != null) {
-    data.data.forEach((category: any) => {
-      categoryOptions.push({
-        value: category.attributes.slug,
-        label: category.attributes.name,
-      })
-    })
-  }
-
-  return (
-    <Form.Item name="category" noStyle initialValue="">
-      <Select options={categoryOptions} />
-    </Form.Item>
-  )
-}*/
-
-// addonBefore={data ? categorySelect(data) : <Spin />}
-
 export default function HeaderSearch() {
   const router = useRouter()
   const [form] = Form.useForm()

@@ -1,7 +1,7 @@
 'use client'
 
 import styles from '@/styles/header.module.scss'
-import { Col, List, Menu, MenuProps, Row, Typography } from 'antd'
+import { Col, List, Row, Typography } from 'antd'
 import Link from 'next/link'
 
 const { Title } = Typography
@@ -62,6 +62,7 @@ export default function CategoriesSubMenu() {
               <Col>
                 <Title level={5}>{category.name}</Title>
                 <List
+                  className={styles['categories-submenu']}
                   dataSource={category.subcategories}
                   renderItem={(item: any) => (
                     <List.Item key={item.name}>

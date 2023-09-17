@@ -1,34 +1,37 @@
+'use client'
+
 import Logo from '@/components/common/logo'
 import SocialIcons from '@/components/common/social-icons'
 import Container from '@/components/utils/container'
 import styles from '@/styles/header.module.scss'
-import { Col, Layout, Row, Space } from 'antd'
+import { Affix, Col, Row } from 'antd'
+import { useState } from 'react'
 import Account from './account'
+import CartIcons from './cart-icons'
+import CategoriesMenu from './categories-menu'
+import Contact from './contact'
 import HeaderInfo from './header-info'
 import HeaderSearch from './header-search'
 import Languages from './languages'
 import MainMenu from './main-menu'
 import TopMenu from './top-menu'
-import CartIcons from './cart-icons'
-import CategoriesMenu from './categories-menu'
-
-const { Header } = Layout
 
 export default function RootHeader() {
+  const [affix, setAffix] = useState<boolean>(false)
+
   return (
-    <header>
-      <Container className={styles.header}>
+    <header className={styles['header']}>
+      <Container className={styles['header__top']}>
         <Row
-          className={styles['header__top']}
           justify={'space-between'}
           align={'middle'}
+          gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
         >
           <Col xs={0} sm={12} lg={8}>
             <HeaderInfo />
           </Col>
           <Col xs={24} sm={12} lg={16}>
             <Row
-              className={styles['header__middle']}
               justify={{ xs: 'space-between', sm: 'end' }}
               align={'middle'}
               gutter={{ xs: 8, sm: 16, md: 24 }}
@@ -45,12 +48,13 @@ export default function RootHeader() {
             </Row>
           </Col>
         </Row>
+      </Container>
 
+      <Container className={styles['header__middle']}>
         <Row
-          className={styles['header__middle']}
-          justify={'space-between'}
           align={'middle'}
-          gutter={{ xs: 8, sm: 16, md: 24 }}
+          justify={'space-between'}
+          gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
         >
           <Col>
             <Logo />
@@ -65,17 +69,41 @@ export default function RootHeader() {
             <CartIcons />
           </Col>
         </Row>
-
-        <Row className={styles['header__bottom']} align={'middle'}>
-          <Col>
-            <CategoriesMenu />
-          </Col>
-          <Col>
-            <MainMenu />
-          </Col>
-          <Col>[Sección de contacto]</Col>
-        </Row>
       </Container>
+
+      <Affix
+        onChange={(affixed?: boolean) => {
+          setAffix(affixed!)
+        }}
+      >
+        <Container
+          className={`${styles['header__bottom']} ${
+            affix ? styles.affix : null
+          }`}
+        >
+          <Col xs={0} lg={24}>
+            <Row
+              justify={'space-between'}
+              align={'middle'}
+              gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
+            >
+              <Col>
+                <CategoriesMenu />
+              </Col>
+              <Col flex={'auto'}>
+                <Row justify={'space-between'} align={'middle'}>
+                  <Col>
+                    <MainMenu />
+                  </Col>
+                  <Col>
+                    <Contact />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+        </Container>
+      </Affix>
     </header>
   )
 }
