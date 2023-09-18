@@ -1,6 +1,20 @@
-import styles from '@/styles/header.module.scss'
-import { ConfigProvider, Menu, MenuProps } from 'antd'
+import { ConfigProvider, Menu, MenuProps, ThemeConfig } from 'antd'
 import Link from 'next/link'
+
+const theme: ThemeConfig = {
+  components: {
+    Menu: {
+      colorText: '#666',
+      fontSize: 12,
+      fontWeightStrong: 400,
+      horizontalLineHeight: 1.5,
+      itemHoverColor: '#262626',
+      horizontalItemSelectedColor: 'none',
+      colorBorderSecondary: '#fff',
+      algorithm: true,
+    },
+  },
+}
 
 const items: MenuProps['items'] = [
   {
@@ -20,22 +34,7 @@ const items: MenuProps['items'] = [
 
 export default function TopMenu() {
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Menu: {
-            colorText: '#666',
-            fontSize: 12,
-            fontWeightStrong: 400,
-            horizontalLineHeight: 1.5,
-            itemHoverColor: '#262626',
-            horizontalItemSelectedColor: 'none',
-            colorBorderSecondary: '#fff',
-            algorithm: true,
-          },
-        },
-      }}
-    >
+    <ConfigProvider theme={theme}>
       <Menu mode="horizontal" items={items} disabledOverflow={true} />
     </ConfigProvider>
   )
