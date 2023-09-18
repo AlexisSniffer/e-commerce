@@ -49,59 +49,58 @@ export default function RootHeader() {
           </Col>
         </Row>
       </Container>
-
-      <Container className={styles['middle']}>
-        <Row
-          align={'middle'}
-          justify={'space-between'}
-          gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
-        >
-          <Col>
-            <Logo />
-          </Col>
-          <Col flex={'auto'} xs={0} lg={24}>
-            <HeaderSearch />
-          </Col>
-          <Col flex={'0 0 auto'} xs={0} lg={24}>
-            <Account />
-          </Col>
-          <Col>
-            <CartIcons />
-          </Col>
-        </Row>
-      </Container>
-
       <Affix
         onChange={(affixed?: boolean) => {
           setAffix(affixed!)
         }}
       >
         <Container
-          className={`${styles['bottom']} ${affix ? styles.affix : null}`}
+          className={`${styles['middle']} ${affix ? styles.affix : null}`}
         >
-          <Col xs={0} lg={24}>
-            <Row
-              justify={'space-between'}
-              align={'middle'}
-              gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
-            >
-              <Col>
-                <CategoriesMenu />
-              </Col>
-              <Col flex={'auto'}>
-                <Row justify={'space-between'} align={'middle'}>
-                  <Col>
-                    <MainMenu />
-                  </Col>
-                  <Col>
-                    <Contact />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
+          <Row
+            align={'middle'}
+            justify={'space-between'}
+            gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
+          >
+            <Col>
+              <Logo />
+            </Col>
+            <Col flex={'auto'} xs={0} lg={24}>
+              <HeaderSearch />
+            </Col>
+            <Col flex={'0 0 auto'} xs={0} lg={24}>
+              <Account />
+            </Col>
+            <Col>
+              <CartIcons />
+            </Col>
+          </Row>
         </Container>
       </Affix>
+
+      <Container className={styles['bottom']}>
+        <Col xs={0} lg={24}>
+          <Row
+            justify={'space-between'}
+            align={'middle'}
+            gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
+          >
+            <Col>
+              <CategoriesMenu />
+            </Col>
+            <Col flex={'auto'}>
+              <Row justify={'space-between'} align={'middle'}>
+                <Col>
+                  <MainMenu />
+                </Col>
+                <Col>
+                  <Contact />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Container>
     </header>
   )
 }

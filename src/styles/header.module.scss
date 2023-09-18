@@ -2,6 +2,12 @@
   color: #222529;
 }
 
+.top,
+.middle,
+.bottom {
+  background-color: #fff;
+}
+
 .top {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -14,7 +20,7 @@
 
 .bottom {
   padding-top: 0.2rem;
-  padding-bottom: 0.8rem;
+  padding-bottom: 1rem;
 }
 
 .account {
