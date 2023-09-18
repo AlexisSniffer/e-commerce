@@ -1,10 +1,33 @@
 'use client'
 
 import styles from '@/styles/header.module.scss'
-import { Col, List, Row, Typography } from 'antd'
+import {
+  Card,
+  Col,
+  ConfigProvider,
+  List,
+  Row,
+  ThemeConfig,
+  Typography,
+} from 'antd'
 import Link from 'next/link'
 
-const { Title } = Typography
+const { Title, Link: LinkAntd, Paragraph } = Typography
+
+const theme: ThemeConfig = {
+  components: {
+    List: {
+      lineWidth: 0,
+      itemPadding: '7px 0',
+    },
+    Typography: {
+      colorLink: '#666',
+      colorLinkHover: '#777',
+      colorLinkActive: '#777',
+      linkHoverDecoration: 'underline',
+    },
+  },
+}
 
 // TODO: realizar consulta a strapi
 const data = [
@@ -54,27 +77,41 @@ const data = [
 
 export default function CategoriesSubMenu() {
   return (
-    <div className={styles['categories-sub-menu']}>
+    <>
       <Row justify={'space-between'} gutter={80}>
         {data.map((category: any) => {
           return (
-            <>
+            <ConfigProvider theme={theme} key={category.name}>
               <Col>
-                <Title level={5}>{category.name}</Title>
+                <Paragraph
+                  style={{ textTransform: 'uppercase', fontWeight: 'bold' }}
+                >
+                  {category.name}
+                </Paragraph>
                 <List
-                  className={styles['categories-submenu']}
                   dataSource={category.subcategories}
                   renderItem={(item: any) => (
                     <List.Item key={item.name}>
-                      <Link href={`${item.name}`}>{item.name} </Link>
+                      <LinkAntd>
+                        <Link href={`${item.name}`}>{item.name} </Link>
+                      </LinkAntd>
                     </List.Item>
                   )}
                 />
               </Col>
-            </>
+            </ConfigProvider>
           )
         })}
       </Row>
-    </div>
+      <br />
+      <Row gutter={24}>
+        <Col span={12}>
+          <Card>Espacio publicitario</Card>
+        </Col>
+        <Col span={12}>
+          <Card>Espacio publicitario</Card>
+        </Col>
+      </Row>
+    </>
   )
 }
