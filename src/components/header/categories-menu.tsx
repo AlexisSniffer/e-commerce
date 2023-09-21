@@ -58,13 +58,7 @@ const items: MenuProps['items'] = [
 export default function CategoriesMenu() {
   return (
     <ConfigProvider theme={theme}>
-      <Dropdown
-        menu={{ items }}
-        placement="bottom"
-        arrow
-        trigger={['click']}
-        overlayClassName="menu-categories"
-      >
+      <Dropdown menu={{ items }} placement="bottom" arrow trigger={['click']}>
         <a onClick={(e) => e.preventDefault()}>
           <Button
             type="primary"
