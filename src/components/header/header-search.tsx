@@ -1,8 +1,7 @@
 'use client'
 
-import styles from '@/styles/header.module.scss'
 import SearchProps from '@/types/search-props'
-import { ConfigProvider, Form, Input, ThemeConfig } from 'antd'
+import { ConfigProvider, Form, Input, Select, ThemeConfig } from 'antd'
 import { useRouter } from 'next/navigation'
 
 const { Search } = Input
@@ -16,12 +15,25 @@ const theme: ThemeConfig = {
   },
 }
 
+const selectAfter = (
+  <Form.Item name="category" noStyle initialValue="">
+    <Select
+      defaultValue="all"
+      options={[
+        { value: 'all', label: 'Todos' },
+        { value: 'fashion', label: 'Moda' },
+        { value: 'man', label: '- Hombre' },
+        { value: 'woman', label: '- Mujer' },
+      ]}
+    ></Select>
+  </Form.Item>
+)
+
 export default function HeaderSearch() {
   const router = useRouter()
   const [form] = Form.useForm()
 
   const onFinish = (values: SearchProps) => {
-    const { filter, category } = values
     router.push('/shop')
   }
 
@@ -38,8 +50,10 @@ export default function HeaderSearch() {
         <Form.Item name="filter">
           <Search
             enterButton
+            allowClear
             size="large"
             placeholder="Buscar..."
+            addonBefore={selectAfter}
             onSearch={form.submit}
           />
         </Form.Item>

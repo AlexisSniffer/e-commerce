@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StyledComponentsRegistry>
-          <RootHeader></RootHeader>
+          <RootHeader />
           {children}
         </StyledComponentsRegistry>
       </body>
