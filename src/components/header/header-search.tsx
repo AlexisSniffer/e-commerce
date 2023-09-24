@@ -5,6 +5,7 @@ import { ConfigProvider, Form, Input, Select, ThemeConfig } from 'antd'
 import { useRouter } from 'next/navigation'
 
 const { Search } = Input
+const { Option } = Select
 
 const theme: ThemeConfig = {
   components: {
@@ -15,10 +16,9 @@ const theme: ThemeConfig = {
   },
 }
 
-const selectAfter = (
-  <Form.Item name="category" noStyle initialValue="">
+const selectBefore = (
+  <Form.Item name="category" noStyle initialValue="all">
     <Select
-      defaultValue="all"
       options={[
         { value: 'all', label: 'Todos' },
         { value: 'fashion', label: 'Moda' },
@@ -53,7 +53,7 @@ export default function HeaderSearch() {
             allowClear
             size="large"
             placeholder="Buscar..."
-            addonBefore={selectAfter}
+            addonBefore={selectBefore}
             onSearch={form.submit}
           />
         </Form.Item>
