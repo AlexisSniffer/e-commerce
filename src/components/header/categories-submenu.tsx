@@ -1,6 +1,4 @@
-'use client'
-
-import styles from '@/styles/header.module.scss'
+import { SubCategoryHeaderProps } from '@/types/category-props'
 import {
   Card,
   Col,
@@ -12,7 +10,7 @@ import {
 } from 'antd'
 import Link from 'next/link'
 
-const { Title, Link: LinkAntd, Paragraph } = Typography
+const { Link: LinkAntd, Paragraph } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -29,71 +27,29 @@ const theme: ThemeConfig = {
   },
 }
 
-// TODO: realizar consulta a strapi
-const data = [
-  {
-    name: 'Accesories',
-    subcategories: [
-      { name: 'Cables & Adaperts' },
-      { name: 'Electronic Cigarettes' },
-      { name: 'Batteries' },
-      { name: 'Chargers' },
-      { name: 'Home Electronic' },
-      { name: 'Bags & Cases' },
-    ],
-  },
-  {
-    name: 'Audio & Video',
-    subcategories: [
-      { name: 'Televisions' },
-      { name: 'Projectors' },
-      { name: 'TV Peceivers' },
-      { name: 'Audio Amplifier' },
-      { name: 'TV Sticks' },
-    ],
-  },
-  {
-    name: 'Camera & Photos',
-    subcategories: [
-      { name: 'Digital Cameras' },
-      { name: 'Camcorders' },
-      { name: 'Camera Drones' },
-      { name: 'Action Cameras' },
-      { name: 'Photo Supplies' },
-      { name: 'Camera & Photo' },
-    ],
-  },
-  {
-    name: 'Laptops',
-    subcategories: [
-      { name: 'Caming Laptops' },
-      { name: 'Ultraslim Laptops' },
-      { name: 'Laptop Accessories' },
-      { name: 'Laptop Bags & Cases' },
-      { name: 'Tablet Accessories' },
-    ],
-  },
-]
-
-export default function CategoriesSubMenu() {
+export default function CategoriesSubMenu({
+  category,
+}: SubCategoryHeaderProps) {
   return (
     <>
       <Row justify={'space-between'} gutter={80}>
-        {data.map((category: any) => {
+        {category.attributes.categories?.data.map((category: any) => {
           return (
-            <ConfigProvider theme={theme} key={category.name}>
+            <ConfigProvider theme={theme} key={category.id}>
               <Col>
                 <Paragraph
                   style={{ textTransform: 'uppercase', fontWeight: 'bold' }}
                 >
-                  {category.name}
+                  {category.attributes.name}
                 </Paragraph>
                 <List
-                  dataSource={category.subcategories}
+                  dataSource={category.attributes.categories.data}
                   renderItem={(item: any) => (
-                    <List.Item key={item.name}>
+                    <List.Item key={item.attributes.name}>
                       <LinkAntd>
-                        <Link href={`${item.name}`}>{item.name} </Link>
+                        <Link href={`${item.attributes.name}`}>
+                          {item.attributes.name}
+                        </Link>
                       </LinkAntd>
                     </List.Item>
                   )}

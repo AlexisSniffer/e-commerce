@@ -3,10 +3,13 @@
 import Logo from '@/components/common/logo'
 import SocialIcons from '@/components/common/social-icons'
 import Container from '@/components/utils/container'
+import { qsCategoryHeader } from '@/queries/category'
 import styles from '@/styles/header.module.scss'
+import { fetcher } from '@/utils/fetcher'
 import { MenuOutlined } from '@ant-design/icons'
 import { Affix, Col, Row } from 'antd'
 import { useState } from 'react'
+import useSWR from 'swr'
 import Account from './account'
 import CartIcons from './cart-icons'
 import CategoriesMenu from './categories-menu'
@@ -21,6 +24,11 @@ import TopMenu from './top-menu'
 export default function RootHeader() {
   const [affix, setAffix] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
+
+  const { data: categories, error: errorCategories } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
+    fetcher,
+  )
 
   return (
     <>
@@ -53,6 +61,7 @@ export default function RootHeader() {
             </Col>
           </Row>
         </Container>
+
         <Affix
           onChange={(affixed?: boolean) => {
             setAffix(affixed!)
@@ -77,7 +86,7 @@ export default function RootHeader() {
                 </Row>
               </Col>
               <Col flex={'auto'} xs={0} lg={24}>
-                <HeaderSearch />
+                <HeaderSearch categories={categories} />
               </Col>
               <Col flex={'0 0 auto'} xs={0} lg={24}>
                 <Account />
@@ -97,7 +106,7 @@ export default function RootHeader() {
               gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
             >
               <Col>
-                <CategoriesMenu />
+                <CategoriesMenu categories={categories} />
               </Col>
               <Col flex={'auto'}>
                 <Row justify={'space-between'} align={'middle'}>

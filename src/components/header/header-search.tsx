@@ -1,11 +1,20 @@
-'use client'
-
+import {
+  CategoryHeaderListProps,
+  CategoryHeaderProps,
+} from '@/types/category-props'
 import SearchProps from '@/types/search-props'
-import { ConfigProvider, Form, Input, Select, ThemeConfig } from 'antd'
+import {
+  ConfigProvider,
+  Form,
+  Input,
+  Select,
+  SelectProps,
+  Spin,
+  ThemeConfig,
+} from 'antd'
 import { useRouter } from 'next/navigation'
 
 const { Search } = Input
-const { Option } = Select
 
 const theme: ThemeConfig = {
   components: {
@@ -16,20 +25,36 @@ const theme: ThemeConfig = {
   },
 }
 
-const selectBefore = (
-  <Form.Item name="category" noStyle initialValue="all">
-    <Select
-      options={[
-        { value: 'all', label: 'Todos' },
-        { value: 'fashion', label: 'Moda' },
-        { value: 'man', label: '- Hombre' },
-        { value: 'woman', label: '- Mujer' },
-      ]}
-    ></Select>
-  </Form.Item>
-)
+const selectBefore = ({ categories }: CategoryHeaderListProps) => {
+  let options: SelectProps['options'] = [{ value: 'all', label: 'Todos' }]
 
-export default function HeaderSearch() {
+  categories.data.map((category: CategoryHeaderProps) => {
+    options?.push({
+      value: category.attributes.slug,
+      label: category.attributes.name,
+    })
+
+    if (
+      category.attributes.categories &&
+      category.attributes.categories?.data.length > 0
+    ) {
+      category.attributes.categories?.data.map((subcategory: any) => {
+        options?.push({
+          value: subcategory.attributes.slug,
+          label: `- ${subcategory.attributes.name}`,
+        })
+      })
+    }
+  })
+
+  return (
+    <Form.Item name="category" noStyle initialValue="all">
+      <Select options={options} />
+    </Form.Item>
+  )
+}
+
+export default function HeaderSearch({ categories }: CategoryHeaderListProps) {
   const router = useRouter()
   const [form] = Form.useForm()
 
@@ -53,7 +78,7 @@ export default function HeaderSearch() {
             allowClear
             size="large"
             placeholder="Buscar..."
-            addonBefore={selectBefore}
+            addonBefore={categories ? selectBefore({ categories }) : <Spin />}
             onSearch={form.submit}
           />
         </Form.Item>

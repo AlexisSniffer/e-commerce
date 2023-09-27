@@ -1,14 +1,9 @@
-'use client'
-
-import { MenuOutlined, ShopOutlined } from '@ant-design/icons'
 import {
-  Button,
-  ConfigProvider,
-  Dropdown,
-  MenuProps,
-  Space,
-  ThemeConfig,
-} from 'antd'
+  CategoryHeaderListProps,
+  CategoryHeaderProps,
+} from '@/types/category-props'
+import { MenuOutlined } from '@ant-design/icons'
+import { Button, ConfigProvider, Dropdown, MenuProps, ThemeConfig } from 'antd'
 import CategoriesSubMenu from './categories-submenu'
 
 const theme: ThemeConfig = {
@@ -25,37 +20,24 @@ const theme: ThemeConfig = {
   },
 }
 
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: (
-      <Space>
-        <ShopOutlined /> Categoria 1
-      </Space>
-    ),
-    children: [{ key: '1-1', label: <CategoriesSubMenu /> }],
-  },
-  {
-    key: '2',
-    label: (
-      <Space>
-        <ShopOutlined /> Categoria 2
-      </Space>
-    ),
-    children: [{ key: '2-1', label: <CategoriesSubMenu /> }],
-  },
-  {
-    key: '3',
-    label: (
-      <Space>
-        <ShopOutlined /> Categoria 3
-      </Space>
-    ),
-    children: [{ key: '3-1', label: <CategoriesSubMenu /> }],
-  },
-]
+export default function CategoriesMenu({
+  categories,
+}: CategoryHeaderListProps) {
+  let items: MenuProps['items'] = []
 
-export default function CategoriesMenu() {
+  categories?.data.map((category: CategoryHeaderProps) => {
+    items?.push({
+      key: category.attributes.slug,
+      label: category.attributes.name,
+      children: [
+        {
+          key: `sub-${category.attributes.slug}`,
+          label: <CategoriesSubMenu category={category} />,
+        },
+      ],
+    })
+  })
+
   return (
     <ConfigProvider theme={theme}>
       <Dropdown menu={{ items }} placement="bottom" arrow trigger={['click']}>
