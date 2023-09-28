@@ -1,5 +1,6 @@
 'use client'
 
+import { CategoryHeaderListProps } from '@/types/category-props'
 import {
   HeartOutlined,
   SearchOutlined,
@@ -11,7 +12,7 @@ import { useState } from 'react'
 import CartDrawer from './cart-drawer'
 import HeaderSearch from './header-search'
 
-export default function CartIcons() {
+export default function CartIcons({ categories }: CategoryHeaderListProps) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -20,7 +21,7 @@ export default function CartIcons() {
         <Col flex={'0 0 auto'} xs={0} sm={24} lg={0}>
           <Popover
             placement="topRight"
-            content={<HeaderSearch />}
+            content={<HeaderSearch categories={categories} />}
             trigger="click"
           >
             <SearchOutlined style={{ fontSize: '1.7rem' }} rev={undefined} />
