@@ -1,9 +1,11 @@
-import Link from 'next/link'
+import Container from '@/components/utils/container'
 
 export default function Home() {
   return (
     <main>
-      <h1>Página de inicio</h1>
+      <Container>
+        <h1>Página de inicio</h1>
+      </Container>
     </main>
   )
 }
