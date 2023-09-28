@@ -3,8 +3,17 @@ import {
   CategoryHeaderProps,
 } from '@/types/category-props'
 import { MenuOutlined } from '@ant-design/icons'
-import { Button, ConfigProvider, Dropdown, MenuProps, ThemeConfig } from 'antd'
+import {
+  Button,
+  ConfigProvider,
+  Dropdown,
+  MenuProps,
+  ThemeConfig,
+  Typography,
+} from 'antd'
 import CategoriesSubMenu from './categories-submenu'
+
+const { Link } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -28,7 +37,11 @@ export default function CategoriesMenu({
   categories?.data.map((category: CategoryHeaderProps) => {
     items?.push({
       key: category.attributes.slug,
-      label: category.attributes.name,
+      label: (
+        <Link style={{ textTransform: 'capitalize' }}>
+          {category.attributes.name}
+        </Link>
+      ),
       children: [
         {
           key: `sub-${category.attributes.slug}`,

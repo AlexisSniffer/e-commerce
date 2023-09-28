@@ -11,10 +11,12 @@ import {
   SelectProps,
   Spin,
   ThemeConfig,
+  Typography,
 } from 'antd'
 import { useRouter } from 'next/navigation'
 
 const { Search } = Input
+const { Paragraph } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -31,7 +33,11 @@ const selectBefore = ({ categories }: CategoryHeaderListProps) => {
   categories.data.map((category: CategoryHeaderProps) => {
     options?.push({
       value: category.attributes.slug,
-      label: category.attributes.name,
+      label: (
+        <Paragraph style={{ textTransform: 'capitalize', margin: '0' }}>
+          {category.attributes.name}
+        </Paragraph>
+      ),
     })
 
     if (
@@ -41,7 +47,11 @@ const selectBefore = ({ categories }: CategoryHeaderListProps) => {
       category.attributes.categories?.data.map((subcategory: any) => {
         options?.push({
           value: subcategory.attributes.slug,
-          label: `- ${subcategory.attributes.name}`,
+          label: (
+            <Paragraph style={{ textTransform: 'capitalize', margin: '0' }}>
+              - {subcategory.attributes.name}
+            </Paragraph>
+          ),
         })
       })
     }

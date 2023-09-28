@@ -8,9 +8,8 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
-import Link from 'next/link'
 
-const { Link: LinkAntd, Paragraph } = Typography
+const { Link, Paragraph } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -46,11 +45,12 @@ export default function CategoriesSubMenu({
                   dataSource={category.attributes.categories.data}
                   renderItem={(item: any) => (
                     <List.Item key={item.attributes.name}>
-                      <LinkAntd>
-                        <Link href={`${item.attributes.name}`}>
-                          {item.attributes.name}
-                        </Link>
-                      </LinkAntd>
+                      <Link
+                        href={`${item.attributes.slug}`}
+                        style={{ textTransform: 'capitalize' }}
+                      >
+                        {item.attributes.name}
+                      </Link>
                     </List.Item>
                   )}
                 />
