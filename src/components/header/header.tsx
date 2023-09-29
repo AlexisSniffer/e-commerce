@@ -86,7 +86,7 @@ export default function RootHeader() {
                 </Row>
               </Col>
               <Col flex={'auto'} xs={0} lg={24}>
-                <HeaderSearch categories={categories} />
+                <HeaderSearch data={categories?.data} meta={categories?.meta} />
               </Col>
               <Col flex={'0 0 auto'} xs={0} lg={24}>
                 <Account />
@@ -106,7 +106,10 @@ export default function RootHeader() {
               gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 0]}
             >
               <Col>
-                <CategoriesMenu categories={categories} />
+                <CategoriesMenu
+                  data={categories?.data}
+                  meta={categories?.meta}
+                />
               </Col>
               <Col flex={'auto'}>
                 <Row justify={'space-between'} align={'middle'}>

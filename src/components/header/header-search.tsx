@@ -1,7 +1,4 @@
-import {
-  CategoryHeaderListProps,
-  CategoryHeaderProps,
-} from '@/types/category-props'
+import { CategoryListProps, CategoryProps } from '@/types/category-props'
 import SearchProps from '@/types/search-props'
 import {
   ConfigProvider,
@@ -27,24 +24,21 @@ const theme: ThemeConfig = {
   },
 }
 
-const selectBefore = ({ categories }: CategoryHeaderListProps) => {
+const selectBefore = (data: CategoryProps[]) => {
   let options: SelectProps['options'] = [{ value: 'all', label: 'Todos' }]
 
-  categories.data.map((category: CategoryHeaderProps) => {
+  data.map(({ attributes }: CategoryProps) => {
     options?.push({
-      value: category.attributes.slug,
+      value: attributes.slug,
       label: (
         <Paragraph style={{ textTransform: 'capitalize', margin: '0' }}>
-          {category.attributes.name}
+          {attributes.name}
         </Paragraph>
       ),
     })
 
-    if (
-      category.attributes.categories &&
-      category.attributes.categories?.data.length > 0
-    ) {
-      category.attributes.categories?.data.map((subcategory: any) => {
+    if (attributes.categories && attributes.categories?.data.length > 0) {
+      attributes.categories?.data.map((subcategory: any) => {
         options?.push({
           value: subcategory.attributes.slug,
           label: (
@@ -64,7 +58,7 @@ const selectBefore = ({ categories }: CategoryHeaderListProps) => {
   )
 }
 
-export default function HeaderSearch({ categories }: CategoryHeaderListProps) {
+export default function HeaderSearch({ data }: CategoryListProps) {
   const router = useRouter()
   const [form] = Form.useForm()
 
@@ -88,7 +82,7 @@ export default function HeaderSearch({ categories }: CategoryHeaderListProps) {
             allowClear
             size="large"
             placeholder="Buscar..."
-            addonBefore={categories ? selectBefore({ categories }) : <Spin />}
+            addonBefore={data ? selectBefore(data) : <Spin />}
             onSearch={form.submit}
           />
         </Form.Item>

@@ -1,4 +1,4 @@
-import { SubCategoryHeaderProps } from '@/types/category-props'
+import { SubCategoriesProps } from '@/types/category-props'
 import {
   Card,
   Col,
@@ -26,13 +26,11 @@ const theme: ThemeConfig = {
   },
 }
 
-export default function CategoriesSubMenu({
-  category,
-}: SubCategoryHeaderProps) {
+export default function CategoriesSubMenu({ categories }: SubCategoriesProps) {
   return (
     <>
       <Row justify={'space-between'} gutter={80}>
-        {category.attributes.categories?.data.map((category: any) => {
+        {categories?.data.map((category: any) => {
           return (
             <ConfigProvider theme={theme} key={category.id}>
               <Col>

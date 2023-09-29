@@ -1,23 +1,23 @@
 import { PaginationProps } from './pagination-props'
 
-export interface CategoryHeaderProps {
+export interface CategoryProps {
   id: number
   attributes: {
     name: string
     slug: string
     categories?: {
-      data: CategoryHeaderProps[]
+      data: CategoryProps[]
     }
   }
 }
 
-export interface SubCategoryHeaderProps {
-  category: CategoryHeaderProps
+export interface SubCategoriesProps {
+  categories?: {
+    data: CategoryProps[]
+  }
 }
 
-export interface CategoryHeaderListProps {
-  categories: {
-    data: CategoryHeaderProps[]
-    meta: PaginationProps
-  }
+export interface CategoryListProps {
+  data: CategoryProps[]
+  meta: PaginationProps
 }
