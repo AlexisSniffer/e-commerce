@@ -1,0 +1,39 @@
+.name {
+  letter-spacing: 0.005em;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-transform: capitalize;
+
+  span {
+    font-size: 0.9rem;
+  }
+
+  &:hover span {
+    color: #3050ff;
+  }
+}
+
+.categories {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.category {
+  color: #777;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.price {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2rem;
+}

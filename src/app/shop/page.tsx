@@ -1,26 +1,90 @@
+'use client'
+
+import ProductDefault from '@/components/product/product-default'
 import Container from '@/components/utils/container'
+import { qsProducts } from '@/queries/product'
+import { ProductListProps, ProductProps } from '@/types/product.props'
+import { fetcher } from '@/utils/fetcher'
+import type { CollapseProps } from 'antd'
+import { Col, Collapse, Row } from 'antd'
+import useSWR from 'swr'
+import FilterCategory from './components/filter-category'
+
+const onChange = (key: string | string[]) => {
+  console.log(key)
+}
+
+const items: CollapseProps['items'] = [
+  {
+    key: '1',
+    label: 'CATEGORIAS',
+    children: <FilterCategory />,
+  },
+  {
+    key: '2',
+    label: 'PRECIO',
+    children: <p>Hola mundo</p>,
+  },
+  {
+    key: '3',
+    label: 'MARCAS',
+    children: <p>Hola mundo</p>,
+  },
+]
 
 export default function Shop() {
-  return (
-    <main>
-      <Container>
-        <h1>Tienda</h1>
+  const { data: products, error: errorProducts } = useSWR<ProductListProps>(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts}`,
+    fetcher,
+  )
 
-        {[
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
-          38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-        ].map((e: any) => {
-          return (
-            <div key={e}>
-              <br />
-              <br />
-              <br />
-              <br />
-            </div>
-          )
-        })}
-      </Container>
-    </main>
+  return (
+    <Container>
+      <Row gutter={16}>
+        <Col xs={0} lg={8} xl={6}>
+          <Collapse
+            activeKey={['1', '2', '3']}
+            items={items}
+            defaultActiveKey={['1']}
+            expandIconPosition={'end'}
+            onChange={onChange}
+          />
+        </Col>
+        <Col xs={24} lg={16} xl={18}>
+          <Row>
+            {products?.data.map((product: ProductProps) => {
+              return (
+                <Col
+                  xs={{ span: 12 }}
+                  sm={{ span: 8 }}
+                  lg={{ span: 6 }}
+                  key={product.attributes.slug}
+                >
+                  <ProductDefault
+                    id={product.id}
+                    attributes={product.attributes}
+                  />
+                </Col>
+              )
+            })}
+            {products?.data.map((product: ProductProps) => {
+              return (
+                <Col
+                  xs={{ span: 12 }}
+                  sm={{ span: 8 }}
+                  lg={{ span: 6 }}
+                  key={product.attributes.slug}
+                >
+                  <ProductDefault
+                    id={product.id}
+                    attributes={product.attributes}
+                  />
+                </Col>
+              )
+            })}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   )
 }
