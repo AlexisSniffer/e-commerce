@@ -1,25 +1,33 @@
 import qs from 'qs'
 
-export const qsProducts = qs.stringify(
-  {
-    populate: {
-      categories: {
-        fields: ['name', 'slug'],
-        populate: {
-          category: {
-            fields: ['name', 'slug'],
-            populate: {
-              category: {
-                fields: ['name', 'slug'],
+export const qsProducts = (categories: string[]) =>
+  qs.stringify(
+    {
+      populate: {
+        categories: {
+          fields: ['name', 'slug'],
+          populate: {
+            category: {
+              fields: ['name', 'slug'],
+              populate: {
+                category: {
+                  fields: ['name', 'slug'],
+                },
               },
             },
           },
         },
+        images: '*',
       },
-      images: '*',
+      filters: {
+        categories: {
+          slug: {
+            $in: categories,
+          },
+        },
+      },
     },
-  },
-  {
-    encodeValuesOnly: true,
-  },
-)
+    {
+      encodeValuesOnly: true,
+    },
+  )

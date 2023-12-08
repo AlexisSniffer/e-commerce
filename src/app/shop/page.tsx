@@ -9,6 +9,7 @@ import type { CollapseProps } from 'antd'
 import { Col, Collapse, Row } from 'antd'
 import useSWR from 'swr'
 import FilterCategory from './components/filter-category'
+import useFilterStore from '@/store/filterStore'
 
 const onChange = (key: string | string[]) => {
   console.log(key)
@@ -33,8 +34,12 @@ const items: CollapseProps['items'] = [
 ]
 
 export default function Shop() {
+  const categoriesStore = useFilterStore((state) => state.categories)
+
   const { data: products, error: errorProducts } = useSWR<ProductListProps>(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
+      categoriesStore,
+    )}`,
     fetcher,
   )
 

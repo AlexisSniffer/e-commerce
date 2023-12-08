@@ -6,6 +6,7 @@ import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, ThemeConfig, Tree, Typography } from 'antd'
 import type { DataNode, TreeProps } from 'antd/es/tree'
 import useSWR from 'swr'
+import useFilterStore from '@/store/filterStore'
 
 const { Text } = Typography
 
@@ -24,6 +25,8 @@ const theme: ThemeConfig = {
 }
 
 export default function FilterCategory() {
+  const categoriesStore = useFilterStore((state) => state.categories)
+  const { setCategories } = useFilterStore()
   const [checkedKeys, setCheckedKeys] = useState<Key[]>([])
   const [selectedKeys, setSelectedKeys] = useState<Key[]>([])
 
@@ -33,6 +36,7 @@ export default function FilterCategory() {
 
   const onCheck = (checkedKeysValue: any) => {
     setCheckedKeys(checkedKeysValue)
+    setCategories(checkedKeysValue)
   }
 
   const { data: categories, error: errorCategories } = useSWR(
@@ -97,10 +101,12 @@ export default function FilterCategory() {
       ) : (
         <Skeleton />
       )}
-      selectedKeys
+      {/* selectedKeys
       <pre>{JSON.stringify(selectedKeys, null, 2)}</pre>
       checkedKeys
       <pre>{JSON.stringify(checkedKeys, null, 2)}</pre>
+      categories
+      <pre>{JSON.stringify(categoriesStore, null, 2)}</pre> */}
     </ConfigProvider>
   )
 }
