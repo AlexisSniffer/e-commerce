@@ -38,13 +38,13 @@ export const qsCategory = qs.stringify(
 
 export const qsCategoryHeader = qs.stringify(
   {
-    fields: ['name', 'slug'],
+    fields: ['name', 'slug', 'isExpanded'],
     populate: {
       categories: {
-        fields: ['name', 'slug'],
+        fields: ['name', 'slug', 'isExpanded'],
         populate: {
           categories: {
-            fields: ['name', 'slug'],
+            fields: ['name', 'slug', 'isExpanded'],
           },
         },
       },

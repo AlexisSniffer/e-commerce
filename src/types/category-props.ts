@@ -5,6 +5,7 @@ export interface CategoryProps {
   attributes: {
     name: string
     slug: string
+    isExpanded: boolean
     categories?: {
       data: CategoryProps[]
     }

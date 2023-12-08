@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, Key } from 'react'
 
 import { qsCategoryHeader } from '@/queries/category'
 import { CategoryProps } from '@/types/category-props'
 import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, ThemeConfig, Tree, Typography } from 'antd'
-import type { DataNode } from 'antd/es/tree'
+import type { DataNode, TreeProps } from 'antd/es/tree'
 import useSWR from 'swr'
 
 const { Text } = Typography
@@ -24,35 +24,25 @@ const theme: ThemeConfig = {
 }
 
 export default function FilterCategory() {
+  const [checkedKeys, setCheckedKeys] = useState<Key[]>([])
+  const [selectedKeys, setSelectedKeys] = useState<Key[]>([])
+
+  const onSelect = (selectedKeysValue: Key[]) => {
+    setSelectedKeys(selectedKeysValue)
+  }
+
+  const onCheck = (checkedKeysValue: any) => {
+    setCheckedKeys(checkedKeysValue)
+  }
+
   const { data: categories, error: errorCategories } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
     fetcher,
   )
 
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([
-    '0-0-0',
-    '0-0-1',
-    '0-1',
-  ])
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(['0-0-0'])
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([])
-  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true)
-
-  const onExpand = (expandedKeysValue: React.Key[]) => {
-    console.log('onExpand', expandedKeysValue)
-    setExpandedKeys(expandedKeysValue)
-    setAutoExpandParent(false)
-  }
-
-  const onCheck = (checkedKeysValue: React.Key[]) => {
-    console.log('onCheck', checkedKeysValue)
-    setCheckedKeys(checkedKeysValue)
-  }
-
-  const onSelect = (selectedKeysValue: React.Key[], info: any) => {
-    console.log('onSelect', info)
-    setSelectedKeys(selectedKeysValue)
-  }
+  const isExpanded: Key[] = categories?.data
+    .filter((category: CategoryProps) => category.attributes.isExpanded)
+    .map((category: CategoryProps) => category.attributes.slug)
 
   const treeData = (categories: CategoryProps[]) => {
     const treeData: DataNode[] = categories?.map((category: CategoryProps) => {
@@ -98,18 +88,19 @@ export default function FilterCategory() {
       {categories?.data ? (
         <Tree
           checkable
-          onExpand={onExpand}
-          expandedKeys={expandedKeys}
-          autoExpandParent={autoExpandParent}
-          //onCheck={onCheck}
-          checkedKeys={checkedKeys}
-          onSelect={onSelect}
-          selectedKeys={selectedKeys}
           treeData={treeData(categories?.data)}
+          selectedKeys={selectedKeys}
+          checkedKeys={checkedKeys}
+          onCheck={onCheck}
+          onSelect={onSelect}
         />
       ) : (
         <Skeleton />
       )}
+      selectedKeys
+      <pre>{JSON.stringify(selectedKeys, null, 2)}</pre>
+      checkedKeys
+      <pre>{JSON.stringify(checkedKeys, null, 2)}</pre>
     </ConfigProvider>
   )
 }

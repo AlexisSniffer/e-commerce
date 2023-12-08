@@ -52,22 +52,7 @@ export default function Shop() {
         </Col>
         <Col xs={24} lg={16} xl={18}>
           <Row>
-            {products?.data.map((product: ProductProps) => {
-              return (
-                <Col
-                  xs={{ span: 12 }}
-                  sm={{ span: 8 }}
-                  lg={{ span: 6 }}
-                  key={product.attributes.slug}
-                >
-                  <ProductDefault
-                    id={product.id}
-                    attributes={product.attributes}
-                  />
-                </Col>
-              )
-            })}
-            {products?.data.map((product: ProductProps) => {
+            {products?.data?.map((product: ProductProps) => {
               return (
                 <Col
                   xs={{ span: 12 }}
