@@ -1,9 +1,11 @@
+import useFilterStore from '@/store/filterStore'
 import styles from '@/styles/product.module.scss'
 import { MediaListProps } from '@/types/media-props'
 import { ProductCategoryProps, ProductProps } from '@/types/product.props'
 import { money } from '@/utils/formatters'
 import { Card, ConfigProvider, Rate, ThemeConfig, Typography } from 'antd'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const { Text } = Typography
 
@@ -36,6 +38,9 @@ function cover(images: MediaListProps) {
 }
 
 export default function ProductDefault({ attributes }: ProductProps) {
+  const router = useRouter()
+  const { setCategories } = useFilterStore()
+
   return (
     <ConfigProvider theme={theme}>
       <Card hoverable cover={cover(attributes.images)}>
@@ -51,6 +56,10 @@ export default function ProductDefault({ attributes }: ProductProps) {
                   <Text
                     key={category.attributes.slug}
                     className={styles['category']}
+                    onClick={() => {
+                      setCategories([category.attributes.slug])
+                      router.push('/shop')
+                    }}
                   >
                     {category.attributes.name}
                     {index !== array.length - 1 ? ', ' : ''}

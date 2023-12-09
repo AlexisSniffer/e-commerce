@@ -3,6 +3,7 @@ import { create } from 'zustand'
 interface FilterState {
   filter: string
   categories: string[]
+  setFilter: (filter: string) => void
   setCategories: (categories: string[]) => void
 }
 

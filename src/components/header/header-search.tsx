@@ -1,3 +1,4 @@
+import useFilterStore from '@/store/filterStore'
 import { CategoryListProps, CategoryProps } from '@/types/category-props'
 import SearchProps from '@/types/search-props'
 import {
@@ -61,8 +62,13 @@ const selectBefore = (data: CategoryProps[]) => {
 export default function HeaderSearch({ data }: CategoryListProps) {
   const router = useRouter()
   const [form] = Form.useForm()
+  const { setFilter, setCategories } = useFilterStore()
 
   const onFinish = (values: SearchProps) => {
+    const { filter, category } = values
+
+    setFilter(filter!)
+    category == 'all' ? setCategories([]) : setCategories([category])
     router.push('/shop')
   }
 

@@ -1,4 +1,4 @@
-import { Key, useState } from 'react'
+import { Key, useEffect, useState } from 'react'
 
 import { qsCategoryHeader } from '@/queries/category'
 import useFilterStore from '@/store/filterStore'
@@ -28,6 +28,10 @@ export default function FilterCategory() {
   const categoriesStore = useFilterStore((state) => state.categories)
   const [checkedKeys, setCheckedKeys] = useState<Key[]>(categoriesStore)
   const { setCategories } = useFilterStore()
+
+  useEffect(() => {
+    setCheckedKeys(categoriesStore)
+  }, [categoriesStore])
 
   const categoryNode = (category: CategoryProps) => {
     return {

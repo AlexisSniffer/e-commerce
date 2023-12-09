@@ -24,9 +24,31 @@ export const qsProducts = (filter: string, categories: string[]) =>
           $containsi: filter,
         },
         categories: {
-          slug: {
-            $in: categories,
-          },
+          $or: [
+            {
+              slug: {
+                $in: categories,
+              },
+            },
+            {
+              category: {
+                $or: [
+                  {
+                    slug: {
+                      $in: categories,
+                    },
+                  },
+                  {
+                    category: {
+                      slug: {
+                        $in: categories,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          ],
         },
       },
     },
