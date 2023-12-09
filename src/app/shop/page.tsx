@@ -35,9 +35,11 @@ const items: CollapseProps['items'] = [
 
 export default function Shop() {
   const categoriesStore = useFilterStore((state) => state.categories)
+  const filterStore = useFilterStore((state) => state.filter)
 
   const { data: products, error: errorProducts } = useSWR<ProductListProps>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
+      filterStore,
       categoriesStore,
     )}`,
     fetcher,

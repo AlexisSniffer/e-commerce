@@ -1,6 +1,6 @@
 import qs from 'qs'
 
-export const qsProducts = (categories: string[]) =>
+export const qsProducts = (filter: string, categories: string[]) =>
   qs.stringify(
     {
       populate: {
@@ -20,6 +20,9 @@ export const qsProducts = (categories: string[]) =>
         images: '*',
       },
       filters: {
+        name: {
+          $containsi: filter,
+        },
         categories: {
           slug: {
             $in: categories,
@@ -31,3 +34,17 @@ export const qsProducts = (categories: string[]) =>
       encodeValuesOnly: true,
     },
   )
+
+export const qsProductUntil = qs.stringify(
+  {
+    populate: {
+      categories: {
+        fields: ['name', 'slug'],
+      },
+      images: '*',
+    },
+  },
+  {
+    encodeValuesOnly: true,
+  },
+)

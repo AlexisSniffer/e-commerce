@@ -1,12 +1,12 @@
-import React, { useState, Key } from 'react'
+import { Key, useState } from 'react'
 
 import { qsCategoryHeader } from '@/queries/category'
+import useFilterStore from '@/store/filterStore'
 import { CategoryProps } from '@/types/category-props'
 import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, ThemeConfig, Tree, Typography } from 'antd'
-import type { DataNode, TreeProps } from 'antd/es/tree'
+import type { DataNode } from 'antd/es/tree'
 import useSWR from 'swr'
-import useFilterStore from '@/store/filterStore'
 
 const { Text } = Typography
 
@@ -26,55 +26,32 @@ const theme: ThemeConfig = {
 
 export default function FilterCategory() {
   const categoriesStore = useFilterStore((state) => state.categories)
+  const [checkedKeys, setCheckedKeys] = useState<Key[]>(categoriesStore)
   const { setCategories } = useFilterStore()
-  const [checkedKeys, setCheckedKeys] = useState<Key[]>([])
-  const [selectedKeys, setSelectedKeys] = useState<Key[]>([])
 
-  const onSelect = (selectedKeysValue: Key[]) => {
-    setSelectedKeys(selectedKeysValue)
+  const categoryNode = (category: CategoryProps) => {
+    return {
+      key: category.attributes.slug,
+      title: (
+        <Text style={{ textTransform: 'capitalize' }}>
+          {category.attributes.name}
+        </Text>
+      ),
+    }
   }
-
-  const onCheck = (checkedKeysValue: any) => {
-    setCheckedKeys(checkedKeysValue)
-    setCategories(checkedKeysValue)
-  }
-
-  const { data: categories, error: errorCategories } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
-    fetcher,
-  )
-
-  const isExpanded: Key[] = categories?.data
-    .filter((category: CategoryProps) => category.attributes.isExpanded)
-    .map((category: CategoryProps) => category.attributes.slug)
 
   const treeData = (categories: CategoryProps[]) => {
     const treeData: DataNode[] = categories?.map((category: CategoryProps) => {
       return {
-        key: category.attributes.slug,
-        title: (
-          <Text style={{ textTransform: 'capitalize' }}>
-            {category.attributes.name}
-          </Text>
-        ),
+        ...categoryNode(category),
         children: category.attributes.categories?.data.map(
           (category2: CategoryProps) => {
             return {
-              key: category2.attributes.slug,
-              title: (
-                <Text style={{ textTransform: 'capitalize' }}>
-                  {category2.attributes.name}
-                </Text>
-              ),
+              ...categoryNode(category2),
               children: category2.attributes.categories?.data.map(
                 (category3: CategoryProps) => {
                   return {
-                    key: category3.attributes.slug,
-                    title: (
-                      <Text style={{ textTransform: 'capitalize' }}>
-                        {category3.attributes.name}
-                      </Text>
-                    ),
+                    ...categoryNode(category3),
                   }
                 },
               ),
@@ -87,26 +64,28 @@ export default function FilterCategory() {
     return treeData
   }
 
+  const onCheck = (checkedKeysValue: any) => {
+    setCheckedKeys(checkedKeysValue)
+    setCategories(checkedKeysValue)
+  }
+
+  const { data: categories, error: errorCategories } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
+    fetcher,
+  )
+
   return (
     <ConfigProvider theme={theme}>
       {categories?.data ? (
         <Tree
           checkable
           treeData={treeData(categories?.data)}
-          selectedKeys={selectedKeys}
           checkedKeys={checkedKeys}
           onCheck={onCheck}
-          onSelect={onSelect}
         />
       ) : (
         <Skeleton />
       )}
-      {/* selectedKeys
-      <pre>{JSON.stringify(selectedKeys, null, 2)}</pre>
-      checkedKeys
-      <pre>{JSON.stringify(checkedKeys, null, 2)}</pre>
-      categories
-      <pre>{JSON.stringify(categoriesStore, null, 2)}</pre> */}
     </ConfigProvider>
   )
 }
