@@ -92,7 +92,7 @@ export default function RootHeader() {
                 <Account />
               </Col>
               <Col>
-                <CartIcons categories={categories} />
+                <CartIcons data={categories?.data} meta={categories?.meta} />
               </Col>
             </Row>
           </Container>
