@@ -5,6 +5,7 @@ export const qsProducts = (
   categories: string[],
   prices: [number, number],
   brands: string[],
+  pagination: { page: number; pageSize: number },
 ) =>
   qs.stringify(
     {
@@ -67,6 +68,8 @@ export const qsProducts = (
           ],
         },
       },
+      sort: ['name:asc'],
+      pagination,
     },
     {
       encodeValuesOnly: true,

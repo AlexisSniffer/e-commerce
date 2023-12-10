@@ -6,8 +6,8 @@ import { qsProducts } from '@/queries/product'
 import useFilterStore from '@/store/filterStore'
 import { ProductListProps, ProductProps } from '@/types/product-props'
 import { fetcher } from '@/utils/fetcher'
-import type { CollapseProps } from 'antd'
-import { Col, Collapse, Row } from 'antd'
+import type { CollapseProps, PaginationProps } from 'antd'
+import { Col, Collapse, Pagination, Row } from 'antd'
 import useSWR from 'swr'
 import FilterBrand from './components/filter-brand'
 import FilterCategory from './components/filter-category'
@@ -36,6 +36,8 @@ export default function Shop() {
   const categoriesStore = useFilterStore((state) => state.categories)
   const pricesStore = useFilterStore((state) => state.prices)
   const brandsStore = useFilterStore((state) => state.brands)
+  const paginationStore = useFilterStore((state) => state.pagination)
+  const { setPagination } = useFilterStore()
 
   const { data: products, error: errorProducts } = useSWR<ProductListProps>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
@@ -43,9 +45,30 @@ export default function Shop() {
       categoriesStore,
       pricesStore,
       brandsStore,
+      paginationStore,
     )}`,
     fetcher,
   )
+
+  const onChange: PaginationProps['onChange'] = (
+    page: number,
+    pageSize: number,
+  ) => {
+    setPagination({
+      page,
+      pageSize,
+    })
+  }
+
+  const onShowSizeChange: PaginationProps['onShowSizeChange'] = (
+    current: number,
+    pageSize: number,
+  ) => {
+    setPagination({
+      page: current,
+      pageSize,
+    })
+  }
 
   return (
     <Container>
@@ -75,6 +98,19 @@ export default function Shop() {
                 </Col>
               )
             })}
+          </Row>
+          <Row gutter={16} justify={'end'}>
+            <Col>
+              <Pagination
+                defaultCurrent={1}
+                pageSize={paginationStore.pageSize}
+                total={products?.meta?.pagination.total}
+                showSizeChanger
+                pageSizeOptions={[12, 24, 36]}
+                onChange={onChange}
+                onShowSizeChange={onShowSizeChange}
+              />
+            </Col>
           </Row>
         </Col>
       </Row>
