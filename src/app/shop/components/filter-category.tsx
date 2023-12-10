@@ -1,11 +1,10 @@
-import { Key, useEffect, useState } from 'react'
-
 import { qsCategoryHeader } from '@/queries/category'
 import useFilterStore from '@/store/filterStore'
 import { CategoryProps } from '@/types/category-props'
 import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, ThemeConfig, Tree, Typography } from 'antd'
 import type { DataNode } from 'antd/es/tree'
+import { Key, useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 const { Text } = Typography
@@ -32,6 +31,11 @@ export default function FilterCategory() {
   useEffect(() => {
     setCheckedKeys(categoriesStore)
   }, [categoriesStore])
+
+  const { data: categories, error: errorCategories } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
+    fetcher,
+  )
 
   const categoryNode = (category: CategoryProps) => {
     return {
@@ -72,11 +76,6 @@ export default function FilterCategory() {
     setCheckedKeys(checkedKeysValue)
     setCategories(checkedKeysValue)
   }
-
-  const { data: categories, error: errorCategories } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
-    fetcher,
-  )
 
   return (
     <ConfigProvider theme={theme}>

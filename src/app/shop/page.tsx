@@ -10,10 +10,7 @@ import { Col, Collapse, Row } from 'antd'
 import useSWR from 'swr'
 import FilterCategory from './components/filter-category'
 import useFilterStore from '@/store/filterStore'
-
-const onChange = (key: string | string[]) => {
-  console.log(key)
-}
+import FilterPrice from './components/filter-price'
 
 const items: CollapseProps['items'] = [
   {
@@ -24,7 +21,7 @@ const items: CollapseProps['items'] = [
   {
     key: '2',
     label: 'PRECIO',
-    children: <p>Hola mundo</p>,
+    children: <FilterPrice />,
   },
   {
     key: '3',
@@ -34,13 +31,15 @@ const items: CollapseProps['items'] = [
 ]
 
 export default function Shop() {
-  const categoriesStore = useFilterStore((state) => state.categories)
   const filterStore = useFilterStore((state) => state.filter)
+  const categoriesStore = useFilterStore((state) => state.categories)
+  const pricesStore = useFilterStore((state) => state.prices)
 
   const { data: products, error: errorProducts } = useSWR<ProductListProps>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
       filterStore,
       categoriesStore,
+      pricesStore,
     )}`,
     fetcher,
   )
@@ -54,7 +53,6 @@ export default function Shop() {
             items={items}
             defaultActiveKey={['1']}
             expandIconPosition={'end'}
-            onChange={onChange}
           />
         </Col>
         <Col xs={24} lg={16} xl={18}>

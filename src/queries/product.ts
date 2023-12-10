@@ -1,6 +1,10 @@
 import qs from 'qs'
 
-export const qsProducts = (filter: string, categories: string[]) =>
+export const qsProducts = (
+  filter: string,
+  categories: string[],
+  prices: [number, number],
+) =>
   qs.stringify(
     {
       populate: {
@@ -22,6 +26,9 @@ export const qsProducts = (filter: string, categories: string[]) =>
       filters: {
         name: {
           $containsi: filter,
+        },
+        price: {
+          $between: prices,
         },
         categories: {
           $or: [

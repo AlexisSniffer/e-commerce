@@ -62,6 +62,9 @@ export default function RootHeader() {
           </Row>
         </Container>
 
+        {/* TODO: bug - Warning: findDOMNode is deprecated in StrictMode. findDOMNode was
+          passed an instance of DomWrapper which is inside StrictMode.
+        */}
         <Affix
           onChange={(affixed?: boolean) => {
             setAffix(affixed!)
