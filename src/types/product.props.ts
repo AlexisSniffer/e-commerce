@@ -1,4 +1,4 @@
-import { CategoryProps } from './category-props'
+import { BrandProps } from './brand-props'
 import { MediaListProps } from './media-props'
 import { PaginationProps } from './pagination-props'
 
@@ -20,6 +20,9 @@ export interface ProductProps {
     ratings: 0
     categories?: {
       data: ProductCategoryProps[]
+    }
+    brand: {
+      data: BrandProps
     }
     images: MediaListProps
   }

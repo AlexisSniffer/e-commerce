@@ -3,13 +3,14 @@
 import ProductDefault from '@/components/product/product-default'
 import Container from '@/components/utils/container'
 import { qsProducts } from '@/queries/product'
+import useFilterStore from '@/store/filterStore'
 import { ProductListProps, ProductProps } from '@/types/product.props'
 import { fetcher } from '@/utils/fetcher'
 import type { CollapseProps } from 'antd'
 import { Col, Collapse, Row } from 'antd'
 import useSWR from 'swr'
+import FilterBrand from './components/filter-brand'
 import FilterCategory from './components/filter-category'
-import useFilterStore from '@/store/filterStore'
 import FilterPrice from './components/filter-price'
 
 const items: CollapseProps['items'] = [
@@ -26,7 +27,7 @@ const items: CollapseProps['items'] = [
   {
     key: '3',
     label: 'MARCAS',
-    children: <p>Hola mundo</p>,
+    children: <FilterBrand />,
   },
 ]
 
@@ -34,12 +35,14 @@ export default function Shop() {
   const filterStore = useFilterStore((state) => state.filter)
   const categoriesStore = useFilterStore((state) => state.categories)
   const pricesStore = useFilterStore((state) => state.prices)
+  const brandsStore = useFilterStore((state) => state.brands)
 
   const { data: products, error: errorProducts } = useSWR<ProductListProps>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
       filterStore,
       categoriesStore,
       pricesStore,
+      brandsStore,
     )}`,
     fetcher,
   )

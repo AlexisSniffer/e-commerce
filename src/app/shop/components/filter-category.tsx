@@ -10,17 +10,7 @@ import useSWR from 'swr'
 const { Text } = Typography
 
 const theme: ThemeConfig = {
-  components: {
-    Card: {
-      padding: 8,
-      paddingXXS: 8,
-      paddingLG: 8,
-      borderRadiusLG: 0,
-    },
-    Button: {
-      borderRadius: 0,
-    },
-  },
+  components: {},
 }
 
 export default function FilterCategory() {
@@ -28,14 +18,18 @@ export default function FilterCategory() {
   const [checkedKeys, setCheckedKeys] = useState<Key[]>(categoriesStore)
   const { setCategories } = useFilterStore()
 
-  useEffect(() => {
-    setCheckedKeys(categoriesStore)
-  }, [categoriesStore])
-
   const { data: categories, error: errorCategories } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
     fetcher,
   )
+
+  useEffect(() => {
+    setCheckedKeys(categoriesStore)
+  }, [categoriesStore])
+
+  if (!categories) {
+    return <Skeleton />
+  }
 
   const categoryNode = (category: CategoryProps) => {
     return {
@@ -79,16 +73,12 @@ export default function FilterCategory() {
 
   return (
     <ConfigProvider theme={theme}>
-      {categories?.data ? (
-        <Tree
-          checkable
-          treeData={treeData(categories?.data)}
-          checkedKeys={checkedKeys}
-          onCheck={onCheck}
-        />
-      ) : (
-        <Skeleton />
-      )}
+      <Tree
+        checkable
+        treeData={treeData(categories?.data)}
+        checkedKeys={checkedKeys}
+        onCheck={onCheck}
+      />
     </ConfigProvider>
   )
 }

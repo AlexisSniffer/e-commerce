@@ -4,6 +4,7 @@ export const qsProducts = (
   filter: string,
   categories: string[],
   prices: [number, number],
+  brands: string[],
 ) =>
   qs.stringify(
     {
@@ -21,6 +22,9 @@ export const qsProducts = (
             },
           },
         },
+        brand: {
+          fields: ['name', 'slug'],
+        },
         images: '*',
       },
       filters: {
@@ -29,6 +33,11 @@ export const qsProducts = (
         },
         price: {
           $between: prices,
+        },
+        brand: {
+          slug: {
+            $in: brands,
+          },
         },
         categories: {
           $or: [
