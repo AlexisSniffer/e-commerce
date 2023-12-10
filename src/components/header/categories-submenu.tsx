@@ -1,3 +1,4 @@
+import useFilterStore from '@/store/filterStore'
 import { SubCategoriesProps } from '@/types/category-props'
 import {
   Card,
@@ -8,8 +9,9 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import { useRouter } from 'next/navigation'
 
-const { Link, Paragraph } = Typography
+const { Text, Paragraph } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -27,6 +29,9 @@ const theme: ThemeConfig = {
 }
 
 export default function CategoriesSubMenu({ categories }: SubCategoriesProps) {
+  const router = useRouter()
+  const { setCategories } = useFilterStore()
+
   return (
     <>
       <Row justify={'space-between'} gutter={80}>
@@ -43,12 +48,18 @@ export default function CategoriesSubMenu({ categories }: SubCategoriesProps) {
                   dataSource={category.attributes.categories.data}
                   renderItem={(item: any) => (
                     <List.Item key={item.attributes.name}>
-                      <Link
-                        href={`${item.attributes.slug}`}
-                        style={{ textTransform: 'capitalize' }}
+                      <Text
+                        style={{
+                          textTransform: 'capitalize',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => {
+                          setCategories([item.attributes.slug])
+                          router.push('/shop')
+                        }}
                       >
                         {item.attributes.name}
-                      </Link>
+                      </Text>
                     </List.Item>
                   )}
                 />
