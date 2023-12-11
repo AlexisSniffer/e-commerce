@@ -6,12 +6,37 @@ import { qsProducts } from '@/queries/product'
 import useFilterStore from '@/store/filterStore'
 import { ProductListProps, ProductProps } from '@/types/product-props'
 import { fetcher } from '@/utils/fetcher'
-import type { CollapseProps, PaginationProps } from 'antd'
-import { Col, Collapse, Pagination, Row } from 'antd'
+import type { CollapseProps, PaginationProps, ThemeConfig } from 'antd'
+import {
+  Breadcrumb,
+  Col,
+  Collapse,
+  ConfigProvider,
+  Divider,
+  Pagination,
+  Row,
+} from 'antd'
 import useSWR from 'swr'
 import FilterBrand from './components/filter-brand'
 import FilterCategory from './components/filter-category'
 import FilterPrice from './components/filter-price'
+import { HomeOutlined } from '@ant-design/icons'
+import Link from 'next/link'
+
+const theme: ThemeConfig = {
+  components: {
+    Collapse: {
+      borderRadiusLG: 0,
+      headerBg: '#fff',
+    },
+    Pagination: {
+      borderRadius: 0,
+    },
+    Select: {
+      borderRadius: 0,
+    },
+  },
+}
 
 const items: CollapseProps['items'] = [
   {
@@ -71,49 +96,71 @@ export default function Shop() {
   }
 
   return (
-    <Container>
-      <Row gutter={16}>
-        <Col xs={0} lg={8} xl={6}>
-          <Collapse
-            activeKey={['1', '2', '3']}
-            items={items}
-            defaultActiveKey={['1']}
-            expandIconPosition={'end'}
-          />
-        </Col>
-        <Col xs={24} lg={16} xl={18}>
-          <Row>
-            {products?.data?.map((product: ProductProps) => {
-              return (
-                <Col
-                  xs={{ span: 12 }}
-                  sm={{ span: 8 }}
-                  lg={{ span: 6 }}
-                  key={product.attributes.slug}
-                >
-                  <ProductDefault
-                    id={product.id}
-                    attributes={product.attributes}
-                  />
-                </Col>
-              )
-            })}
-          </Row>
-          <Row gutter={16} justify={'end'}>
-            <Col>
-              <Pagination
-                defaultCurrent={1}
-                pageSize={paginationStore.pageSize}
-                total={products?.meta?.pagination.total}
-                showSizeChanger
-                pageSizeOptions={[12, 24, 36]}
-                onChange={onChange}
-                onShowSizeChange={onShowSizeChange}
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+    <ConfigProvider theme={theme}>
+      <Container>
+        <Row gutter={24}>
+          <Col span={24}>
+            <Breadcrumb
+              items={[
+                {
+                  title: (
+                    <Link href={'/'}>
+                      <HomeOutlined />
+                    </Link>
+                  ),
+                },
+                {
+                  title: <span>Tienda</span>,
+                },
+              ]}
+            />
+            <br />
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col xs={0} lg={8} xl={6}>
+            <Collapse
+              activeKey={['1', '2', '3']}
+              items={items}
+              defaultActiveKey={['1']}
+              expandIconPosition={'end'}
+            />
+          </Col>
+          <Col xs={24} lg={16} xl={18}>
+            <Row>
+              {products?.data?.map((product: ProductProps) => {
+                return (
+                  <Col
+                    xs={{ span: 12 }}
+                    sm={{ span: 8 }}
+                    lg={{ span: 6 }}
+                    key={product.attributes.slug}
+                  >
+                    <ProductDefault
+                      id={product.id}
+                      attributes={product.attributes}
+                    />
+                  </Col>
+                )
+              })}
+            </Row>
+            <Divider />
+            <Row gutter={16} justify={'end'}>
+              <Col>
+                <Pagination
+                  defaultCurrent={1}
+                  pageSize={paginationStore.pageSize}
+                  total={products?.meta?.pagination.total}
+                  showSizeChanger
+                  pageSizeOptions={[12, 24, 36]}
+                  onChange={onChange}
+                  onShowSizeChange={onShowSizeChange}
+                />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </ConfigProvider>
   )
 }

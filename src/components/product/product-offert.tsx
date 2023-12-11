@@ -1,6 +1,6 @@
 import styles from '@/styles/product.module.scss'
 import { MediaListProps } from '@/types/media-props'
-import { ProductCategoryProps, ProductProps } from '@/types/product.props'
+import { ProductCategoryProps, ProductProps } from '@/types/product-props'
 import { money } from '@/utils/formatters'
 import { Card, ConfigProvider, Rate, ThemeConfig, Typography } from 'antd'
 import Link from 'next/link'

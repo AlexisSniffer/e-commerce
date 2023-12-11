@@ -4,7 +4,7 @@ import ProductDefault from '@/components/product/product-default'
 import ProductOffert from '@/components/product/product-offert'
 import Container from '@/components/utils/container'
 import { qsProductUntil } from '@/queries/product'
-import { ProductListProps, ProductProps } from '@/types/product.props'
+import { ProductListProps, ProductProps } from '@/types/product-props'
 import { fetcher } from '@/utils/fetcher'
 import {
   Col,
