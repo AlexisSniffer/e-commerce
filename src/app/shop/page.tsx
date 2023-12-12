@@ -6,6 +6,7 @@ import { qsProducts } from '@/queries/product'
 import useFilterStore from '@/store/filterStore'
 import { ProductListProps, ProductProps } from '@/types/product-props'
 import { fetcher } from '@/utils/fetcher'
+import { HomeOutlined } from '@ant-design/icons'
 import type { CollapseProps, PaginationProps, ThemeConfig } from 'antd'
 import {
   Breadcrumb,
@@ -16,12 +17,11 @@ import {
   Pagination,
   Row,
 } from 'antd'
+import Link from 'next/link'
 import useSWR from 'swr'
 import FilterBrand from './components/filter-brand'
 import FilterCategory from './components/filter-category'
 import FilterPrice from './components/filter-price'
-import { HomeOutlined } from '@ant-design/icons'
-import Link from 'next/link'
 
 const theme: ThemeConfig = {
   components: {

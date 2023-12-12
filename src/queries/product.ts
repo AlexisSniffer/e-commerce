@@ -70,6 +70,7 @@ export const qsProducts = (
       },
       sort: ['name:asc'],
       pagination,
+      locale: localStorage.getItem('locale'),
     },
     {
       encodeValuesOnly: true,

@@ -2,13 +2,13 @@ import qs from 'qs'
 
 export const qsCategory = qs.stringify(
   {
-    fields: ['name', 'slug'],
+    fields: ['name', 'slug', 'isExpanded'],
     populate: {
       categories: {
-        fields: ['name', 'slug'],
+        fields: ['name', 'slug', 'isExpanded'],
         populate: {
           categories: {
-            fields: ['name', 'slug'],
+            fields: ['name', 'slug', 'isExpanded'],
           },
         },
       },
@@ -30,6 +30,7 @@ export const qsCategory = qs.stringify(
         },
       },
     },
+    locale: localStorage.getItem('locale'),
   },
   {
     encodeValuesOnly: true,

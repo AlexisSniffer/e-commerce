@@ -1,25 +1,40 @@
 'use client'
 
-import { Select } from 'antd'
+import useFilterStore from '@/store/filterStore'
+import { ConfigProvider, Select, ThemeConfig } from 'antd'
 
-const languageOptions = [
-  { value: 'esp', label: '🇪🇸 ESP' },
-  { value: 'eng', label: '🇺🇸 ENG' },
-]
-
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`)
+const theme: ThemeConfig = {
+  components: {
+    Select: {
+      fontSize: 12,
+    },
+  },
 }
 
+const languageOptions = [
+  { value: 'es', label: '🇵🇦 Español' },
+  { value: 'en', label: '🇺🇸 English' },
+]
+
 export default function Languages() {
-  // FIXME: corregir tamaño de fuente del select
+  const paginationStore = useFilterStore((state) => state.pagination)
+  const { setFilter, setCategories } = useFilterStore()
+
+  const handleChange = (value: string) => {
+    localStorage.setItem('locale', value)
+    setFilter('')
+    setCategories([])
+  }
+
   return (
-    <Select
-      defaultValue="esp"
-      bordered={false}
-      size={'small'}
-      onChange={handleChange}
-      options={languageOptions}
-    />
+    <ConfigProvider theme={theme}>
+      <Select
+        defaultValue={localStorage.getItem('locale')}
+        bordered={false}
+        size={'small'}
+        onChange={handleChange}
+        options={languageOptions}
+      />
+    </ConfigProvider>
   )
 }

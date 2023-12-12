@@ -1,4 +1,4 @@
-import { qsCategoryHeader } from '@/queries/category'
+import { qsCategory } from '@/queries/category'
 import useFilterStore from '@/store/filterStore'
 import { CategoryProps } from '@/types/category-props'
 import { fetcher } from '@/utils/fetcher'
@@ -19,7 +19,7 @@ export default function FilterCategory() {
   const { setCategories } = useFilterStore()
 
   const { data: categories, error: errorCategories } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategory}`,
     fetcher,
   )
 
