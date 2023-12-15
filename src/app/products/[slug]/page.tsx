@@ -1,6 +1,7 @@
 'use client'
 
 import ProductCarousel from '@/components/product/product-carousel'
+import ProductDetail from '@/components/product/product-detail'
 import Container from '@/components/utils/container'
 import { qsProductsBySlug } from '@/queries/product'
 import { Payload } from '@/types/payload'
@@ -8,7 +9,6 @@ import { Product } from '@/types/product'
 import { fetcher } from '@/utils/fetcher'
 import { Alert, Col, Row, Skeleton } from 'antd'
 import useSWR from 'swr'
-import ProductDetail from '../components/product-detail'
 
 export default function Product({ params }: { params: { slug: string } }) {
   const { data: product, error: errorProduct } = useSWR<Payload<Product[]>>(
