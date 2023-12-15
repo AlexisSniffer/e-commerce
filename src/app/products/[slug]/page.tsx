@@ -1,20 +1,16 @@
 'use client'
 
+import { qsProductsBySlug } from '@/queries/product'
+import { Payload } from '@/types/payload'
+import { Product } from '@/types/product'
+import { fetcher } from '@/utils/fetcher'
 import { Alert, Skeleton } from 'antd'
 import useSWR from 'swr'
-
-import { qsProductsBySlug } from '@/queries/product'
-import { ProductDetailProps, ProductListProps } from '@/types/product-props'
-import { fetcher } from '@/utils/fetcher'
-//import dayjs from 'dayjs'
-//import dayjsES from 'dayjs/locale/es'
-//import relativeTime from 'dayjs/plugin/relativeTime'
 import ProductDetail from '../components/product-detail'
-//dayjs.extend(relativeTime)
-//dayjs.locale(dayjsES)
+import Container from '@/components/utils/container'
 
 export default function Product({ params }: { params: { slug: string } }) {
-  const { data: product, error: errorProduct } = useSWR<ProductListProps>(
+  const { data: product, error: errorProduct } = useSWR<Payload<Product[]>>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProductsBySlug(
       params.slug,
     )}`,
@@ -29,15 +25,18 @@ export default function Product({ params }: { params: { slug: string } }) {
     return <Skeleton />
   }
 
-  const productDetail: ProductDetailProps = {
+  /*const productDetail: ProductDetailProps = {
     product: {
       data: product.data[0],
     },
-  }
+  }*/
 
   return (
-    <>
-      <ProductDetail product={productDetail.product} />
-    </>
+    <Container>
+      <ProductDetail
+        id={product.data[0].id}
+        attributes={product.data[0].attributes}
+      />
+    </Container>
   )
 }

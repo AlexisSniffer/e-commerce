@@ -26,5 +26,6 @@ export interface Product {
     deliveryTime?: { data: DeliveryTime }
     locale: string
     localizations?: { data: Product[] }
+    createdBy: any
   }
 }

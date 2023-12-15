@@ -1,9 +1,8 @@
-import {
-  ProductCategoryProps,
-  ProductDetailProps,
-  ProductProps,
-} from '@/types/product-props'
-import { money, valMinMax } from '@/utils/formatters'
+import SocialIcons from '@/components/common/social-icons'
+import ProductAdd from '@/components/product/product-add'
+import ProductCategories from '@/components/product/product-categories'
+import ProductPrices from '@/components/product/product-price'
+import { Product } from '@/types/product'
 import {
   Col,
   ConfigProvider,
@@ -14,10 +13,6 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
-import styles from '@/styles/product.module.scss'
-import { useRouter } from 'next/navigation'
-import useFilterStore from '@/store/filterStore'
-import ProductCategories from '@/components/product/product-categories'
 
 const theme: ThemeConfig = {
   components: {
@@ -30,118 +25,36 @@ const theme: ThemeConfig = {
 
 const { Title, Paragraph, Text } = Typography
 
-const ProductDetail = ({ product }: ProductDetailProps) => {
-  const router = useRouter()
-  const { setCategories } = useFilterStore()
-
+const ProductDetail = ({ id, attributes }: Product) => {
   return (
     <ConfigProvider theme={theme}>
-      {/*  <pre>{JSON.stringify(product, null, 2)}</pre> */}
-
       <Row gutter={[16, 16]}>
         <Col xs={24} md={12}></Col>
         <Col xs={24} md={12}>
           <Space direction="vertical">
-            {/* Title */}
-            <Title level={1} style={{ marginBottom: '0' }}>
-              {product.data.attributes.name}
-            </Title>
-
-            {/* Rate */}
-            <Rate
-              value={product.data.attributes.ratings}
-              disabled
-              style={{ fontSize: '1rem' }}
-            ></Rate>
-
-            {/* Divider */}
+            <Title level={1}>{attributes.name}</Title>
+            <Rate value={attributes.ratings} disabled></Rate>
             <Divider />
+            <ProductPrices id={id} attributes={attributes} />
+            <Paragraph>{attributes.description}</Paragraph>
 
-            {/* Price */}
-            <p className={styles['product-detail-price']}>
-              {product.data.attributes.variants.length ? (
-                valMinMax(
-                  product.data.attributes.variants.map((variant: any) => {
-                    let price: number
-                    price = variant.isDiscount
-                      ? variant.discount
-                      : variant.price
-                    return price
-                  }),
-                )
-              ) : (
-                <>
-                  {product.data.attributes.isDiscount ? (
-                    <Space>
-                      <span>
-                        {money.format(product.data.attributes.discount)}
-                      </span>
-                      <span
-                        className={`${styles['product-detail-price']} ${styles['is-discount']}`}
-                      >
-                        {money.format(product.data.attributes.price)}
-                      </span>
-                    </Space>
-                  ) : (
-                    <span>{money.format(product.data.attributes.price)}</span>
-                  )}
-                </>
-              )}
-            </p>
-
-            {/* Description */}
-            <Paragraph>{product.data.attributes.description}</Paragraph>
-
-            {/* Categories */}
             <Space>
               <Text>CATEGORIAS:</Text>
-
-              <Text>
-                {/* {product.data.attributes.categories &&
-                product.data.attributes.categories?.data.length ? (
-                  product.data.attributes.categories?.data.map(
-                    (
-                      category: ProductCategoryProps,
-                      index: number,
-                      array: ProductCategoryProps[],
-                    ) => {
-                      return (
-                        <Text
-                          key={category.attributes.slug}
-                          onClick={() => {
-                            setCategories([category.attributes.slug])
-                            router.push('/shop')
-                          }}
-                        >
-                          {category.attributes.name}
-                          {index !== array.length - 1 ? ', ' : ''}
-                        </Text>
-                      )
-                    },
-                  )
-                ) : (
-                  <Text>sin categoria</Text>
-                )} */}
-              </Text>
+              <ProductCategories id={id} attributes={attributes} />
             </Space>
-
-            {/* Vendor */}
             <Space>
               <Text>VENDEDOR:</Text>
-              <Text>{`${product.data.attributes.createdBy.firstname} ${product.data.attributes.createdBy.lastname}`}</Text>
+              <Text>{`${attributes.createdBy.firstname} ${attributes.createdBy.lastname}`}</Text>
             </Space>
-
-            {/* Delivery time */}
             <Space>
               <Text>TIEMPO DE ENTREGA:</Text>
-              <Text>
-                {product.data.attributes.deliveryTime.data.attributes.time}
-              </Text>
+              <Text>{attributes.deliveryTime?.data.attributes.time}</Text>
             </Space>
-
             <Divider />
+            <ProductAdd id={id} attributes={attributes}></ProductAdd>
+            <Divider />
+            <SocialIcons />
           </Space>
-          ]{' '}
         </Col>
       </Row>
     </ConfigProvider>
