@@ -143,6 +143,7 @@ export const qsProductUntil = qs.stringify(
         },
       },
     },
+    locale: localStorage.getItem('locale') ?? 'es',
   },
   {
     encodeValuesOnly: true,

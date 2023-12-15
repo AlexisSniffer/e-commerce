@@ -1,5 +1,6 @@
 import useFilterStore from '@/store/filterStore'
-import { CategoryListProps, CategoryProps } from '@/types/category-props'
+import { Category } from '@/types/category'
+import { Payload } from '@/types/payload'
 import SearchProps from '@/types/search-props'
 import {
   ConfigProvider,
@@ -25,10 +26,10 @@ const theme: ThemeConfig = {
   },
 }
 
-const selectBefore = (data: CategoryProps[]) => {
+const selectBefore = (data: Category[]) => {
   let options: SelectProps['options'] = [{ value: 'all', label: 'Todos' }]
 
-  data.map(({ attributes }: CategoryProps) => {
+  data.map(({ attributes }: Category) => {
     options?.push({
       value: attributes.slug,
       label: (
@@ -59,7 +60,10 @@ const selectBefore = (data: CategoryProps[]) => {
   )
 }
 
-export default function HeaderSearch({ data }: CategoryListProps) {
+export default function HeaderSearch({
+  data,
+  meta,
+}: Payload<Category[] | undefined>) {
   const router = useRouter()
   const [form] = Form.useForm()
   const { setFilter, setCategories } = useFilterStore()

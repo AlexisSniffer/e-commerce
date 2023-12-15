@@ -67,6 +67,7 @@ export const qsCategoryHeader = qs.stringify(
         },
       },
     },
+    locale: localStorage.getItem('locale') ?? 'es',
   },
   {
     encodeValuesOnly: true,

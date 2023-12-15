@@ -1,4 +1,5 @@
-import { CategoryListProps, CategoryProps } from '@/types/category-props'
+import { Category } from '@/types/category'
+import { Payload } from '@/types/payload'
 import { MenuOutlined } from '@ant-design/icons'
 import {
   Button,
@@ -26,10 +27,13 @@ const theme: ThemeConfig = {
   },
 }
 
-export default function CategoriesMenu({ data }: CategoryListProps) {
+export default function CategoriesMenu({
+  data,
+  meta,
+}: Payload<Category[] | undefined>) {
   let items: MenuProps['items'] = []
 
-  data?.map((category: CategoryProps) => {
+  data?.map((category: Category) => {
     items?.push({
       key: category.attributes.slug,
       label: (
@@ -41,7 +45,10 @@ export default function CategoriesMenu({ data }: CategoryListProps) {
         {
           key: `sub-${category.attributes.slug}`,
           label: (
-            <CategoriesSubMenu categories={category.attributes.categories} />
+            <CategoriesSubMenu
+              id={category.id}
+              attributes={category.attributes}
+            />
           ),
         },
       ],

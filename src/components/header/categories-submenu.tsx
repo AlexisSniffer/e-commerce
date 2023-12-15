@@ -1,5 +1,5 @@
 import useFilterStore from '@/store/filterStore'
-import { SubCategoriesProps } from '@/types/category-props'
+import { Category } from '@/types/category'
 import {
   Card,
   Col,
@@ -28,14 +28,14 @@ const theme: ThemeConfig = {
   },
 }
 
-export default function CategoriesSubMenu({ categories }: SubCategoriesProps) {
+export default function CategoriesSubMenu({ attributes }: Category) {
   const router = useRouter()
-  const { setCategories } = useFilterStore()
+  const { setFilter, setCategories } = useFilterStore()
 
   return (
     <>
       <Row justify={'space-between'} gutter={80}>
-        {categories?.data.map((category: any) => {
+        {attributes.categories?.data.map((category: any) => {
           return (
             <ConfigProvider theme={theme} key={category.id}>
               <Col>
@@ -54,6 +54,7 @@ export default function CategoriesSubMenu({ categories }: SubCategoriesProps) {
                           cursor: 'pointer',
                         }}
                         onClick={() => {
+                          setFilter('')
                           setCategories([item.attributes.slug])
                           router.push('/shop')
                         }}

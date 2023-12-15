@@ -1,6 +1,5 @@
 import { PhoneOutlined } from '@ant-design/icons'
 import { ConfigProvider, Space, ThemeConfig, Typography } from 'antd'
-import Link from 'next/link'
 
 const { Link: LinkAntd } = Typography
 

@@ -2,7 +2,7 @@
 
 export interface Payload<T> {
   data: T
-  meta: {
+  meta?: {
     pagination?: {
       page: number
       pageSize: number

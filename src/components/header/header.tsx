@@ -5,6 +5,8 @@ import SocialIcons from '@/components/common/social-icons'
 import Container from '@/components/utils/container'
 import { qsCategoryHeader } from '@/queries/category'
 import styles from '@/styles/header.module.scss'
+import { Category } from '@/types/category'
+import { Payload } from '@/types/payload'
 import { fetcher } from '@/utils/fetcher'
 import { MenuOutlined } from '@ant-design/icons'
 import { Affix, Col, Row } from 'antd'
@@ -25,7 +27,9 @@ export default function RootHeader() {
   const [affix, setAffix] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
 
-  const { data: categories, error: errorCategories } = useSWR(
+  const { data: categories, error: errorCategories } = useSWR<
+    Payload<Category[]>
+  >(
     `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategoryHeader}`,
     fetcher,
   )

@@ -115,7 +115,7 @@ export default function Shop() {
                 },
               ]}
             />
-            <br />
+            <Divider />
           </Col>
         </Row>
         <Row gutter={16}>
@@ -151,7 +151,7 @@ export default function Shop() {
                 <Pagination
                   defaultCurrent={1}
                   pageSize={paginationStore.pageSize}
-                  total={products?.meta.pagination?.total}
+                  total={products?.meta?.pagination?.total}
                   showSizeChanger
                   pageSizeOptions={[12, 24, 36]}
                   onChange={onChange}

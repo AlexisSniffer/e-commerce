@@ -1,6 +1,6 @@
 'use client'
 
-import { ConfigProvider, Drawer, Menu, MenuProps, ThemeConfig } from 'antd'
+import { Drawer, Menu, MenuProps } from 'antd'
 import Sider from 'antd/es/layout/Sider'
 import Link from 'next/link'
 
