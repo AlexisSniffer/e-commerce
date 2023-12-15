@@ -1,8 +1,10 @@
 import { qsMaxPrice } from '@/queries/price'
 import useFilterStore from '@/store/filterStore'
+import { Payload } from '@/types/payload'
+import { Product } from '@/types/product'
 import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, Slider, ThemeConfig, Typography } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 
 const { Text } = Typography
@@ -19,33 +21,31 @@ export default function FilterPrice() {
   const pricesStore = useFilterStore((state) => state.prices)
   const { setPrices } = useFilterStore()
 
-  const { data, error } = useSWR(
+  const { data: products, error: errorProducts } = useSWR<Payload<Product[]>>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsMaxPrice}`,
     fetcher,
   )
 
-  const maxPrice = data?.data[0].attributes.price
-
   useEffect(() => {
-    setPrices([0, maxPrice])
-  }, [maxPrice, setPrices])
+    setPrices([0, products?.data[0].attributes.price ?? 9999])
+  }, [products, setPrices])
 
-  if (!data) {
+  if (!products) {
     return <Skeleton />
   }
 
-  const onChange = (prices: [number, number]) => {
-    setPrices(prices)
+  const onChange = (value: number[]) => {
+    setPrices(value)
   }
 
   return (
     <ConfigProvider theme={theme}>
       <Slider
         range
-        defaultValue={[0, maxPrice]}
+        defaultValue={[0, products?.data[0].attributes.price]}
         min={0}
-        max={maxPrice}
-        onAfterChange={onChange}
+        max={products?.data[0].attributes.price}
+        onChangeComplete={onChange}
       />
       <Text>
         Precio: ${pricesStore[0]} - ${pricesStore[1]}

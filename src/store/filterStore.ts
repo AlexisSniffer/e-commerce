@@ -8,12 +8,12 @@ interface PaginationProps {
 interface FilterState {
   filter: string
   categories: string[]
-  prices: [number, number]
+  prices: number[]
   brands: string[]
   pagination: PaginationProps
   setFilter: (filter: string) => void
   setCategories: (categories: string[]) => void
-  setPrices: (prices: [number, number]) => void
+  setPrices: (prices: number[]) => void
   setBrands: (brands: string[]) => void
   setPagination: (pagination: PaginationProps) => void
 }
@@ -30,7 +30,7 @@ const useFilterStore = create<FilterState>()((set) => ({
   setFilter: (filter: string) => set((state) => ({ filter: filter })),
   setCategories: (categories: string[]) =>
     set((state) => ({ categories: categories })),
-  setPrices: (prices: [number, number]) => set((state) => ({ prices: prices })),
+  setPrices: (prices: number[]) => set((state) => ({ prices: prices })),
   setBrands: (brands: string[]) => set((state) => ({ brands: brands })),
   setPagination: (pagination: PaginationProps) =>
     set((state) => ({ pagination: pagination })),

@@ -1,6 +1,7 @@
 import { qsBrands } from '@/queries/brand'
 import useFilterStore from '@/store/filterStore'
-import { BrandProps } from '@/types/brand-props'
+import { Brand } from '@/types/brand'
+import { Payload } from '@/types/payload'
 import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, ThemeConfig, Tree, Typography } from 'antd'
 import type { DataNode } from 'antd/es/tree'
@@ -18,7 +19,7 @@ export default function FilterBrand() {
   const [checkedKeys, setCheckedKeys] = useState<Key[]>(brandsStore)
   const { setBrands } = useFilterStore()
 
-  const { data: brands, error: errorBrands } = useSWR(
+  const { data: brands, error: errorBrands } = useSWR<Payload<Brand[]>>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/brands?${qsBrands}`,
     fetcher,
   )
@@ -31,19 +32,17 @@ export default function FilterBrand() {
     return <Skeleton />
   }
 
-  const brandNode = (brand: BrandProps) => {
+  const brandNode = ({ attributes }: Brand) => {
     return {
-      key: brand.attributes.slug,
+      key: attributes.slug,
       title: (
-        <Text style={{ textTransform: 'capitalize' }}>
-          {brand.attributes.name}
-        </Text>
+        <Text style={{ textTransform: 'capitalize' }}>{attributes.name}</Text>
       ),
     }
   }
 
-  const treeData = (categories: BrandProps[]) => {
-    const treeData: DataNode[] = categories?.map((brand: BrandProps) => {
+  const treeData = (brands: Brand[]) => {
+    const treeData: DataNode[] = brands?.map((brand: Brand) => {
       return {
         ...brandNode(brand),
       }

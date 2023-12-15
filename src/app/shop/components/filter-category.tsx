@@ -1,6 +1,7 @@
 import { qsCategory } from '@/queries/category'
 import useFilterStore from '@/store/filterStore'
-import { CategoryProps } from '@/types/category-props'
+import { Category } from '@/types/category'
+import { Payload } from '@/types/payload'
 import { fetcher } from '@/utils/fetcher'
 import { ConfigProvider, Skeleton, ThemeConfig, Tree, Typography } from 'antd'
 import type { DataNode } from 'antd/es/tree'
@@ -18,10 +19,9 @@ export default function FilterCategory() {
   const [checkedKeys, setCheckedKeys] = useState<Key[]>(categoriesStore)
   const { setCategories } = useFilterStore()
 
-  const { data: categories, error: errorCategories } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategory}`,
-    fetcher,
-  )
+  const { data: categories, error: errorCategories } = useSWR<
+    Payload<Category[]>
+  >(`${process.env.NEXT_PUBLIC_API_URL}/api/categories?${qsCategory}`, fetcher)
 
   useEffect(() => {
     setCheckedKeys(categoriesStore)
@@ -31,27 +31,25 @@ export default function FilterCategory() {
     return <Skeleton />
   }
 
-  const categoryNode = (category: CategoryProps) => {
+  const categoryNode = ({ attributes }: Category) => {
     return {
-      key: category.attributes.slug,
+      key: attributes.slug,
       title: (
-        <Text style={{ textTransform: 'capitalize' }}>
-          {category.attributes.name}
-        </Text>
+        <Text style={{ textTransform: 'capitalize' }}>{attributes.name}</Text>
       ),
     }
   }
 
-  const treeData = (categories: CategoryProps[]) => {
-    const treeData: DataNode[] = categories?.map((category: CategoryProps) => {
+  const treeData = (categories: Category[]) => {
+    const treeData: DataNode[] = categories?.map((category: Category) => {
       return {
         ...categoryNode(category),
         children: category.attributes.categories?.data.map(
-          (category2: CategoryProps) => {
+          (category2: Category) => {
             return {
               ...categoryNode(category2),
               children: category2.attributes.categories?.data.map(
-                (category3: CategoryProps) => {
+                (category3: Category) => {
                   return {
                     ...categoryNode(category3),
                   }
