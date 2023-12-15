@@ -1,5 +1,35 @@
 import qs from 'qs'
 
+const productPopulate = {
+  categories: {
+    fields: ['name', 'slug'],
+    populate: {
+      category: {
+        fields: ['name', 'slug'],
+        populate: {
+          category: {
+            fields: ['name', 'slug'],
+          },
+        },
+      },
+    },
+  },
+  brand: {
+    fields: ['name', 'slug'],
+  },
+  images: '*',
+  deliveryTime: '*',
+  variants: {
+    populate: {
+      variant: {
+        populate: {
+          type: '*',
+        },
+      },
+    },
+  },
+}
+
 export const qsProducts = (
   filter: string,
   categories: string[],
@@ -77,13 +107,44 @@ export const qsProducts = (
     },
   )
 
+export const qsProductsBySlug = (slug: string) => {
+  return qs.stringify(
+    {
+      populate: {
+        ...productPopulate,
+      },
+      filters: {
+        slug: {
+          $eq: slug,
+        },
+      },
+      locale: localStorage.getItem('locale') ?? 'es',
+    },
+    {
+      encodeValuesOnly: true,
+    },
+  )
+}
+
 export const qsProductUntil = qs.stringify(
   {
+    filters: {
+      id: 6,
+    },
     populate: {
       categories: {
         fields: ['name', 'slug'],
       },
       images: '*',
+      variants: {
+        populate: {
+          variant: {
+            populate: {
+              type: '*',
+            },
+          },
+        },
+      },
     },
   },
   {

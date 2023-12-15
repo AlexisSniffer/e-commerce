@@ -18,6 +18,7 @@ export interface ProductProps {
     until?: Date
     stock: 50
     ratings: 0
+    createdBy: any
     categories?: {
       data: ProductCategoryProps[]
     }
@@ -25,6 +26,8 @@ export interface ProductProps {
       data: BrandProps
     }
     images: MediaListProps
+    variants: any
+    deliveryTime: any
   }
 }
 
@@ -57,4 +60,10 @@ export interface ProductCategoryProps {
 export interface ProductListProps {
   data: ProductProps[]
   meta: PaginationProps
+}
+
+export interface ProductDetailProps {
+  product: {
+    data: ProductProps
+  }
 }
