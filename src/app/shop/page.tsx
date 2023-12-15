@@ -4,7 +4,8 @@ import ProductDefault from '@/components/product/product-default'
 import Container from '@/components/utils/container'
 import { qsProducts } from '@/queries/product'
 import useFilterStore from '@/store/filterStore'
-import { ProductListProps, ProductProps } from '@/types/product-props'
+import { Payload } from '@/types/payload'
+import { Product } from '@/types/product'
 import { fetcher } from '@/utils/fetcher'
 import { HomeOutlined } from '@ant-design/icons'
 import type { CollapseProps, PaginationProps, ThemeConfig } from 'antd'
@@ -64,7 +65,7 @@ export default function Shop() {
   const paginationStore = useFilterStore((state) => state.pagination)
   const { setPagination } = useFilterStore()
 
-  const { data: products, error: errorProducts } = useSWR<ProductListProps>(
+  const { data: products, error: errorProducts } = useSWR<Payload<Product[]>>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
       filterStore,
       categoriesStore,
@@ -128,7 +129,7 @@ export default function Shop() {
           </Col>
           <Col xs={24} lg={16} xl={18}>
             <Row>
-              {products?.data?.map((product: ProductProps) => {
+              {products?.data?.map((product: Product) => {
                 return (
                   <Col
                     xs={{ span: 12 }}
@@ -150,7 +151,7 @@ export default function Shop() {
                 <Pagination
                   defaultCurrent={1}
                   pageSize={paginationStore.pageSize}
-                  total={products?.meta?.pagination.total}
+                  total={products?.meta.pagination?.total}
                   showSizeChanger
                   pageSizeOptions={[12, 24, 36]}
                   onChange={onChange}

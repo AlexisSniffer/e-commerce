@@ -33,7 +33,7 @@ const productPopulate = {
 export const qsProducts = (
   filter: string,
   categories: string[],
-  prices: [number, number],
+  prices: number[],
   brands: string[],
   pagination: { page: number; pageSize: number },
 ) =>
