@@ -2,6 +2,7 @@ import { Brand } from './brand'
 import { Category } from './category'
 import { DeliveryTime } from './delivery-time'
 import { Media } from './media'
+import { Variants } from './variants'
 
 export interface Product {
   id: number

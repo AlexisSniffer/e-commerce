@@ -4,7 +4,8 @@ import ProductDefault from '@/components/product/product-default'
 import ProductOffert from '@/components/product/product-offert'
 import Container from '@/components/utils/container'
 import { qsProductUntil } from '@/queries/product'
-import { ProductListProps, ProductProps } from '@/types/product-props'
+import { Payload } from '@/types/payload'
+import { Product } from '@/types/product'
 import { fetcher } from '@/utils/fetcher'
 import {
   Col,
@@ -16,7 +17,7 @@ import {
 } from 'antd'
 import useSWR from 'swr'
 
-const { Title, Paragraph } = Typography
+const { Title } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -33,7 +34,7 @@ const theme: ThemeConfig = {
 }
 
 export default function Home() {
-  const { data: products, error: errorProducts } = useSWR<ProductListProps>(
+  const { data: products, error: errorProducts } = useSWR<Payload<Product[]>>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProductUntil}`,
     fetcher,
   )
@@ -62,7 +63,7 @@ export default function Home() {
             </Col>
             <Col span={16}>
               <Row>
-                {products?.data.map((product: ProductProps) => {
+                {products.data!.map((product: Product) => {
                   return (
                     <Col
                       xs={{ span: 12 }}

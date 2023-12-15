@@ -128,9 +128,6 @@ export const qsProductsBySlug = (slug: string) => {
 
 export const qsProductUntil = qs.stringify(
   {
-    filters: {
-      id: 6,
-    },
     populate: {
       categories: {
         fields: ['name', 'slug'],

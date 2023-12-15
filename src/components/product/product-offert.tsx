@@ -1,9 +1,10 @@
 import styles from '@/styles/product.module.scss'
-import { MediaListProps } from '@/types/media-props'
-import { ProductCategoryProps, ProductProps } from '@/types/product-props'
+import { Media } from '@/types/media'
+import { Product } from '@/types/product'
 import { money } from '@/utils/formatters'
 import { Card, ConfigProvider, Rate, ThemeConfig, Typography } from 'antd'
 import Link from 'next/link'
+import ProductCategories from './product-categories'
 
 const { Text } = Typography
 
@@ -21,50 +22,25 @@ const theme: ThemeConfig = {
   },
 }
 
-function cover(images: MediaListProps) {
+function cover(images: Media[]) {
   return (
     <picture>
       <img
-        src={images?.data[0].attributes.url}
-        alt={images?.data[0].attributes.alternativeText}
+        src={images[0].attributes.url}
+        alt={images[0].attributes.alternativeText}
         width={'100%'}
-        height={'100%'}
+        height={'auto'}
+        style={{ height: 'auto' }}
       />
     </picture>
   )
 }
 
-export default function ProductOffert({ attributes }: ProductProps) {
+export default function ProductOffert({ id, attributes }: Product) {
   return (
     <ConfigProvider theme={theme}>
-      <Card
-        hoverable
-        cover={cover(attributes.images)}
-        style={{ height: '100%' }}
-      >
-        <span className={styles['categories']}>
-          {attributes.categories && attributes.categories?.data.length > 0 ? (
-            attributes.categories?.data.map(
-              (
-                category: ProductCategoryProps,
-                index: number,
-                array: ProductCategoryProps[],
-              ) => {
-                return (
-                  <Text
-                    key={category.attributes.slug}
-                    className={styles['category']}
-                  >
-                    {category.attributes.name}
-                    {index !== array.length - 1 ? ', ' : ''}
-                  </Text>
-                )
-              },
-            )
-          ) : (
-            <Text className={styles['category']}>sin categoria</Text>
-          )}
-        </span>
+      <Card hoverable cover={cover(attributes.images.data)}>
+        <ProductCategories id={id} attributes={attributes} />
 
         <Link className={styles['name']} href={`/products/${attributes.slug}`}>
           <Text>{attributes.name}</Text>
