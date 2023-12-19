@@ -1,3 +1,4 @@
+import { CheckCircleFilled, CheckOutlined } from '@ant-design/icons'
 import {
   ConfigProvider,
   Radio,
@@ -6,6 +7,7 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import { useState } from 'react'
 
 const theme: ThemeConfig = {
   components: {
@@ -23,6 +25,8 @@ export default function ProductVariants({
   selectedOptions,
   setOptions,
 }: any) {
+  const [selectedVariant, setSelectedVariant] = useState<string>()
+
   return (
     <ConfigProvider theme={theme}>
       <Space>
@@ -31,8 +35,8 @@ export default function ProductVariants({
           name="radiogroup"
           optionType="button"
           buttonStyle="solid"
-          value={selectedOptions[type]}
           onChange={({ target: { value } }: RadioChangeEvent) => {
+            setSelectedVariant(value)
             setOptions(type, value)
           }}
         >
@@ -43,7 +47,15 @@ export default function ProductVariants({
                 value={value}
                 style={{ backgroundColor: value }}
               >
-                {type === 'color' ? '' : value}
+                {type === 'color' ? (
+                  selectedVariant == value ? (
+                    <CheckOutlined />
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  value
+                )}
               </Radio>
             )
           })}
