@@ -106,22 +106,16 @@ export default function ProductAdd({ id, attributes }: Product) {
   return (
     <ConfigProvider theme={theme}>
       <Row>
-        <Col>
-          {attributes.variants.length > 0 ? (
-            <Space direction="vertical">
-              {options.map(({ type, values }) => (
-                <ProductVariants
-                  key={type}
-                  type={type}
-                  values={Array.from(values)}
-                  selectedOptions={selectedOptions}
-                  setOptions={setOptions}
-                />
-              ))}
-            </Space>
-          ) : (
-            <></>
-          )}
+        <Col span={24}>
+          {options.map(({ type, values }) => (
+            <ProductVariants
+              key={type}
+              type={type}
+              values={Array.from(values)}
+              selectedOptions={selectedOptions}
+              setOptions={setOptions}
+            />
+          ))}
         </Col>
       </Row>
       <Divider style={{ marginTop: '1em', marginBottom: '1em' }} />
