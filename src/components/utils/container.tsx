@@ -1,6 +1,17 @@
 import { Col, Row } from 'antd'
+import { CSSProperties } from 'react'
 
-export default function Container({ children, className, style }: any) {
+interface ContainerProps {
+  children: React.ReactNode
+  className?: string
+  style?: CSSProperties | undefined
+}
+
+export default function Container({
+  children,
+  className,
+  style,
+}: ContainerProps) {
   return (
     <Row className={className} style={style}>
       <Col xs={1} lg={2}></Col>

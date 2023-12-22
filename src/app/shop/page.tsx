@@ -66,13 +66,13 @@ export default function Shop() {
   const { setPagination } = useFilterStore()
 
   const { data: products, error: errorProducts } = useSWR<Payload<Product[]>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts(
-      filterStore,
-      categoriesStore,
-      pricesStore,
-      brandsStore,
-      paginationStore,
-    )}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts({
+      filter: filterStore,
+      categories: categoriesStore,
+      prices: pricesStore,
+      brands: brandsStore,
+      pagination: paginationStore,
+    })}`,
     fetcher,
   )
 

@@ -39,7 +39,11 @@ function cover(images: Media[]) {
 export default function ProductOffert({ id, attributes }: Product) {
   return (
     <ConfigProvider theme={theme}>
-      <Card hoverable cover={cover(attributes.images.data)}>
+      <Card
+        hoverable
+        cover={cover(attributes.images.data)}
+        style={{ height: '100%' }}
+      >
         <ProductCategories id={id} attributes={attributes} />
 
         <Link className={styles['name']} href={`/products/${attributes.slug}`}>

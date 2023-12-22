@@ -30,13 +30,13 @@ const productPopulate = {
   },
 }
 
-export const qsProducts = (
-  filter: string,
-  categories: string[],
-  prices: number[],
-  brands: string[],
-  pagination: { page: number; pageSize: number },
-) =>
+export const qsProducts = (filters: {
+  filter?: string
+  categories?: string[]
+  prices?: number[]
+  brands?: string[]
+  pagination?: { page: number; pageSize: number }
+}) =>
   qs.stringify(
     {
       populate: {
@@ -60,21 +60,21 @@ export const qsProducts = (
       },
       filters: {
         name: {
-          $containsi: filter,
+          $containsi: filters.filter,
         },
         price: {
-          $between: prices,
+          $between: filters.prices,
         },
         brand: {
           slug: {
-            $in: brands,
+            $in: filters.brands,
           },
         },
         categories: {
           $or: [
             {
               slug: {
-                $in: categories,
+                $in: filters.categories,
               },
             },
             {
@@ -82,13 +82,13 @@ export const qsProducts = (
                 $or: [
                   {
                     slug: {
-                      $in: categories,
+                      $in: filters.categories,
                     },
                   },
                   {
                     category: {
                       slug: {
-                        $in: categories,
+                        $in: filters.categories,
                       },
                     },
                   },
@@ -99,8 +99,8 @@ export const qsProducts = (
         },
       },
       sort: ['name:asc'],
-      pagination,
-      locale: localStorage.getItem('locale'),
+      pagination: filters.pagination,
+      //locale: localStorage.getItem('locale'),
     },
     {
       encodeValuesOnly: true,
@@ -118,7 +118,7 @@ export const qsProductsBySlug = (slug: string) => {
           $eq: slug,
         },
       },
-      locale: localStorage.getItem('locale') ?? 'es',
+      //locale: localStorage.getItem('locale') ?? 'es',
     },
     {
       encodeValuesOnly: true,
@@ -143,7 +143,7 @@ export const qsProductUntil = qs.stringify(
         },
       },
     },
-    locale: localStorage.getItem('locale') ?? 'es',
+    //locale: localStorage.getItem('locale'),
   },
   {
     encodeValuesOnly: true,
