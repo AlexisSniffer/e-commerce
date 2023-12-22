@@ -10,6 +10,7 @@ import { fetcher } from '@/utils/fetcher'
 import { HomeOutlined } from '@ant-design/icons'
 import type { CollapseProps, PaginationProps, ThemeConfig } from 'antd'
 import {
+  Alert,
   Breadcrumb,
   Col,
   Collapse,
@@ -17,6 +18,7 @@ import {
   Divider,
   Pagination,
   Row,
+  Skeleton,
 } from 'antd'
 import Link from 'next/link'
 import useSWR from 'swr'
@@ -128,37 +130,51 @@ export default function Shop() {
             />
           </Col>
           <Col xs={24} lg={16} xl={18}>
-            <Row>
-              {products?.data?.map((product: Product) => {
-                return (
-                  <Col
-                    xs={{ span: 12 }}
-                    sm={{ span: 8 }}
-                    lg={{ span: 6 }}
-                    key={product.attributes.slug}
-                  >
-                    <ProductDefault
-                      id={product.id}
-                      attributes={product.attributes}
-                    />
-                  </Col>
-                )
-              })}
-            </Row>
-            <Divider />
-            <Row gutter={16} justify={'end'}>
-              <Col>
-                <Pagination
-                  defaultCurrent={1}
-                  pageSize={paginationStore.pageSize}
-                  total={products?.meta?.pagination?.total}
-                  showSizeChanger
-                  pageSizeOptions={[12, 24, 36]}
-                  onChange={onChange}
-                  onShowSizeChange={onShowSizeChange}
-                />
-              </Col>
-            </Row>
+            {products ? (
+              <Row>
+                {products?.data.length ? (
+                  <>
+                    {products?.data?.map((product: Product) => {
+                      return (
+                        <Col
+                          xs={{ span: 12 }}
+                          sm={{ span: 8 }}
+                          lg={{ span: 6 }}
+                          key={product.attributes.slug}
+                        >
+                          <ProductDefault
+                            id={product.id}
+                            attributes={product.attributes}
+                          />
+                        </Col>
+                      )
+                    })}
+                    <Divider />
+                    <Row gutter={16} justify={'end'}>
+                      <Col>
+                        <Pagination
+                          defaultCurrent={1}
+                          pageSize={paginationStore.pageSize}
+                          total={products?.meta?.pagination?.total}
+                          showSizeChanger
+                          pageSizeOptions={[12, 24, 36]}
+                          onChange={onChange}
+                          onShowSizeChange={onShowSizeChange}
+                        />
+                      </Col>
+                    </Row>
+                  </>
+                ) : (
+                  <Alert
+                    message="No se encontraron productos que coincidan con su selección."
+                    type="info"
+                    showIcon
+                  />
+                )}
+              </Row>
+            ) : (
+              <Skeleton />
+            )}
           </Col>
         </Row>
       </Container>

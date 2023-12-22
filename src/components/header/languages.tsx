@@ -29,7 +29,7 @@ export default function Languages() {
   return (
     <ConfigProvider theme={theme}>
       <Select
-        defaultValue={localStorage.getItem('locale')}
+        //defaultValue={localStorage.getItem('locale')}
         bordered={false}
         size={'small'}
         onChange={handleChange}

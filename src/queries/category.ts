@@ -30,7 +30,7 @@ export const qsCategory = qs.stringify(
         },
       },
     },
-    locale: localStorage.getItem('locale'),
+    //locale: localStorage.getItem('locale'),
   },
   {
     encodeValuesOnly: true,
@@ -67,7 +67,7 @@ export const qsCategoryHeader = qs.stringify(
         },
       },
     },
-    locale: localStorage.getItem('locale') ?? 'es',
+    //locale: localStorage.getItem('locale') ?? 'es',
   },
   {
     encodeValuesOnly: true,

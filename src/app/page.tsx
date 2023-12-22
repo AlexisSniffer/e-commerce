@@ -3,6 +3,7 @@
 import Container from '@/components/utils/container'
 import ProductsFilterOffers from './components/products-filter-offers'
 import ProductsFilterSortBy from './components/products-filter-sortby'
+import FeaturedBrands from './components/featured-brands'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
 
       <Container style={{ padding: '2em 0 2em', background: '#f4f4f4' }}>
         <ProductsFilterSortBy />
+        <FeaturedBrands />
       </Container>
     </>
   )

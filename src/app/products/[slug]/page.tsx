@@ -27,7 +27,11 @@ export default function Product({ params }: { params: { slug: string } }) {
   }
 
   if (!product) {
-    return <Skeleton />
+    return (
+      <Container>
+        <Skeleton />
+      </Container>
+    )
   }
 
   return (
