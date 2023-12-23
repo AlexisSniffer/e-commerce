@@ -41,7 +41,7 @@ export default function ProductsFilterSortBy() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row>
+      <Row style={{ marginBottom: '2rem' }}>
         <Col
           xs={{ span: 24, order: 2 }}
           sm={{ span: 12, order: 1 }}
@@ -49,7 +49,7 @@ export default function ProductsFilterSortBy() {
           style={{
             backgroundColor: '#fff',
             padding: '2rem',
-            minHeight: '664px',
+            minHeight: '642px',
           }}
         >
           <Title level={3}>Ordenar por</Title>

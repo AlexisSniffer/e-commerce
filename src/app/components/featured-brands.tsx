@@ -25,7 +25,7 @@ const theme: ThemeConfig = {
   },
 }
 
-const { Text } = Typography
+const { Text, Title } = Typography
 
 const responsive = [
   {
@@ -75,8 +75,9 @@ export default function FeaturedBrands() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row>
+      <Row style={{ marginBottom: '2rem' }}>
         <Col span={24}>
+          <Title level={3}>Marcas Destacadas</Title>
           <Carousel
             style={{ marginTop: '1rem' }}
             slidesToShow={6}
