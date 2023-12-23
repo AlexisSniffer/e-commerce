@@ -9,6 +9,7 @@ import {
   Col,
   ConfigProvider,
   Row,
+  Skeleton,
   ThemeConfig,
   Typography,
 } from 'antd'
@@ -68,6 +69,10 @@ export default function FeaturedBrands() {
     fetcher,
   )
 
+  if (!brands) {
+    return <Skeleton />
+  }
+
   return (
     <ConfigProvider theme={theme}>
       <Row>
@@ -100,12 +105,16 @@ export default function FeaturedBrands() {
                       router.push('/shop')
                     }}
                   >
-                    {!brand.attributes.thumbnail?.data ? (
+                    {brand.attributes.thumbnail?.data ? (
                       <div>
                         <Image
-                          alt="adidas"
+                          alt={
+                            brand.attributes.thumbnail?.data.attributes
+                              .alternativeText ?? ''
+                          }
                           src={
-                            'https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg'
+                            'http://localhost:1337' +
+                            brand.attributes.thumbnail?.data.attributes.url
                           }
                           width={0}
                           height={0}
