@@ -88,7 +88,7 @@ export default function FeaturedBrands() {
           >
             {brands?.data?.map((brand: Brand) => {
               return (
-                <div key={brand.attributes.slug} style={{ height: '200px' }}>
+                <div key={brand.attributes.slug}>
                   <Card
                     hoverable
                     style={{
@@ -106,7 +106,13 @@ export default function FeaturedBrands() {
                     }}
                   >
                     {brand.attributes.thumbnail?.data ? (
-                      <div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
                         <Image
                           alt={
                             brand.attributes.thumbnail?.data.attributes
@@ -119,7 +125,7 @@ export default function FeaturedBrands() {
                           width={0}
                           height={0}
                           sizes="100vw"
-                          style={{ width: '100%', height: 'auto' }}
+                          style={{ width: '80%', height: 'auto' }}
                         ></Image>
                       </div>
                     ) : (
