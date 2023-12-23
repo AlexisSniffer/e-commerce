@@ -162,7 +162,7 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
           lg={{ span: 6 }}
           style={{
             backgroundColor: '#fff',
-            padding: '2rem',
+            padding: '2rem 1rem',
             borderLeft: '1px solid rgba(0,0,0,0.1)',
           }}
         >
@@ -183,6 +183,17 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
                 </Col>
               )
             })}
+            <Col span={24}>
+              <Text
+                className={styles['view-all']}
+                onClick={() => {
+                  setCategories([attributes.slug])
+                  router.push('/shop')
+                }}
+              >
+                ver más
+              </Text>
+            </Col>
           </Row>
         </Col>
       </Row>

@@ -11,13 +11,14 @@
 .view-all {
   color: #3050ff !important;
   text-transform: capitalize;
+  font-weight: bold;
   cursor: pointer;
 
   &:hover {
     text-decoration: underline;
   }
 
-  &::before {
-    //content: '\f30b';
+  &::after {
+    content: '→';
   }
 }
