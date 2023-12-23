@@ -26,7 +26,7 @@ function cover(images: Media[]) {
   return (
     <picture>
       <img
-        src={images[0].attributes.url}
+        src={'http://localhost:1337' + images[0].attributes.url}
         alt={images[0].attributes.alternativeText}
         width={'100%'}
         height={'auto'}
@@ -41,17 +41,14 @@ export default function ProductDefault({ id, attributes }: Product) {
     <ConfigProvider theme={theme}>
       <Card hoverable cover={cover(attributes.images.data)}>
         <ProductCategories id={id} attributes={attributes} />
-
         <Link className={styles['name']} href={`/products/${attributes.slug}`}>
           <Text>{attributes.name}</Text>
         </Link>
-
         <Rate
           value={attributes.ratings}
           disabled
           style={{ fontSize: '0.9rem' }}
         ></Rate>
-
         <Text className={styles['price']}>
           {money.format(attributes.price)}
         </Text>

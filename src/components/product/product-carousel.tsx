@@ -21,7 +21,7 @@ export default function ProductCarousel({ id, attributes }: Product) {
           return (
             <img
               key={image.attributes.url}
-              src={image.attributes.url}
+              src={'http://localhost:1337' + image.attributes.url}
               alt={image.attributes.alternativeText}
               width={'100%'}
               height={'auto'}
@@ -35,7 +35,7 @@ export default function ProductCarousel({ id, attributes }: Product) {
             <Col span={6} key={image.attributes.url}>
               <img
                 onClick={() => goTo(index)}
-                src={image.attributes.url}
+                src={'http://localhost:1337' + image.attributes.url}
                 alt={image.attributes.alternativeText}
                 width={'100%'}
                 height={'auto'}

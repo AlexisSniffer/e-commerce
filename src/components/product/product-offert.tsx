@@ -26,7 +26,7 @@ function cover(images: Media[]) {
   return (
     <picture>
       <img
-        src={images[0].attributes.url}
+        src={'http://localhost:1337' + images[0].attributes.url}
         alt={images[0].attributes.alternativeText}
         width={'100%'}
         height={'auto'}

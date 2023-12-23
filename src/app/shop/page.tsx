@@ -131,24 +131,36 @@ export default function Shop() {
           </Col>
           <Col xs={24} lg={16} xl={18}>
             {products ? (
-              <Row>
+              <>
+                <Row>
+                  {products?.data.length ? (
+                    <>
+                      {products?.data?.map((product: Product) => {
+                        return (
+                          <Col
+                            xs={{ span: 12 }}
+                            sm={{ span: 8 }}
+                            lg={{ span: 6 }}
+                            key={product.attributes.slug}
+                          >
+                            <ProductDefault
+                              id={product.id}
+                              attributes={product.attributes}
+                            />
+                          </Col>
+                        )
+                      })}
+                    </>
+                  ) : (
+                    <Alert
+                      message="No se encontraron productos que coincidan con su selección."
+                      type="info"
+                      showIcon
+                    />
+                  )}
+                </Row>
                 {products?.data.length ? (
                   <>
-                    {products?.data?.map((product: Product) => {
-                      return (
-                        <Col
-                          xs={{ span: 12 }}
-                          sm={{ span: 8 }}
-                          lg={{ span: 6 }}
-                          key={product.attributes.slug}
-                        >
-                          <ProductDefault
-                            id={product.id}
-                            attributes={product.attributes}
-                          />
-                        </Col>
-                      )
-                    })}
                     <Divider />
                     <Row gutter={16} justify={'end'}>
                       <Col>
@@ -164,14 +176,8 @@ export default function Shop() {
                       </Col>
                     </Row>
                   </>
-                ) : (
-                  <Alert
-                    message="No se encontraron productos que coincidan con su selección."
-                    type="info"
-                    showIcon
-                  />
-                )}
-              </Row>
+                ) : null}
+              </>
             ) : (
               <Skeleton />
             )}
