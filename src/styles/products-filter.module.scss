@@ -1,0 +1,23 @@
+.category-links {
+  color: #777 !important;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.view-all {
+  color: #3050ff !important;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &::before {
+    //content: '\f30b';
+  }
+}
