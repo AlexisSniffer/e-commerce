@@ -69,15 +69,6 @@ export default function CategoriesSubMenu({ attributes }: Category) {
           )
         })}
       </Row>
-      <br />
-      <Row gutter={24}>
-        <Col span={12}>
-          <Card>Espacio publicitario</Card>
-        </Col>
-        <Col span={12}>
-          <Card>Espacio publicitario</Card>
-        </Col>
-      </Row>
     </>
   )
 }

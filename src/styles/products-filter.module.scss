@@ -1,3 +1,46 @@
+@import 'variables';
+/*
+  HOME: CAROUSEL CATEGORIAS
+*/
+.carousel-categories {
+  .container {
+    cursor: pointer;
+    //transition: transform 0.5s ease;
+
+    &:hover {
+      .thumbnail {
+        transition: transform 0.5s ease;
+        transform: rotate(30deg);
+      }
+    }
+  }
+
+  .thumbnail,
+  .name {
+    margin-bottom: 0.5rem;
+  }
+
+  .thumbnail {
+    border-radius: 50%;
+  }
+
+  .name {
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+
+  .count {
+    color: $secondary-color-dark !important;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+}
+
+/*
+  HOME:
+*/
+
 .category-links {
   color: #777 !important;
   text-transform: capitalize;

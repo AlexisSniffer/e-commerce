@@ -9,9 +9,15 @@ export const qsCategory = qs.stringify(
         populate: {
           categories: {
             fields: ['name', 'slug', 'isExpanded'],
+            populate: {
+              products: {
+                fields: ['slug'],
+              },
+            },
           },
         },
       },
+      thumbnail: '*',
     },
     filters: {
       category: {
