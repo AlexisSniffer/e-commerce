@@ -1,6 +1,8 @@
 import useFilterStore from '@/store/filterStore'
+import styles from '@/styles/products-filter.module.scss'
 import { Category } from '@/types/category'
 import { Payload } from '@/types/payload'
+import { Product } from '@/types/product'
 import {
   Carousel,
   ConfigProvider,
@@ -11,8 +13,6 @@ import {
 } from 'antd'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import styles from '@/styles/products-filter.module.scss'
-import { Product } from '@/types/product'
 
 const theme: ThemeConfig = {
   components: {
