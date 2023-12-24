@@ -12,6 +12,7 @@ import {
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import styles from '@/styles/products-filter.module.scss'
+import { Product } from '@/types/product'
 
 const theme: ThemeConfig = {
   components: {
@@ -56,6 +57,26 @@ const responsive = [
   },
 ]
 
+function count(categories: Category[]) {
+  let slugs: string[] = []
+  let count = 0
+
+  categories.map((category1: Category) => {
+    if (category1.attributes.categories.data.length) {
+      category1.attributes.categories.data.map((category2: Category) => {
+        category2.attributes.products?.data.map((product: Product) => {
+          if (!slugs.includes(product.attributes.slug)) {
+            slugs.push(product.attributes.slug)
+            count++
+          }
+        })
+      })
+    }
+  })
+
+  return count == 1 ? `${count} product` : `${count} products`
+}
+
 export default function CategoriesSlider({
   categories,
 }: {
@@ -70,7 +91,6 @@ export default function CategoriesSlider({
 
   return (
     <ConfigProvider theme={theme}>
-      <pre>{JSON.stringify(categories, null, 2)}</pre>
       <Carousel
         slidesToShow={categories.data.length < 8 ? categories.data?.length : 8}
         draggable={true}
@@ -108,7 +128,9 @@ export default function CategoriesSlider({
                 <Text className={styles['name']}>
                   {category.attributes.name}
                 </Text>
-                <Text className={styles['count']}>1 products</Text>
+                <Text className={styles['count']}>
+                  {count(category.attributes.categories.data)}
+                </Text>
               </Flex>
             </div>
           )
