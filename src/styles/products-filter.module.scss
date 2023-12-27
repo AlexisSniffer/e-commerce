@@ -26,6 +26,11 @@
 
 .article {
   margin-bottom: 2rem;
+
+  .title {
+    margin: 0;
+    text-transform: capitalize;
+  }
 }
 
 .view-all {

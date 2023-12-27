@@ -79,10 +79,7 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
         >
           <Row align={'middle'} gutter={40} style={{ marginBottom: '1rem' }}>
             <Col>
-              <Title
-                level={4}
-                style={{ textTransform: 'uppercase', margin: '0' }}
-              >
+              <Title level={4} className={styles['title']}>
                 {attributes.name}
               </Title>
             </Col>

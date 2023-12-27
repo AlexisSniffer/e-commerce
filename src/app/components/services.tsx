@@ -20,7 +20,7 @@ export default function Services() {
   }
 
   return (
-    <Row style={{ padding: '2em 0 2em' }}>
+    <Row style={{ padding: '1rem 0' }}>
       {services.data.length ? (
         <>
           {services.data.map((service: Service, index: number) => {

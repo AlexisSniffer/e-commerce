@@ -54,7 +54,6 @@ export default function ProductsFilterSortBy() {
           style={{
             backgroundColor: '#fff',
             padding: '2rem',
-            minHeight: '642px',
           }}
         >
           <Title level={3}>Ordenar por</Title>
@@ -121,9 +120,6 @@ export default function ProductsFilterSortBy() {
           xs={{ span: 24, order: 3 }}
           sm={{ span: 24, order: 3 }}
           lg={{ span: 12, order: 3 }}
-          style={{
-            backgroundColor: '#fff',
-          }}
         >
           {products ? (
             <Row>
