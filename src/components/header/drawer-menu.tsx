@@ -1,8 +1,24 @@
 'use client'
 
-import { Drawer, Menu, MenuProps } from 'antd'
-import Sider from 'antd/es/layout/Sider'
+import {
+  ConfigProvider,
+  Drawer,
+  Layout,
+  Menu,
+  MenuProps,
+  ThemeConfig,
+} from 'antd'
 import Link from 'next/link'
+
+const theme: ThemeConfig = {
+  components: {
+    Menu: {
+      itemBorderRadius: 0,
+    },
+  },
+}
+
+const { Sider } = Layout
 
 interface DrawerMenuProps {
   isOpen: boolean
@@ -19,17 +35,23 @@ const items: MenuProps['items'] = [
 
 export default function DrawerMenu(props: DrawerMenuProps) {
   return (
-    <Drawer
-      placement="left"
-      size="default"
-      width={300}
-      open={props.isOpen}
-      onClose={props.onClose}
-      bodyStyle={{ padding: 0 }}
-    >
-      <Sider width={'100%'} theme="dark">
-        <Menu style={{ height: '100%' }} items={items} />
-      </Sider>
-    </Drawer>
+    <ConfigProvider theme={theme}>
+      <Drawer
+        placement="left"
+        size="default"
+        width={300}
+        open={props.isOpen}
+        onClose={props.onClose}
+        styles={{
+          body: {
+            padding: 0,
+          },
+        }}
+      >
+        <Sider width={'100%'} theme="dark">
+          <Menu style={{ height: '100%' }} items={items} />
+        </Sider>
+      </Drawer>
+    </ConfigProvider>
   )
 }

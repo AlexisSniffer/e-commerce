@@ -14,7 +14,6 @@ import {
   Skeleton,
   Space,
   Tabs,
-  TabsProps,
   ThemeConfig,
   Typography,
 } from 'antd'
