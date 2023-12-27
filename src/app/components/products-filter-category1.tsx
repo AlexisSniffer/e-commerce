@@ -67,7 +67,7 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row style={{ marginBottom: '2rem' }}>
+      <Row className={styles['article']}>
         <Col
           xs={{ span: 24 }}
           sm={{ span: 24 }}
@@ -114,7 +114,7 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
               </Space>
             </Col>
           </Row>
-          <Row style={{ marginBottom: '1rem' }}>
+          <Row className={styles['article']}>
             <div
               style={{
                 height: '250px',
@@ -126,7 +126,7 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
               Espacio publicitario
             </div>
           </Row>
-          <Row style={{ marginBottom: '1rem' }}>
+          <Row>
             <Tabs
               defaultActiveKey="1"
               items={[

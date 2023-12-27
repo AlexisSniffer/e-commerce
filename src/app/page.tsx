@@ -2,6 +2,7 @@
 
 import Container from '@/components/utils/container'
 import { qsCategory } from '@/queries/category'
+import styles from '@/styles/products-filter.module.scss'
 import { Category } from '@/types/category'
 import { Payload } from '@/types/payload'
 import { fetcher } from '@/utils/fetcher'
@@ -30,16 +31,16 @@ export default function Home() {
 
   return (
     <>
-      <Container style={{ padding: '2em 0 2em', background: '#f4f4f4' }}>
+      <Container className={styles['section-gray']}>
         <CategoriesSlider categories={categories} />
       </Container>
 
-      <Container style={{ padding: '2em 0 2em', background: '#fff' }}>
+      <Container className={styles['section-white']}>
         <Services />
         <ProductsFilterOffers />
       </Container>
 
-      <Container style={{ padding: '2em 0 2em', background: '#f4f4f4' }}>
+      <Container className={styles['section-gray']}>
         <ProductsFilterSortBy />
         {categories ? (
           <>

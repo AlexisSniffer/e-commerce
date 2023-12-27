@@ -1,6 +1,8 @@
 import ProductDefault from '@/components/product/product-default'
 import { qsCategory } from '@/queries/category'
 import { qsProducts } from '@/queries/product'
+import useFilterStore from '@/store/filterStore'
+import styles from '@/styles/products-filter.module.scss'
 import { Category } from '@/types/category'
 import { Payload } from '@/types/payload'
 import { Product } from '@/types/product'
@@ -11,9 +13,12 @@ import {
   List,
   Row,
   Skeleton,
+  Space,
   ThemeConfig,
   Typography,
 } from 'antd'
+import { useRouter } from 'next/navigation'
+
 import { useState } from 'react'
 import useSWR from 'swr'
 
@@ -24,7 +29,9 @@ const theme: ThemeConfig = {
 }
 
 export default function ProductsFilterSortBy() {
-  const [filterCategories, setFilterCategories] = useState<string[]>()
+  const router = useRouter()
+  const { setCategories } = useFilterStore()
+  const [filterCategories, setFilterCategories] = useState<string[]>([])
 
   const { data: products, error: errorProducts } = useSWR<Payload<Product[]>>(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products?${qsProducts({
@@ -39,7 +46,7 @@ export default function ProductsFilterSortBy() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row style={{ marginBottom: '2rem' }}>
+      <Row className={styles['article']}>
         <Col
           xs={{ span: 24, order: 2 }}
           sm={{ span: 12, order: 1 }}
@@ -52,30 +59,42 @@ export default function ProductsFilterSortBy() {
         >
           <Title level={3}>Ordenar por</Title>
           {categories ? (
-            <List
-              size="small"
-              grid={{
-                gutter: 16,
-                xs: 3,
-                sm: 2,
-                md: 1,
-                lg: 1,
-                xl: 1,
-                xxl: 1,
-              }}
-              dataSource={categories?.data}
-              renderItem={(category: Category) => (
-                <List.Item>
-                  <Text
-                    onClick={() => {
-                      setFilterCategories([category.attributes.slug])
-                    }}
-                  >
-                    {category.attributes.name}
-                  </Text>
-                </List.Item>
-              )}
-            ></List>
+            <Space direction="vertical" size={'large'}>
+              <List
+                size="small"
+                grid={{
+                  gutter: 16,
+                  xs: 3,
+                  sm: 2,
+                  md: 1,
+                  lg: 1,
+                  xl: 1,
+                  xxl: 1,
+                }}
+                dataSource={categories?.data}
+                renderItem={(category: Category) => (
+                  <List.Item>
+                    <Text
+                      className={styles['category-links']}
+                      onClick={() => {
+                        setFilterCategories([category.attributes.slug])
+                      }}
+                    >
+                      {category.attributes.name}
+                    </Text>
+                  </List.Item>
+                )}
+              ></List>
+              <Text
+                className={styles['view-all']}
+                onClick={() => {
+                  setCategories(filterCategories)
+                  router.push('/shop')
+                }}
+              >
+                ver más
+              </Text>
+            </Space>
           ) : (
             <Skeleton />
           )}

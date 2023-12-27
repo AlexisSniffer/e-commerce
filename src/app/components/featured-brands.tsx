@@ -1,5 +1,6 @@
 import { qsBrands } from '@/queries/brand'
 import useFilterStore from '@/store/filterStore'
+import styles from '@/styles/products-filter.module.scss'
 import { Brand } from '@/types/brand'
 import { Payload } from '@/types/payload'
 import { fetcher } from '@/utils/fetcher'
@@ -75,11 +76,10 @@ export default function FeaturedBrands() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row style={{ marginBottom: '2rem' }}>
+      <Row>
         <Col span={24}>
           <Title level={3}>Marcas Destacadas</Title>
           <Carousel
-            style={{ marginTop: '1rem' }}
             slidesToShow={6}
             draggable={true}
             infinite={true}
@@ -92,28 +92,14 @@ export default function FeaturedBrands() {
                 <div key={brand.attributes.slug}>
                   <Card
                     hoverable
-                    style={{
-                      position: 'relative',
-                      height: '165px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'uppercase',
-                      fontWeight: 'bold',
-                    }}
+                    className={styles['brand']}
                     onClick={() => {
                       setBrands([brand.attributes.slug])
                       router.push('/shop')
                     }}
                   >
                     {brand.attributes.thumbnail?.data ? (
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
+                      <div className={styles['flex-center']}>
                         <Image
                           alt={
                             brand.attributes.thumbnail?.data.attributes

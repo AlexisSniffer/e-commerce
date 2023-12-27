@@ -1,4 +1,48 @@
 @import 'variables';
+
+/*
+  GLOBAL
+*/
+
+%section-padding {
+  padding: 2rem 0;
+}
+
+.section-white {
+  @extend %section-padding;
+  background-color: #ffffff;
+}
+
+.section-gray {
+  @extend %section-padding;
+  background-color: #f4f4f4;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.article {
+  margin-bottom: 2rem;
+}
+
+.view-all {
+  color: #3050ff !important;
+  text-transform: capitalize;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &::after {
+    content: '→';
+  }
+}
+
 /*
   HOME: CAROUSEL CATEGORIAS
 */
@@ -60,8 +104,9 @@
   }
 }
 
-//////////////////////////
-
+/*
+  HOME: ORDENAR POR
+*/
 .category-links {
   color: #777 !important;
   text-transform: capitalize;
@@ -72,17 +117,18 @@
   }
 }
 
-.view-all {
-  color: #3050ff !important;
-  text-transform: capitalize;
+/*
+  HOME: MARCAS
+*/
+
+.brand {
+  position: relative;
+  height: 165px;
+  text-transform: uppercase;
   font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &::after {
-    content: '→';
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+//////////////////////////
