@@ -48,6 +48,25 @@
   }
 }
 
+.categories {
+  .name,
+  .name-sub {
+    cursor: pointer;
+  }
+
+  .name {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+
+  .name-sub {
+    color: $body-text !important;
+    text-transform: capitalize;
+  }
+}
+
 /*
   HOME: CAROUSEL CATEGORIAS
 */

@@ -1,5 +1,4 @@
 import ProductDefault from '@/components/product/product-default'
-import ProductExtra from '@/components/product/product-extra'
 import { qsProductUntil } from '@/queries/product'
 import useFilterStore from '@/store/filterStore'
 import styles from '@/styles/products-filter.module.scss'
@@ -12,8 +11,6 @@ import {
   ConfigProvider,
   Row,
   Skeleton,
-  Space,
-  Tabs,
   ThemeConfig,
   Typography,
 } from 'antd'
@@ -30,29 +27,6 @@ const theme: ThemeConfig = {
       inkBarColor: 'none',
     },
   },
-}
-
-function ProductFilter({ data }: Payload<Product[]>) {
-  if (!data) {
-    return <Skeleton />
-  }
-
-  return (
-    <Row>
-      {data!.slice(0, 4).map((product: Product) => {
-        return (
-          <Col
-            xs={{ span: 12 }}
-            sm={{ span: 8 }}
-            lg={{ span: 6 }}
-            key={product.attributes.slug}
-          >
-            <ProductDefault id={product.id} attributes={product.attributes} />
-          </Col>
-        )
-      })}
-    </Row>
-  )
 }
 
 export default function ProductsFilterCategory2({ id, attributes }: Category) {
@@ -109,22 +83,77 @@ export default function ProductsFilterCategory2({ id, attributes }: Category) {
               </div>
             </Col>
           </Row>
-          <Row>
-            {products!.data.slice(0, 6).map((product: Product) => {
+          <Row className={`${styles['article']} ${styles['categories']}`}>
+            {attributes.categories.data.map((category: Category) => {
               return (
-                <Col
-                  xs={{ span: 8 }}
-                  sm={{ span: 6 }}
-                  lg={{ span: 4 }}
-                  key={product.attributes.slug}
-                >
-                  <ProductDefault
-                    id={product.id}
-                    attributes={product.attributes}
-                  />
+                <Col key={category.attributes.slug} span={6}>
+                  <Row>
+                    <Text
+                      className={styles['name']}
+                      onClick={() => {
+                        setCategories([category.attributes.slug])
+                        router.push('/shop')
+                      }}
+                    >
+                      {category.attributes.name}
+                    </Text>
+                  </Row>
+                  <Row gutter={[0, 8]}>
+                    {category.attributes.categories.data.map(
+                      (category2: Category) => {
+                        return (
+                          <Col key={category2.attributes.slug} span={12}>
+                            <Text
+                              className={styles['name-sub']}
+                              onClick={() => {
+                                setCategories([category2.attributes.slug])
+                                router.push('/shop')
+                              }}
+                            >
+                              {category2.attributes.name}
+                            </Text>
+                          </Col>
+                        )
+                      },
+                    )}
+                  </Row>
+                  <Row style={{ marginTop: '1rem' }}>
+                    <Text
+                      className={styles['view-all']}
+                      onClick={() => {
+                        setCategories([category.attributes.slug])
+                        router.push('/shop')
+                      }}
+                    >
+                      ver más
+                    </Text>
+                  </Row>
                 </Col>
               )
             })}
+          </Row>
+          <Row>
+            {products ? (
+              <>
+                {products!.data.slice(0, 6).map((product: Product) => {
+                  return (
+                    <Col
+                      xs={{ span: 8 }}
+                      sm={{ span: 6 }}
+                      lg={{ span: 4 }}
+                      key={product.attributes.slug}
+                    >
+                      <ProductDefault
+                        id={product.id}
+                        attributes={product.attributes}
+                      />
+                    </Col>
+                  )
+                })}
+              </>
+            ) : (
+              <Skeleton />
+            )}
           </Row>
         </Col>
       </Row>
