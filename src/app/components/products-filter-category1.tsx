@@ -113,10 +113,11 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
           <Row className={styles['article']}>
             <div
               style={{
+                color: '#000',
                 height: '250px',
                 width: '100%',
                 padding: '2rem',
-                backgroundColor: 'beige',
+                backgroundColor: '#B0BEC5',
               }}
             >
               Espacio publicitario

@@ -105,12 +105,13 @@ export default function ProductsFilterSortBy() {
         >
           <div
             style={{
+              color: '#000',
               padding: '2rem',
               display: 'block',
               width: '100%',
               minHeight: '200px',
               height: '100%',
-              backgroundColor: '#ccc',
+              backgroundColor: '#B0BEC5',
             }}
           >
             Espacio Publicitario

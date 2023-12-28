@@ -15,9 +15,12 @@ import ProductsFilterCategory1 from './components/products-filter-category1'
 import ProductsFilterOffers from './components/products-filter-offers'
 import ProductsFilterSortBy from './components/products-filter-sortby'
 import Services from './components/services'
+import ProductsFilterCategory2 from './components/products-filter-category2'
 
 export default function Home() {
   const [random1, setRandom1] = useState<number>(0)
+  const [random2, setRandom2] = useState<number>(0)
+  const [random3, setRandom3] = useState<number>(0)
 
   const { data: categories, error: errorCategories } = useSWR<
     Payload<Category[]>
@@ -26,6 +29,8 @@ export default function Home() {
   useEffect(() => {
     setInterval(() => {
       setRandom1(randomCategory(categories?.meta?.pagination?.total ?? 0))
+      setRandom2(randomCategory(categories?.meta?.pagination?.total ?? 0))
+      setRandom3(randomCategory(categories?.meta?.pagination?.total ?? 0))
     }, 60000)
   }, [categories])
 
@@ -47,6 +52,10 @@ export default function Home() {
             <ProductsFilterCategory1
               id={categories?.data[random1].id}
               attributes={categories?.data[random1].attributes}
+            />
+            <ProductsFilterCategory2
+              id={categories?.data[random2].id}
+              attributes={categories?.data[random2].attributes}
             />
           </>
         ) : null}
