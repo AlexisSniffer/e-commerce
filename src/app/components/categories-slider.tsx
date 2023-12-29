@@ -46,11 +46,17 @@ const responsive = [
   {
     breakpoint: 992,
     settings: {
-      slidesToShow: 6,
+      slidesToShow: 5,
     },
   },
   {
     breakpoint: 1200,
+    settings: {
+      slidesToShow: 6,
+    },
+  },
+  {
+    breakpoint: 9999,
     settings: {
       slidesToShow: 7,
     },
@@ -92,9 +98,8 @@ export default function CategoriesSlider({
   return (
     <ConfigProvider theme={theme}>
       <Carousel
-        slidesToShow={categories.data.length < 8 ? categories.data?.length : 8}
         draggable={true}
-        infinite={true}
+        infinite={false}
         dots={false}
         autoplay={true}
         responsive={responsive}

@@ -2,6 +2,7 @@ import SocialIcons from '@/components/common/social-icons'
 import ProductAdd from '@/components/product/product-add'
 import ProductCategories from '@/components/product/product-categories'
 import ProductPrices from '@/components/product/product-price'
+import useShopStore from '@/store/shopStore'
 import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
 import {
@@ -13,6 +14,7 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import { useEffect } from 'react'
 
 const theme: ThemeConfig = {
   components: {
@@ -26,6 +28,12 @@ const theme: ThemeConfig = {
 const { Title, Paragraph, Text } = Typography
 
 export default function ProductDetail({ id, attributes }: Product) {
+  const { setViewProducts } = useShopStore()
+
+  useEffect(() => {
+    setViewProducts(id)
+  }, [id, setViewProducts])
+
   return (
     <ConfigProvider theme={theme}>
       <Space direction="vertical" className={styles['product-detail']}>

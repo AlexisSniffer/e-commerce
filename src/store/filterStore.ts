@@ -10,11 +10,13 @@ interface FilterState {
   categories: string[]
   prices: number[]
   brands: string[]
+  views: number[]
   pagination: PaginationProps
   setFilter: (filter: string) => void
   setCategories: (categories: string[]) => void
   setPrices: (prices: number[]) => void
   setBrands: (brands: string[]) => void
+  setViews: (views: number[]) => void
   setPagination: (pagination: PaginationProps) => void
 }
 
@@ -23,6 +25,7 @@ const useFilterStore = create<FilterState>()((set) => ({
   categories: [],
   prices: [0, 0],
   brands: [],
+  views: [],
   pagination: {
     page: 1,
     pageSize: 12,
@@ -32,6 +35,7 @@ const useFilterStore = create<FilterState>()((set) => ({
     set((state) => ({ categories: categories })),
   setPrices: (prices: number[]) => set((state) => ({ prices: prices })),
   setBrands: (brands: string[]) => set((state) => ({ brands: brands })),
+  setViews: (views: number[]) => set((state) => ({ views: views })),
   setPagination: (pagination: PaginationProps) =>
     set((state) => ({ pagination: pagination })),
 }))

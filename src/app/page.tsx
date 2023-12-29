@@ -16,6 +16,7 @@ import ProductsFilterOffers from './components/products-filter-offers'
 import ProductsFilterSortBy from './components/products-filter-sortby'
 import Services from './components/services'
 import ProductsFilterCategory2 from './components/products-filter-category2'
+import ProductsView from './components/products-view'
 
 export default function Home() {
   const [random1, setRandom1] = useState<number>(0)
@@ -60,6 +61,7 @@ export default function Home() {
           </>
         ) : null}
         <FeaturedBrands />
+        <ProductsView />
       </Container>
     </>
   )

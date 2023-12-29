@@ -64,6 +64,7 @@ export default function Shop() {
   const categoriesStore = useFilterStore((state) => state.categories)
   const pricesStore = useFilterStore((state) => state.prices)
   const brandsStore = useFilterStore((state) => state.brands)
+  const viewsStore = useFilterStore((state) => state.views)
   const paginationStore = useFilterStore((state) => state.pagination)
   const { setPagination } = useFilterStore()
 
@@ -73,6 +74,7 @@ export default function Shop() {
       categories: categoriesStore,
       prices: pricesStore,
       brands: brandsStore,
+      views: viewsStore,
       pagination: paginationStore,
     })}`,
     fetcher,

@@ -59,6 +59,12 @@ const responsive = [
       slidesToShow: 7,
     },
   },
+  {
+    breakpoint: 9999,
+    settings: {
+      slidesToShow: 7,
+    },
+  },
 ]
 
 export default function FeaturedBrands() {
@@ -76,13 +82,13 @@ export default function FeaturedBrands() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row>
+      <Row className={styles['article']}>
         <Col span={24}>
           <Title level={3}>Marcas Destacadas</Title>
           <Carousel
             slidesToShow={6}
             draggable={true}
-            infinite={true}
+            infinite={false}
             dots={false}
             autoplay={true}
             responsive={responsive}

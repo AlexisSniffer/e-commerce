@@ -35,6 +35,7 @@ export const qsProducts = (filters: {
   categories?: string[]
   prices?: number[]
   brands?: string[]
+  views?: number[]
   pagination?: { page: number; pageSize: number }
 }) =>
   qs.stringify(
@@ -59,6 +60,9 @@ export const qsProducts = (filters: {
         images: '*',
       },
       filters: {
+        id: {
+          $in: filters.views,
+        },
         name: {
           $containsi: filters.filter,
         },
