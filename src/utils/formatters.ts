@@ -8,7 +8,8 @@ export const money = new Intl.NumberFormat('en-US', {
 })
 
 export const valMinMax = (prices: number[]) => {
-  return `${money.format(Math.min(...prices))} - ${money.format(
-    Math.max(...prices),
-  )}`
+  return {
+    min: money.format(Math.min(...prices)),
+    max: money.format(Math.max(...prices)),
+  }
 }

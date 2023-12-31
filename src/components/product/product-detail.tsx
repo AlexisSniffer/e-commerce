@@ -61,6 +61,10 @@ export default function ProductDetail({ id, attributes }: Product) {
                 : 'N/A'}
             </Text>
           </Space>
+          <Space>
+            <Text>STOCK:</Text>
+            <Text>{attributes.stock == 0 ? 'Agotado' : 'Disponible'}</Text>
+          </Space>
         </Flex>
         <ProductAdd id={id} attributes={attributes}></ProductAdd>
         <Divider style={{ marginTop: '0.5em', marginBottom: '0.5em' }} />

@@ -6,16 +6,22 @@ import { Space, Typography } from 'antd'
 const { Text } = Typography
 
 export default function ProductPrices({ id, attributes }: Product) {
+  const priceMinMax = attributes.variants?.length
+    ? valMinMax(
+        attributes.variants?.map((variant: any) => {
+          let price: number
+          price = variant.isDiscount ? variant.discount : variant.price
+          return price
+        }),
+      )
+    : null
+
   return (
     <Text className={styles['price']}>
-      {attributes.variants?.length ? (
-        valMinMax(
-          attributes.variants.map((variant: any) => {
-            let price: number
-            price = variant.isDiscount ? variant.discount : variant.price
-            return price
-          }),
-        )
+      {attributes.variants?.length && priceMinMax ? (
+        <span className={styles['price']}>
+          {priceMinMax.min} - {priceMinMax.max}
+        </span>
       ) : (
         <>
           {attributes.isDiscount ? (
