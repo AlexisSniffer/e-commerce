@@ -15,6 +15,7 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import Image from 'next/image'
 import Link from 'next/link'
 import Countdown from '../common/countdown'
 import ProductCategories from './product-categories'
@@ -42,17 +43,23 @@ const theme: ThemeConfig = {
 function cover({ id, attributes }: Product) {
   return (
     <div className={styles['cover']}>
-      <picture>
+      <Image
+        src={'http://localhost:1337' + attributes.images.data[0].attributes.url}
+        alt={attributes.images.data[0].attributes.alternativeText}
+        width={0}
+        height={0}
+        sizes="100vw"
+      ></Image>
+
+      {/* <picture>
         <img
           src={
             'http://localhost:1337' + attributes.images.data[0].attributes.url
           }
           alt={attributes.images.data[0].attributes.alternativeText}
-          width={'100%'}
-          height={'auto'}
-          style={{ height: 'auto' }}
+          style={{ height: 'auto', maxWidth: '100%' }}
         />
-      </picture>
+      </picture> */}
       <Button
         type="primary"
         //onClick={showModal}
