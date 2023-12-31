@@ -1,5 +1,5 @@
 import ProductDefault from '@/components/product/product-default'
-import ProductOffert from '@/components/product/product-offert'
+import ProductOffer from '@/components/product/product-offer'
 import { qsProductUntil } from '@/queries/product'
 import { Payload } from '@/types/payload'
 import { Product } from '@/types/product'
@@ -37,7 +37,7 @@ export default function ProductsFilterOffers() {
       </Row>
       <Row>
         <Col span={8}>
-          <ProductOffert
+          <ProductOffer
             id={products.data[0].id}
             attributes={products.data[0].attributes}
           />

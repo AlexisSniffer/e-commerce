@@ -1,10 +1,6 @@
 import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
-import {
-  ArrowRightOutlined,
-  HeartOutlined,
-  ShoppingCartOutlined,
-} from '@ant-design/icons'
+import { ShoppingOutlined } from '@ant-design/icons'
 import {
   Button,
   Card,
@@ -41,6 +37,11 @@ const theme: ThemeConfig = {
 function cover({ id, attributes }: Product) {
   return (
     <div className={styles['cover']}>
+      {attributes.discount && attributes.until ? (
+        <Tag className={styles['offer']}>
+          <span>offerta termina en:</span> 2 dias
+        </Tag>
+      ) : null}
       <picture>
         <img
           src={
@@ -52,55 +53,44 @@ function cover({ id, attributes }: Product) {
           style={{ height: 'auto' }}
         />
       </picture>
-      <Button
-        type="primary"
-        //onClick={showModal}
-        className={styles['quick-view']}
-      >
-        vista rápida
-      </Button>
-      <Button
-        shape="circle"
-        icon={
-          attributes.variants?.length ? (
-            <ArrowRightOutlined rev={undefined} />
-          ) : (
-            <ShoppingCartOutlined rev={undefined} />
-          )
-        }
-        // onClick={}
-        className={styles['add']}
-      />
-      {attributes.discount && attributes.until ? (
-        <Tag className={styles['offer2']}>
-          <span>oferta termina en:</span> 2 dias, 2:23:34
-        </Tag>
-      ) : null}
     </div>
   )
 }
 
-export default function ProductDefault({ id, attributes }: Product) {
+export default function ProductOffer({ id, attributes }: Product) {
   return (
     <ConfigProvider theme={theme}>
       <Card
         hoverable
         cover={cover({ id: id, attributes: attributes })}
-        className={styles['product-default']}
+        style={{ height: '100%' }}
+        className={`${styles['product-default']} ${styles['product-offer']}`}
       >
-        <Flex gap={10} justify="space-between">
+        <Flex align="center" vertical>
           <ProductCategories id={id} attributes={attributes} />
-          <HeartOutlined className={styles['wish']} />
+          <Link
+            className={styles['name']}
+            href={`/products/${attributes.slug}`}
+          >
+            <Text>{attributes.name}</Text>
+          </Link>
+          <Rate
+            disabled
+            value={attributes.ratings}
+            className={styles['rate']}
+          ></Rate>
+          <ProductPrices id={id} attributes={attributes} />
+          <Flex>
+            <Button
+              type="primary"
+              size="large"
+              icon={<ShoppingOutlined />}
+              className={styles['add']}
+            >
+              añadir
+            </Button>
+          </Flex>
         </Flex>
-        <Link className={styles['name']} href={`/products/${attributes.slug}`}>
-          <Text>{attributes.name}</Text>
-        </Link>
-        <Rate
-          disabled
-          value={attributes.ratings}
-          className={styles['rate']}
-        ></Rate>
-        <ProductPrices id={id} attributes={attributes} />
       </Card>
     </ConfigProvider>
   )

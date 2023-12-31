@@ -1,5 +1,4 @@
 import styles from '@/styles/product.module.scss'
-import { Media } from '@/types/media'
 import { Product } from '@/types/product'
 import { money } from '@/utils/formatters'
 import { ConfigProvider, Flex, Rate, ThemeConfig, Typography } from 'antd'
@@ -8,7 +7,11 @@ import Link from 'next/link'
 const { Text } = Typography
 
 const theme: ThemeConfig = {
-  components: {},
+  components: {
+    Rate: {
+      marginXS: 2,
+    },
+  },
 }
 
 export default function ProductExtra({ id, attributes }: Product) {
