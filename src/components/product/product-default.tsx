@@ -16,6 +16,7 @@ import {
   Typography,
 } from 'antd'
 import Link from 'next/link'
+import Countdown from '../common/countdown'
 import ProductCategories from './product-categories'
 import ProductPrices from './product-price'
 
@@ -73,7 +74,8 @@ function cover({ id, attributes }: Product) {
       />
       {attributes.discount && attributes.until ? (
         <Tag className={styles['offer2']}>
-          <span>oferta termina en:</span> 2 dias, 2:23:34
+          <span>oferta termina en:</span>{' '}
+          <Countdown targetDate={attributes.until} />
         </Tag>
       ) : null}
     </div>
