@@ -51,7 +51,7 @@ function cover({ id, attributes }: Product) {
         width={0}
         height={0}
         sizes="100vw"
-      ></Image>
+      />
     </div>
   )
 }
