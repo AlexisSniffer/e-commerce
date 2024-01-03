@@ -42,7 +42,15 @@ export default function ProductDetail({ id, attributes }: Product) {
         </Title>
         <Rate value={attributes.ratings} disabled></Rate>
         <Divider style={{ marginTop: '0.5em', marginBottom: '0.5em' }} />
-        <ProductPrices id={id} attributes={attributes} />
+        <ProductPrices
+          price={attributes.price}
+          discount={{
+            isDiscount: attributes.isDiscount,
+            discount: attributes.discount,
+            until: attributes.until,
+          }}
+          variants={attributes.variants}
+        />
         <Paragraph>{attributes.description}</Paragraph>
         <Flex vertical>
           <Space>

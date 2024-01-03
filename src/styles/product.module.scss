@@ -174,12 +174,9 @@
   .price {
     margin: 0;
     font-weight: bold;
+    font-size: 1.7rem;
 
-    span {
-      font-size: 1.7rem;
-    }
-
-    .is-discount {
+    &.is-discount {
       color: #777;
       font-size: 1.5rem;
       text-decoration: line-through;

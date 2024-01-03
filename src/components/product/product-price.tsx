@@ -1,41 +1,57 @@
 import styles from '@/styles/product.module.scss'
-import { Product } from '@/types/product'
+import { Variants } from '@/types/variants'
 import { money, valMinMax } from '@/utils/formatters'
 import { Space, Typography } from 'antd'
 
 const { Text } = Typography
 
-export default function ProductPrices({ id, attributes }: Product) {
-  const priceMinMax = attributes.variants?.length
-    ? valMinMax(
-        attributes.variants?.map((variant: any) => {
-          let price: number
-          price = variant.isDiscount ? variant.discount : variant.price
-          return price
-        }),
-      )
-    : null
+export default function ProductPrices({
+  price,
+  discount,
+  variants,
+}: {
+  price: number
+  discount: {
+    isDiscount: boolean
+    discount?: number
+    until?: Date
+  }
+  variants?: Variants[]
+}) {
+  let priceMinMax = null
+
+  if (variants?.length) {
+    priceMinMax = valMinMax(
+      variants?.map((variant: Variants) => {
+        let price: number = 0
+        price = variant.isDiscount ? variant.discount ?? 0 : variant.price
+        return price
+      }),
+    )
+  }
 
   return (
-    <Text className={styles['price']}>
-      {attributes.variants?.length && priceMinMax ? (
-        <span className={styles['price']}>
+    <>
+      {variants && priceMinMax ? (
+        <Text className={styles['price']}>
           {priceMinMax.min} - {priceMinMax.max}
-        </span>
+        </Text>
       ) : (
-        <>
-          {attributes.isDiscount ? (
-            <Space>
-              <span>{money.format(attributes.discount)}</span>
-              <span className={`${styles['price']} ${styles['is-discount']}`}>
-                {money.format(attributes.price)}
-              </span>
-            </Space>
-          ) : (
-            <span>{money.format(attributes.price)}</span>
-          )}
-        </>
+        <Space>
+          {discount?.isDiscount ? (
+            <Text className={styles['price']}>
+              {money.format(discount.discount ?? 0)}
+            </Text>
+          ) : null}
+          <Text
+            className={`${styles['price']} ${
+              discount?.isDiscount ? styles['is-discount'] : null
+            }`}
+          >
+            {money.format(price)}
+          </Text>
+        </Space>
       )}
-    </Text>
+    </>
   )
 }

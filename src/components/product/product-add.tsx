@@ -1,7 +1,6 @@
 import { Product } from '@/types/product'
 import { Variants } from '@/types/variants'
 import { Variation } from '@/types/variation'
-import { money } from '@/utils/formatters'
 import {
   Button,
   Col,
@@ -15,6 +14,7 @@ import {
   Typography,
 } from 'antd'
 import { useState } from 'react'
+import ProductPrices from './product-price'
 import ProductVariants from './product-variants'
 
 const { Text } = Typography
@@ -122,19 +122,15 @@ export default function ProductAdd({ id, attributes }: Product) {
       <Row>
         <Col>
           {attributes.variants.length && selectedVariant ? (
-            <>
-              {selectedVariant != null && selectedVariant.isDiscount ? (
-                <Space>
-                  <Text>{money.format(selectedVariant.discount)}</Text>
-                  <Text delete>{money.format(selectedVariant.price)}</Text>
-                </Space>
-              ) : (
-                <Text>{money.format(selectedVariant.price)}</Text>
-              )}
-            </>
-          ) : (
-            ''
-          )}
+            <ProductPrices
+              price={selectedVariant.price}
+              discount={{
+                isDiscount: selectedVariant.isDiscount,
+                discount: selectedVariant.discount,
+                until: selectedVariant.until,
+              }}
+            />
+          ) : null}
         </Col>
       </Row>
       <Row>
