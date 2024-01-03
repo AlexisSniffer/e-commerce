@@ -50,16 +50,6 @@ function cover({ id, attributes }: Product) {
         height={0}
         sizes="100vw"
       ></Image>
-
-      {/* <picture>
-        <img
-          src={
-            'http://localhost:1337' + attributes.images.data[0].attributes.url
-          }
-          alt={attributes.images.data[0].attributes.alternativeText}
-          style={{ height: 'auto', maxWidth: '100%' }}
-        />
-      </picture> */}
       <Button
         type="primary"
         //onClick={showModal}
@@ -109,7 +99,15 @@ export default function ProductDefault({ id, attributes }: Product) {
           value={attributes.ratings}
           className={styles['rate']}
         ></Rate>
-        <ProductPrices id={id} attributes={attributes} />
+        <ProductPrices
+          price={attributes.price}
+          discount={{
+            isDiscount: attributes.isDiscount,
+            discount: attributes.discount,
+            until: attributes.until,
+          }}
+          variants={attributes.variants}
+        />
       </Card>
     </ConfigProvider>
   )

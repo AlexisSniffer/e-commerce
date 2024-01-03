@@ -1,8 +1,8 @@
 import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
-import { money } from '@/utils/formatters'
 import { ConfigProvider, Flex, Rate, ThemeConfig, Typography } from 'antd'
 import Link from 'next/link'
+import ProductPrices from './product-price'
 
 const { Text } = Typography
 
@@ -35,12 +35,14 @@ export default function ProductExtra({ id, attributes }: Product) {
         </picture>
         <Flex
           vertical
+          gap={2}
           style={{
             padding: '1rem 0 0 0.5rem ',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
+          className={styles['product-default']}
         >
           <Link
             className={styles['name']}
@@ -53,9 +55,15 @@ export default function ProductExtra({ id, attributes }: Product) {
             disabled
             style={{ fontSize: '0.9rem' }}
           ></Rate>
-          <Text className={styles['price']}>
-            {money.format(attributes.price)}
-          </Text>
+          <ProductPrices
+            price={attributes.price}
+            discount={{
+              isDiscount: attributes.isDiscount,
+              discount: attributes.discount,
+              until: attributes.until,
+            }}
+            variants={attributes.variants}
+          />
         </Flex>
       </Flex>
     </ConfigProvider>

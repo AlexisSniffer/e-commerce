@@ -1,7 +1,7 @@
 import styles from '@/styles/product.module.scss'
 import { Variants } from '@/types/variants'
 import { money, valMinMax } from '@/utils/formatters'
-import { Space, Typography } from 'antd'
+import { Flex, Typography } from 'antd'
 
 const { Text } = Typography
 
@@ -31,13 +31,13 @@ export default function ProductPrices({
   }
 
   return (
-    <>
+    <div>
       {variants && priceMinMax ? (
         <Text className={styles['price']}>
           {priceMinMax.min} - {priceMinMax.max}
         </Text>
       ) : (
-        <Space>
+        <Flex gap={5}>
           {discount?.isDiscount ? (
             <Text className={styles['price']}>
               {money.format(discount.discount ?? 0)}
@@ -50,8 +50,8 @@ export default function ProductPrices({
           >
             {money.format(price)}
           </Text>
-        </Space>
+        </Flex>
       )}
-    </>
+    </div>
   )
 }

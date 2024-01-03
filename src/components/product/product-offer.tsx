@@ -78,7 +78,15 @@ export default function ProductOffer({ id, attributes }: Product) {
             value={attributes.ratings}
             className={styles['rate']}
           ></Rate>
-          <ProductPrices id={id} attributes={attributes} />
+          <ProductPrices
+            price={attributes.price}
+            discount={{
+              isDiscount: attributes.isDiscount,
+              discount: attributes.discount,
+              until: attributes.until,
+            }}
+            variants={attributes.variants}
+          />
           <Flex>
             <Button
               type="primary"
