@@ -29,3 +29,9 @@ export interface Product {
     createdBy: any
   }
 }
+
+export interface ProductCart extends Product {
+  qty: number
+  price: number
+  variant?: Variants
+}
