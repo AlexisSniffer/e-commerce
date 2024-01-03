@@ -2,7 +2,7 @@ import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
 import { ConfigProvider, Flex, Rate, ThemeConfig, Typography } from 'antd'
 import Link from 'next/link'
-import ProductPrices from './product-price'
+import ProductPrices from './components/product-price'
 
 const { Text } = Typography
 

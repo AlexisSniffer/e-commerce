@@ -1,7 +1,7 @@
 'use client'
 
-import ProductCarousel from '@/components/product/product-carousel'
-import ProductDetail from '@/components/product/product-detail'
+import ProductCarousel from '@/components/product/components/product-carousel'
+import ProductDetail from '@/components/product/components/product-detail'
 import Container from '@/components/utils/container'
 import { qsProductsBySlug } from '@/queries/product'
 import { Payload } from '@/types/payload'

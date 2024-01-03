@@ -14,8 +14,8 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import Countdown from '../common/countdown'
-import ProductCategories from './product-categories'
-import ProductPrices from './product-price'
+import ProductCategories from './components/product-categories'
+import ProductPrices from './components/product-price'
 
 const { Text } = Typography
 

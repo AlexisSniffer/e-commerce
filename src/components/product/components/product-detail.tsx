@@ -1,7 +1,7 @@
 import SocialIcons from '@/components/common/social-icons'
-import ProductAdd from '@/components/product/product-add'
-import ProductCategories from '@/components/product/product-categories'
-import ProductPrices from '@/components/product/product-price'
+import ProductAdd from '@/components/product/components/product-add'
+import ProductCategories from '@/components/product/components/product-categories'
+import ProductPrices from '@/components/product/components/product-price'
 import useShopStore from '@/store/shopStore'
 import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
@@ -16,7 +16,7 @@ import {
   Typography,
 } from 'antd'
 import { useEffect } from 'react'
-import Countdown from '../common/countdown'
+import Countdown from '../../common/countdown'
 
 const theme: ThemeConfig = {
   components: {
