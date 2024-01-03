@@ -39,13 +39,23 @@ export default function ProductPrices({
       ) : (
         <Flex gap={5}>
           {discount?.isDiscount ? (
-            <Text className={styles['price']}>
-              {money.format(discount.discount ?? 0)}
-            </Text>
-          ) : null}
+            discount.until && new Date(discount.until) > new Date() ? (
+              <Text className={styles['price']}>
+                {money.format(discount.discount ?? 0)}
+              </Text>
+            ) : (
+              <></>
+            )
+          ) : (
+            <></>
+          )}
           <Text
             className={`${styles['price']} ${
-              discount?.isDiscount ? styles['is-discount'] : null
+              discount?.isDiscount &&
+              discount.until &&
+              new Date(discount.until) > new Date()
+                ? styles['is-discount']
+                : null
             }`}
           >
             {money.format(price)}

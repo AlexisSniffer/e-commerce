@@ -69,7 +69,9 @@ function cover({ id, attributes }: Product) {
         // onClick={}
         className={styles['add']}
       />
-      {attributes.discount && attributes.until ? (
+      {attributes.discount &&
+      attributes.until &&
+      new Date(attributes.until) > new Date() ? (
         <Tag className={styles['offer2']}>
           <span>oferta termina en:</span>{' '}
           <Countdown targetDate={attributes.until} />

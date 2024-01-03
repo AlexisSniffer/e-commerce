@@ -11,10 +11,12 @@ import {
   Flex,
   Rate,
   Space,
+  Tag,
   ThemeConfig,
   Typography,
 } from 'antd'
 import { useEffect } from 'react'
+import Countdown from '../common/countdown'
 
 const theme: ThemeConfig = {
   components: {
@@ -51,6 +53,14 @@ export default function ProductDetail({ id, attributes }: Product) {
           }}
           variants={attributes.variants}
         />
+        {attributes.discount &&
+        attributes.until &&
+        new Date(attributes.until) > new Date() ? (
+          <Tag className={styles['offer2']}>
+            <span>oferta termina en:</span>{' '}
+            <Countdown targetDate={attributes.until} />
+          </Tag>
+        ) : null}
         <Paragraph>{attributes.description}</Paragraph>
         <Flex vertical>
           <Space>
