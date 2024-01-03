@@ -27,7 +27,10 @@ export default function ProductExtra({ id, attributes }: Product) {
             src={
               'http://localhost:1337' + attributes.images.data[0].attributes.url
             }
-            alt={attributes.images.data[0].attributes.alternativeText}
+            alt={
+              attributes.images.data[0].attributes.alternativeText ??
+              attributes.slug
+            }
             width={'80px'}
             height={'auto'}
             style={{ height: 'auto' }}

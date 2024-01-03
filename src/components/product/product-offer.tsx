@@ -49,7 +49,10 @@ function cover({ id, attributes }: Product) {
       ) : null}
       <Image
         src={'http://localhost:1337' + attributes.images.data[0].attributes.url}
-        alt={attributes.images.data[0].attributes.alternativeText}
+        alt={
+          attributes.images.data[0].attributes.alternativeText ??
+          attributes.slug
+        }
         width={0}
         height={0}
         sizes="100vw"

@@ -122,7 +122,7 @@ export default function CategoriesSlider({
                   height={128}
                   alt={
                     category.attributes.thumbnail?.data.attributes
-                      .alternativeText ?? 'category'
+                      .alternativeText ?? category.attributes.slug
                   }
                   src={
                     'http://localhost:1337' +

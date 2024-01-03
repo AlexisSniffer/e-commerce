@@ -27,7 +27,7 @@ export default function ProductCarousel({ id, attributes }: Product) {
                 <div key={image.id}>
                   <Image
                     src={'http://localhost:1337' + image.attributes.url}
-                    alt={image.attributes.alternativeText}
+                    alt={image.attributes.alternativeText ?? attributes.slug}
                     width={0}
                     height={0}
                     sizes="100vw"
@@ -45,7 +45,7 @@ export default function ProductCarousel({ id, attributes }: Product) {
                 <Col span={6} key={image.attributes.url}>
                   <Image
                     src={'http://localhost:1337' + image.attributes.url}
-                    alt={image.attributes.alternativeText}
+                    alt={image.attributes.alternativeText ?? attributes.slug}
                     width={0}
                     height={0}
                     sizes="100vw"

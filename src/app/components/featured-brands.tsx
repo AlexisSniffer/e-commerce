@@ -109,7 +109,7 @@ export default function FeaturedBrands() {
                         <Image
                           alt={
                             brand.attributes.thumbnail?.data.attributes
-                              .alternativeText ?? ''
+                              .alternativeText ?? brand.attributes.slug
                           }
                           src={
                             'http://localhost:1337' +
