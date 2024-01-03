@@ -69,7 +69,18 @@ function cover({ id, attributes }: Product) {
         // onClick={}
         className={styles['add']}
       />
-      {attributes.discount &&
+      {attributes.isDiscount &&
+      (!attributes.until ||
+        (attributes.until && new Date(attributes.until) > new Date())) ? (
+        <Tag className={styles['discount']}>
+          -
+          {Math.round(
+            ((attributes.price - attributes.discount) / attributes.price) * 100,
+          )}
+          %
+        </Tag>
+      ) : null}
+      {attributes.isDiscount &&
       attributes.until &&
       new Date(attributes.until) > new Date() ? (
         <Tag className={styles['offer2']}>

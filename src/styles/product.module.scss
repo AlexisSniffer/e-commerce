@@ -95,6 +95,16 @@
       }
     }
 
+    .discount {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      color: #fff;
+      background-color: #da5555;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
     .offer2 {
       position: absolute;
       bottom: 0.5rem;
