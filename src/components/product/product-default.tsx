@@ -1,5 +1,7 @@
+import useCartStore from '@/store/cartStore'
 import styles from '@/styles/product.module.scss'
-import { Product } from '@/types/product'
+import { Product, ProductCart } from '@/types/product'
+import { productPrice } from '@/utils/product'
 import {
   ArrowRightOutlined,
   HeartOutlined,
@@ -14,9 +16,11 @@ import {
   Tag,
   ThemeConfig,
   Typography,
+  notification,
 } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Countdown from '../common/countdown'
 import ProductCategories from './components/product-categories'
 import ProductPrices from './components/product-price'
@@ -40,62 +44,84 @@ const theme: ThemeConfig = {
   },
 }
 
-function cover({ id, attributes }: Product) {
-  return (
-    <div className={styles['cover']}>
-      <Image
-        src={'http://localhost:1337' + attributes.images.data[0].attributes.url}
-        alt={
-          attributes.images.data[0].attributes.alternativeText ??
-          attributes.slug
-        }
-        width={0}
-        height={0}
-        sizes="100vw"
-      ></Image>
-      <Button
-        type="primary"
-        //onClick={showModal}
-        className={styles['quick-view']}
-      >
-        vista rápida
-      </Button>
-      <Button
-        shape="circle"
-        icon={
-          attributes.variants?.length ? (
-            <ArrowRightOutlined rev={undefined} />
-          ) : (
-            <ShoppingCartOutlined rev={undefined} />
-          )
-        }
-        // onClick={}
-        className={styles['add']}
-      />
-      {attributes.isDiscount &&
-      (!attributes.until ||
-        (attributes.until && new Date(attributes.until) > new Date())) ? (
-        <Tag className={styles['discount']}>
-          -
-          {Math.round(
-            ((attributes.price - attributes.discount) / attributes.price) * 100,
-          )}
-          %
-        </Tag>
-      ) : null}
-      {attributes.isDiscount &&
-      attributes.until &&
-      new Date(attributes.until) > new Date() ? (
-        <Tag className={styles['offer']}>
-          <span>oferta termina en:</span>{' '}
-          <Countdown targetDate={attributes.until} />
-        </Tag>
-      ) : null}
-    </div>
-  )
-}
-
 export default function ProductDefault({ id, attributes }: Product) {
+  const router = useRouter()
+  const { add } = useCartStore()
+
+  const addProduct = () => {
+    let product: ProductCart = {
+      id,
+      attributes,
+      qty: 1,
+      price: productPrice({ id, attributes }),
+    }
+
+    add(product)
+  }
+
+  const linkProduct = () => {
+    router.push(`/products/${attributes.slug}`)
+  }
+
+  const cover = ({ id, attributes }: Product) => {
+    return (
+      <div className={styles['cover']}>
+        <Image
+          src={
+            'http://localhost:1337' + attributes.images.data[0].attributes.url
+          }
+          alt={
+            attributes.images.data[0].attributes.alternativeText ??
+            attributes.slug
+          }
+          width={0}
+          height={0}
+          sizes="100vw"
+        ></Image>
+        <Button
+          type="primary"
+          //onClick={showModal}
+          className={styles['quick-view']}
+        >
+          vista rápida
+        </Button>
+        <Button
+          shape="circle"
+          disabled={!(attributes.stock > 0)}
+          icon={
+            attributes.variants?.length ? (
+              <ArrowRightOutlined />
+            ) : (
+              <ShoppingCartOutlined />
+            )
+          }
+          onClick={attributes.variants?.length ? linkProduct : addProduct}
+          className={styles['add']}
+        />
+        {attributes.isDiscount &&
+        (!attributes.until ||
+          (attributes.until && new Date(attributes.until) > new Date())) ? (
+          <Tag className={styles['discount']}>
+            -
+            {Math.round(
+              ((attributes.price - attributes.discount) / attributes.price) *
+                100,
+            )}
+            %
+          </Tag>
+        ) : null}
+        {attributes.isDiscount &&
+        attributes.until &&
+        new Date(attributes.until) > new Date() ? (
+          <Tag className={styles['offer']}>
+            <span>oferta termina en:</span>{' '}
+            <Countdown targetDate={attributes.until} />
+          </Tag>
+        ) : null}
+      </div>
+    )
+  }
+
   return (
     <ConfigProvider theme={theme}>
       <Card
