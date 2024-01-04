@@ -86,7 +86,7 @@ function cover({ id, attributes }: Product) {
       {attributes.isDiscount &&
       attributes.until &&
       new Date(attributes.until) > new Date() ? (
-        <Tag className={styles['offer2']}>
+        <Tag className={styles['offer']}>
           <span>oferta termina en:</span>{' '}
           <Countdown targetDate={attributes.until} />
         </Tag>
@@ -101,14 +101,14 @@ export default function ProductDefault({ id, attributes }: Product) {
       <Card
         hoverable
         cover={cover({ id: id, attributes: attributes })}
-        className={styles['product-default']}
+        className={`${styles['product']}`}
       >
         <Flex gap={10} justify="space-between">
           <ProductCategories id={id} attributes={attributes} />
           <HeartOutlined className={styles['wish']} />
         </Flex>
-        <Link className={styles['name']} href={`/products/${attributes.slug}`}>
-          <Text>{attributes.name}</Text>
+        <Link href={`/products/${attributes.slug}`}>
+          <Text className={styles['name']}>{attributes.name}</Text>
         </Link>
         <Rate
           disabled

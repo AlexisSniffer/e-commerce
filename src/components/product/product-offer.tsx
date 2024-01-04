@@ -68,40 +68,37 @@ export default function ProductOffer({ id, attributes }: Product) {
         hoverable
         cover={cover({ id: id, attributes: attributes })}
         style={{ height: '100%' }}
-        className={`${styles['product-default']} ${styles['product-offer']}`}
+        className={`${styles['product']} ${styles['product-offer']}`}
       >
-        <Flex align="center" vertical>
-          <ProductCategories id={id} attributes={attributes} />
-          <Link
-            className={styles['name']}
-            href={`/products/${attributes.slug}`}
-          >
-            <Text>{attributes.name}</Text>
-          </Link>
-          <Rate
-            disabled
-            value={attributes.ratings}
-            className={styles['rate']}
-          ></Rate>
-          <ProductPrices
-            price={attributes.price}
-            discount={{
-              isDiscount: attributes.isDiscount,
-              discount: attributes.discount,
-              until: attributes.until,
-            }}
-            variants={attributes.variants}
-          />
-          <Flex>
-            <Button
-              type="primary"
-              size="large"
-              icon={<ShoppingOutlined />}
-              className={styles['add']}
-            >
-              añadir
-            </Button>
+        <Flex vertical align="center" gap={20}>
+          <Flex vertical align="center">
+            <ProductCategories id={id} attributes={attributes} />
+            <Link href={`/products/${attributes.slug}`}>
+              <Text className={styles['name']}>{attributes.name}</Text>
+            </Link>
+            <Rate
+              disabled
+              value={attributes.ratings}
+              className={styles['rate']}
+            ></Rate>
+            <ProductPrices
+              price={attributes.price}
+              discount={{
+                isDiscount: attributes.isDiscount,
+                discount: attributes.discount,
+                until: attributes.until,
+              }}
+              variants={attributes.variants}
+            />
           </Flex>
+          <Button
+            type="primary"
+            size="large"
+            icon={<ShoppingOutlined />}
+            className={styles['add']}
+          >
+            añadir
+          </Button>
         </Flex>
       </Card>
     </ConfigProvider>

@@ -37,7 +37,7 @@ export default function ProductPrices({
           {priceMinMax.min} - {priceMinMax.max}
         </Text>
       ) : (
-        <Flex gap={5}>
+        <Flex gap={5} align="center">
           {discount?.isDiscount &&
           (!discount.until ||
             (discount.until && new Date(discount.until) > new Date())) ? (

@@ -24,6 +24,9 @@ const theme: ThemeConfig = {
     Button: {
       borderRadius: 0,
     },
+    Rate: {
+      marginXS: 2,
+    },
   },
 }
 
@@ -38,11 +41,18 @@ export default function ProductDetail({ id, attributes }: Product) {
 
   return (
     <ConfigProvider theme={theme}>
-      <Space direction="vertical" className={styles['product-detail']}>
-        <Title level={1} style={{ margin: 0 }}>
+      <Space
+        direction="vertical"
+        className={`${styles['product']} ${styles['product-detail']}`}
+      >
+        <Title level={1} className={styles['name']}>
           {attributes.name}
         </Title>
-        <Rate value={attributes.ratings} disabled></Rate>
+        <Rate
+          disabled
+          value={attributes.ratings}
+          className={styles['rate']}
+        ></Rate>
         <Divider style={{ marginTop: '0.5em', marginBottom: '0.5em' }} />
         <ProductPrices
           price={attributes.price}
@@ -56,32 +66,48 @@ export default function ProductDetail({ id, attributes }: Product) {
         {attributes.discount &&
         attributes.until &&
         new Date(attributes.until) > new Date() ? (
-          <Tag className={styles['offer2']}>
+          <Tag className={styles['offer']}>
             <span>oferta termina en:</span>{' '}
             <Countdown targetDate={attributes.until} />
           </Tag>
-        ) : null}
-        <Paragraph>{attributes.description}</Paragraph>
+        ) : (
+          <></>
+        )}
+        <Paragraph className={styles['description']}>
+          {attributes.description}
+        </Paragraph>
         <Flex vertical>
           <Space>
-            <Text>CATEGORIAS:</Text>
+            <Text className={styles['detail']}>categorias:</Text>
             <ProductCategories id={id} attributes={attributes} />
           </Space>
           <Space>
-            <Text>VENDEDOR:</Text>
-            <Text>{`${attributes.createdBy.firstname} ${attributes.createdBy.lastname}`}</Text>
+            <Text className={styles['detail']}>vendedor:</Text>
+            <Text
+              className={`${styles['detail']} ${styles['detail-vendor']}`}
+            >{`${attributes.createdBy.firstname} ${attributes.createdBy.lastname}`}</Text>
           </Space>
           <Space>
-            <Text>TIEMPO DE ENTREGA:</Text>
-            <Text>
+            <Text className={styles['detail']}>tiempo de entrega:</Text>
+            <Text
+              className={`${styles['detail']} ${styles['detail-delivery']}`}
+            >
               {attributes.deliveryTime?.data
                 ? attributes.deliveryTime.data.attributes.time
                 : 'N/A'}
             </Text>
           </Space>
           <Space>
-            <Text>STOCK:</Text>
-            <Text>{attributes.stock == 0 ? 'Agotado' : 'Disponible'}</Text>
+            <Text className={styles['detail']}>stock:</Text>
+            <Tag
+              className={`${styles['detail']} ${styles['detail-stock']} ${
+                attributes.stock > 0
+                  ? styles['detail-stock-available']
+                  : styles['detail-stock-soldout']
+              }`}
+            >
+              {attributes.stock > 0 ? 'disponible' : 'agotado'}
+            </Tag>
           </Space>
         </Flex>
         <ProductAdd id={id} attributes={attributes}></ProductAdd>

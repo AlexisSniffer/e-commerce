@@ -19,7 +19,10 @@ export default function ProductCarousel({ id, attributes }: Product) {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row gutter={[8, 8]} className={styles['product-carousel']}>
+      <Row
+        gutter={[8, 8]}
+        className={`${styles['product']} ${styles['product-carousel']}`}
+      >
         <Col span={24}>
           <Carousel ref={carouselRef} autoplay draggable pauseOnHover dots>
             {attributes.images.data.map((image: Media) => {

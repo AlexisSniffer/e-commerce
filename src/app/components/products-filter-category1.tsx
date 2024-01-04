@@ -132,21 +132,27 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
                   label: 'Lo más vendido',
                   children: products?.data ? (
                     <ProductFilter data={products?.data} />
-                  ) : null,
+                  ) : (
+                    <></>
+                  ),
                 },
                 {
                   key: '2',
                   label: 'Nuevos',
                   children: products?.data ? (
                     <ProductFilter data={products?.data} />
-                  ) : null,
+                  ) : (
+                    <></>
+                  ),
                 },
                 {
                   key: '3',
                   label: 'Mejores calificaciones',
                   children: products?.data ? (
                     <ProductFilter data={products?.data} />
-                  ) : null,
+                  ) : (
+                    <></>
+                  ),
                 },
               ]}
               onChange={() => {}}
@@ -164,7 +170,7 @@ export default function ProductsFilterCategory1({ id, attributes }: Category) {
           }}
         >
           <Title level={5}>Ofertas Especiales</Title>
-          <Row>
+          <Row gutter={[16, 20]}>
             {products?.data!.slice(0, 4).map((product: Product) => {
               return (
                 <Col

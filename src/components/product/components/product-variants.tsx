@@ -1,3 +1,4 @@
+import styles from '@/styles/product.module.scss'
 import { CheckOutlined } from '@ant-design/icons'
 import {
   Col,
@@ -32,7 +33,7 @@ export default function ProductVariants({
     <ConfigProvider theme={theme}>
       <Row>
         <Col span={3}>
-          <Text style={{ textTransform: 'uppercase' }}>{type}:</Text>
+          <Text className={styles['detail']}>{type}:</Text>
         </Col>
         <Col span={21}>
           <Radio.Group

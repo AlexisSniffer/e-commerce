@@ -1,6 +1,7 @@
 import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
 import { ConfigProvider, Flex, Rate, ThemeConfig, Typography } from 'antd'
+import Image from 'next/image'
 import Link from 'next/link'
 import ProductPrices from './components/product-price'
 
@@ -17,46 +18,35 @@ const theme: ThemeConfig = {
 export default function ProductExtra({ id, attributes }: Product) {
   return (
     <ConfigProvider theme={theme}>
-      <Flex
-        style={{
-          marginBottom: '1rem',
-        }}
-      >
-        <picture>
-          <img
-            src={
-              'http://localhost:1337' + attributes.images.data[0].attributes.url
-            }
-            alt={
-              attributes.images.data[0].attributes.alternativeText ??
-              attributes.slug
-            }
-            width={'80px'}
-            height={'auto'}
-            style={{ height: 'auto' }}
-          />
-        </picture>
+      <Flex gap={10} align="center">
+        <Image
+          src={
+            'http://localhost:1337' + attributes.images.data[0].attributes.url
+          }
+          alt={
+            attributes.images.data[0].attributes.alternativeText ??
+            attributes.slug
+          }
+          width={80}
+          height={80}
+        />
         <Flex
           vertical
           gap={2}
           style={{
-            padding: '1rem 0 0 0.5rem ',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
-          className={styles['product-default']}
+          className={`${styles['product']} ${styles['product-extra']}`}
         >
-          <Link
-            className={styles['name']}
-            href={`/products/${attributes.slug}`}
-          >
-            <Text>{attributes.name}</Text>
+          <Link href={`/products/${attributes.slug}`}>
+            <Text className={styles['name']}>{attributes.name}</Text>
           </Link>
           <Rate
-            value={attributes.ratings}
             disabled
-            style={{ fontSize: '0.9rem' }}
+            value={attributes.ratings}
+            className={styles['rate']}
           ></Rate>
           <ProductPrices
             price={attributes.price}

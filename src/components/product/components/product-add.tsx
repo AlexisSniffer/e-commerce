@@ -1,4 +1,5 @@
-import { Product } from '@/types/product'
+import useCartStore from '@/store/cartStore'
+import { Product, ProductCart } from '@/types/product'
 import { Variants } from '@/types/variants'
 import { Variation } from '@/types/variation'
 import {
@@ -6,10 +7,10 @@ import {
   Col,
   ConfigProvider,
   Divider,
+  Flex,
   Form,
   InputNumber,
   Row,
-  Space,
   ThemeConfig,
   Typography,
 } from 'antd'
@@ -32,6 +33,8 @@ const theme: ThemeConfig = {
 
 export default function ProductAdd({ id, attributes }: Product) {
   const [form] = Form.useForm()
+  const { add } = useCartStore()
+
   const allVariantOptions = attributes.variants?.map((variant: Variants) => {
     const allOptions: any = {}
 
@@ -77,7 +80,7 @@ export default function ProductAdd({ id, attributes }: Product) {
     })
   }
 
-  const [selectedVariant, setSelectedVariant] = useState<any | null>()
+  const [selectedVariant, setSelectedVariant] = useState<Variants | undefined>()
   const [selectedOptions, setSelectedOptions] = useState(defaultValues)
 
   const setOptions = (type: string, value: string) => {
@@ -90,7 +93,7 @@ export default function ProductAdd({ id, attributes }: Product) {
       [type]: value,
     }
 
-    setSelectedVariant(null)
+    setSelectedVariant(undefined)
     allVariantOptions.map((item) => {
       if (JSON.stringify(item.variant) === JSON.stringify(selection)) {
         setSelectedVariant(item)
@@ -100,7 +103,17 @@ export default function ProductAdd({ id, attributes }: Product) {
   ///////////////////////////////////////////////
 
   const onFinish = (values: any) => {
-    console.log(values)
+    let product: ProductCart = {
+      id,
+      attributes,
+      qty: values.qty,
+      price: 0,
+      ...(attributes.variants.length && selectedVariant
+        ? { variant: selectedVariant }
+        : null),
+    }
+
+    add(product)
   }
 
   return (
@@ -130,26 +143,20 @@ export default function ProductAdd({ id, attributes }: Product) {
                 until: selectedVariant.until,
               }}
             />
-          ) : null}
+          ) : (
+            <></>
+          )}
         </Col>
       </Row>
       <Row>
         <Col>
-          <Form
-            form={form}
-            name="productDetailForm"
-            labelCol={{ span: 8 }}
-            initialValues={{
-              ['qty']: 1,
-            }}
-            onFinish={onFinish}
-          >
-            <Form.Item
-              name="qty"
-              rules={[{ required: true }]}
-              style={{ width: '100px', margin: 0 }}
-            >
-              <Space>
+          <Form form={form} name="productDetailForm" onFinish={onFinish}>
+            <Flex gap={5}>
+              <Form.Item
+                name="qty"
+                rules={[{ required: true }]}
+                style={{ width: '100px', margin: 0 }}
+              >
                 <InputNumber
                   size="large"
                   style={{ width: '100px' }}
@@ -160,19 +167,18 @@ export default function ProductAdd({ id, attributes }: Product) {
                     attributes.variants.length ? selectedVariant == null : false
                   }
                 />
-
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={form.submit}
-                  disabled={
-                    attributes.variants.length ? selectedVariant == null : false
-                  }
-                >
-                  Añadir a carrito
-                </Button>
-              </Space>
-            </Form.Item>
+              </Form.Item>
+              <Button
+                type="primary"
+                size="large"
+                onClick={form.submit}
+                disabled={
+                  attributes.variants.length ? selectedVariant == null : false
+                }
+              >
+                Añadir a carrito
+              </Button>
+            </Flex>
           </Form>
         </Col>
       </Row>

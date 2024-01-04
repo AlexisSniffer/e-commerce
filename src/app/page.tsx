@@ -59,7 +59,9 @@ export default function Home() {
               attributes={categories?.data[random2].attributes}
             />
           </>
-        ) : null}
+        ) : (
+          <></>
+        )}
         <FeaturedBrands />
         <ProductsView />
       </Container>
