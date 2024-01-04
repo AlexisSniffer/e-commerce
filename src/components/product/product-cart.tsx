@@ -52,7 +52,7 @@ export default function ProductCart({ product }: { product: ProductCart }) {
             shape="circle"
             size="small"
             icon={<CloseOutlined />}
-            onClick={() => remove(product.id)}
+            onClick={() => remove(product)}
           ></Button>
         </div>
       </Flex>

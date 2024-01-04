@@ -7,7 +7,7 @@ interface CartState {
   subtotal: number
   add: (product: ProductCart) => void
   edit: (product: ProductCart) => void
-  remove: (id: number) => void
+  remove: (product: ProductCart) => void
 }
 
 const useCartStore = create<CartState>()((set) => ({
@@ -54,9 +54,14 @@ const useCartStore = create<CartState>()((set) => ({
       }
     })
   },
-  remove: (id: number) => {
+  remove: (product: ProductCart) => {
     set((state) => {
-      state.cart = state.cart.filter((product) => product.id !== id)
+      state.cart = state.cart.filter(
+        (p) =>
+          p.id !== product.id ||
+          (product.variant !== undefined &&
+            p.variant?.id !== product.variant.id),
+      )
 
       return {
         cart: [...state.cart],
