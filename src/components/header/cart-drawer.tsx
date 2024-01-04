@@ -14,6 +14,7 @@ const { Text } = Typography
 
 export default function CartDrawer(props: CartDrawerProps) {
   const cartStore = useCartStore((state) => state.cart)
+  const subTotalStore = useCartStore((state) => state.subtotal)
 
   return (
     <Drawer
@@ -23,22 +24,28 @@ export default function CartDrawer(props: CartDrawerProps) {
       onClose={props.onClose}
       open={props.isOpen}
     >
-      <Flex vertical gap={10}>
-        {cartStore.map((product) => {
-          return <ProductCart key={product.id} product={product} />
-        })}
-      </Flex>
-      <Divider />
-      <Flex vertical gap={10}>
-        <Flex justify="space-between">
-          <Text>SUBTOTAL:</Text>
-          <Text>{money.format(10.0)}</Text>
-        </Flex>
-        <Button size="large">VER CARRO</Button>
-        <Button size="large" type="primary">
-          VERIFICAR
-        </Button>
-      </Flex>
+      {cartStore.length ? (
+        <>
+          <Flex vertical gap={10}>
+            {cartStore.map((product) => {
+              return <ProductCart key={product.id} product={product} />
+            })}
+          </Flex>
+          <Divider />
+          <Flex vertical gap={10}>
+            <Flex justify="space-between">
+              <Text strong>SUBTOTAL:</Text>
+              <Text strong>{money.format(subTotalStore)}</Text>
+            </Flex>
+            <Button size="large">VER CARRO</Button>
+            <Button size="large" type="primary">
+              VERIFICAR
+            </Button>
+          </Flex>
+        </>
+      ) : (
+        <Text italic>No hay productos en el carrito.</Text>
+      )}
     </Drawer>
   )
 }

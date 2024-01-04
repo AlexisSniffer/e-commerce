@@ -105,7 +105,7 @@ export default function ProductAdd({ id, attributes }: Product) {
       id,
       attributes,
       qty: values.qty,
-      price: 0,
+      price: attributes.price,
       ...(attributes.variants.length && selectedVariant
         ? { variant: selectedVariant }
         : null),

@@ -1,5 +1,6 @@
 'use client'
 
+import useCartStore from '@/store/cartStore'
 import { Category } from '@/types/category'
 import { Payload } from '@/types/payload'
 import {
@@ -18,6 +19,7 @@ export default function CartIcons({
   meta,
 }: Payload<Category[] | undefined>) {
   const [open, setOpen] = useState(false)
+  const countStore = useCartStore((state) => state.count)
 
   return (
     <>
@@ -39,7 +41,7 @@ export default function CartIcons({
           </Link>
         </Col>
         <Col>
-          <Badge count={4}>
+          <Badge count={countStore}>
             <ShoppingOutlined
               style={{ fontSize: '1.7rem' }}
               rev={undefined}

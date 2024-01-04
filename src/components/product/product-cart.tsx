@@ -1,7 +1,9 @@
+import useCartStore from '@/store/cartStore'
 import styles from '@/styles/product.module.scss'
 import { ProductCart } from '@/types/product'
 import { money } from '@/utils/formatters'
-import { ConfigProvider, Flex, ThemeConfig, Typography } from 'antd'
+import { CloseOutlined } from '@ant-design/icons'
+import { Button, ConfigProvider, Flex, ThemeConfig, Typography } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -16,6 +18,8 @@ const theme: ThemeConfig = {
 }
 
 export default function ProductCart({ product }: { product: ProductCart }) {
+  const { remove } = useCartStore()
+
   return (
     <ConfigProvider theme={theme}>
       <Flex
@@ -31,18 +35,26 @@ export default function ProductCart({ product }: { product: ProductCart }) {
             {product.qty} <span>x</span> {money.format(product.price)}
           </Text>
         </Flex>
-        <Image
-          src={
-            'http://localhost:1337' +
-            product.attributes.images.data[0].attributes.url
-          }
-          alt={
-            product.attributes.images.data[0].attributes.alternativeText ??
-            product.attributes.slug
-          }
-          width={78}
-          height={78}
-        ></Image>
+        <div className={styles['remove']}>
+          <Image
+            src={
+              'http://localhost:1337' +
+              product.attributes.images.data[0].attributes.url
+            }
+            alt={
+              product.attributes.images.data[0].attributes.alternativeText ??
+              product.attributes.slug
+            }
+            width={78}
+            height={78}
+          />
+          <Button
+            shape="circle"
+            size="small"
+            icon={<CloseOutlined />}
+            onClick={() => remove(product.id)}
+          ></Button>
+        </div>
       </Flex>
     </ConfigProvider>
   )

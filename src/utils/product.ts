@@ -17,3 +17,7 @@ export const disableProduct = ({
 
   return false
 }
+
+export const productPrice = () => {
+  return 0
+}
