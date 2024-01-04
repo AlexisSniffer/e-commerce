@@ -71,10 +71,7 @@ export default function ProductAdd({ id, attributes }: Product) {
     })
 
   let options = []
-  const defaultValues: any = {}
   for (const [key, value] of optionsMap) {
-    defaultValues[key] = value.values().next().value
-
     options.push({
       type: key,
       values: value,
@@ -82,7 +79,7 @@ export default function ProductAdd({ id, attributes }: Product) {
   }
 
   const [selectedVariant, setSelectedVariant] = useState<Variants | undefined>()
-  const [selectedOptions, setSelectedOptions] = useState(defaultValues)
+  const [selectedOptions, setSelectedOptions] = useState({})
 
   const setOptions = (type: string, value: string) => {
     setSelectedOptions((prevState: any) => {
