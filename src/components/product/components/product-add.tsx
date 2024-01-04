@@ -17,7 +17,7 @@ import {
 import { useState } from 'react'
 import ProductPrices from './product-price'
 import ProductVariants from './product-variants'
-import { disableProduct } from '@/utils/product'
+import { disableProduct, productPrice } from '@/utils/product'
 
 const { Text } = Typography
 
@@ -105,7 +105,7 @@ export default function ProductAdd({ id, attributes }: Product) {
       id,
       attributes,
       qty: values.qty,
-      price: attributes.price,
+      price: productPrice({ id, attributes }, selectedVariant),
       ...(attributes.variants.length && selectedVariant
         ? { variant: selectedVariant }
         : null),
@@ -161,9 +161,11 @@ export default function ProductAdd({ id, attributes }: Product) {
                   maxLength={16}
                   min={1}
                   max={20}
-                  disabled={
-                    attributes.variants.length ? selectedVariant == null : false
-                  }
+                  disabled={disableProduct({
+                    id: id,
+                    attributes: attributes,
+                    selectedVariant: selectedVariant,
+                  })}
                 />
               </Form.Item>
               <Button

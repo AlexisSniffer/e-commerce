@@ -18,6 +18,33 @@ export const disableProduct = ({
   return false
 }
 
-export const productPrice = () => {
-  return 0
+export const productPrice = (product: Product, selectedVariant?: Variants) => {
+  if (product.attributes.variants.length && selectedVariant) {
+    return getPrice(
+      selectedVariant.price,
+      selectedVariant.isDiscount,
+      selectedVariant.discount,
+      selectedVariant.until,
+    )
+  }
+
+  return getPrice(
+    product.attributes.price,
+    product.attributes.isDiscount,
+    product.attributes.discount,
+    product.attributes.until,
+  )
+}
+
+function getPrice(
+  price: number,
+  isDiscount: boolean,
+  discount?: number,
+  until?: Date,
+): number {
+  if (isDiscount && (!until || (until && new Date(until) > new Date()))) {
+    return discount!
+  }
+
+  return price
 }

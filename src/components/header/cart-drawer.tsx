@@ -26,7 +26,7 @@ export default function CartDrawer(props: CartDrawerProps) {
     >
       {cartStore.length ? (
         <>
-          <Flex vertical gap={10}>
+          <Flex vertical gap={20}>
             {cartStore.map((product) => {
               return <ProductCart key={product.id} product={product} />
             })}
