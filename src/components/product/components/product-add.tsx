@@ -17,6 +17,7 @@ import {
 import { useState } from 'react'
 import ProductPrices from './product-price'
 import ProductVariants from './product-variants'
+import { disableProduct } from '@/utils/product'
 
 const { Text } = Typography
 
@@ -172,9 +173,11 @@ export default function ProductAdd({ id, attributes }: Product) {
                 type="primary"
                 size="large"
                 onClick={form.submit}
-                disabled={
-                  attributes.variants.length ? selectedVariant == null : false
-                }
+                disabled={disableProduct({
+                  id: id,
+                  attributes: attributes,
+                  selectedVariant: selectedVariant,
+                })}
               >
                 Añadir a carrito
               </Button>

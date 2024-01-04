@@ -40,7 +40,7 @@ export default function ProductVariants({
             name="radiogroup"
             optionType="button"
             buttonStyle="solid"
-            style={{ display: 'flex' }}
+            className={styles['variants']}
             onChange={({ target: { value } }: RadioChangeEvent) => {
               setSelectedVariant(value)
               setOptions(type, value)
@@ -51,14 +51,8 @@ export default function ProductVariants({
                 <Radio
                   key={value}
                   value={value}
+                  className={styles['variant']}
                   style={{
-                    display: 'flex',
-                    minWidth: '40px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
                     backgroundColor: value,
                   }}
                 >
