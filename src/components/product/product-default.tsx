@@ -50,7 +50,9 @@ const theme: ThemeConfig = {
 
 export default function ProductDefault({ id, attributes }: Product) {
   const router = useRouter()
-  const [api, contextHolder] = notification.useNotification()
+  const [api, contextHolder] = notification.useNotification({
+    stack: { threshold: 4 },
+  })
   const { add } = useCartStore()
 
   const addProduct = () => {
@@ -159,9 +161,9 @@ export default function ProductDefault({ id, attributes }: Product) {
           </Flex>
         </Flex>
         <Flex gap={10}>
-          <Button block>Ver</Button>
+          <Button block>VER</Button>
           <Button block type="primary">
-            Pagar
+            VERIFICAR
           </Button>
         </Flex>
       </Flex>

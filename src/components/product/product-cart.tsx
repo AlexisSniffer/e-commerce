@@ -6,6 +6,7 @@ import { CloseOutlined } from '@ant-design/icons'
 import { Button, ConfigProvider, Flex, ThemeConfig, Typography } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
+import React from 'react'
 
 const { Text } = Typography
 
@@ -20,6 +21,12 @@ const theme: ThemeConfig = {
 export default function ProductCart({ product }: { product: ProductCart }) {
   const { remove } = useCartStore()
 
+  const Variation = ({ value, className }: any) => (
+    <span style={{ backgroundColor: value }} className={styles['color']}>
+      {className == 'color' ? '' : value}
+    </span>
+  )
+
   return (
     <ConfigProvider theme={theme}>
       <Flex
@@ -29,7 +36,28 @@ export default function ProductCart({ product }: { product: ProductCart }) {
       >
         <Flex vertical>
           <Link href={`/products/${product.attributes.slug}`}>
-            <Text className={styles['name']}>{product.attributes.name}</Text>
+            <Text className={styles['name']}>
+              {product.attributes.name}
+
+              {product.variant ? (
+                <Text className={styles['variant']}>
+                  {Object.entries(product.variant.variant).map(
+                    ([key, value], index, array) => (
+                      <React.Fragment key={key}>
+                        <span>{key}</span> :{' '}
+                        <Variation
+                          value={value}
+                          className={key === 'color' ? 'color' : ''}
+                        />
+                        {index < array.length - 1 && ', '}
+                      </React.Fragment>
+                    ),
+                  )}
+                </Text>
+              ) : (
+                <></>
+              )}
+            </Text>
           </Link>
           <Text className={styles['qty']}>
             {product.qty} <span>x</span> {money.format(product.price)}

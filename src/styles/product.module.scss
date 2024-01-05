@@ -249,6 +249,27 @@
   &-cart {
     .name {
       font-weight: bold;
+
+      .variant {
+        margin-left: 5px;
+        color: $body-text;
+        font-size: 0.8rem;
+        font-weight: normal;
+        text-transform: capitalize;
+
+        .color {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+
+        &::before {
+          content: '-';
+          margin-right: 5px;
+          font-size: 1rem;
+        }
+      }
     }
 
     .qty {
