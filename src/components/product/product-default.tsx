@@ -41,11 +41,16 @@ const theme: ThemeConfig = {
     Rate: {
       marginXS: 2,
     },
+    Notification: {
+      paddingContentHorizontalLG: 10,
+      paddingMD: 10,
+    },
   },
 }
 
 export default function ProductDefault({ id, attributes }: Product) {
   const router = useRouter()
+  const [api, contextHolder] = notification.useNotification()
   const { add } = useCartStore()
 
   const addProduct = () => {
@@ -55,6 +60,12 @@ export default function ProductDefault({ id, attributes }: Product) {
       qty: 1,
       price: productPrice({ id, attributes }),
     }
+
+    api.open({
+      message: null,
+      description: addMessage(),
+      placement: 'bottomRight',
+    })
 
     add(product)
   }
@@ -122,8 +133,44 @@ export default function ProductDefault({ id, attributes }: Product) {
     )
   }
 
+  const addMessage = () => {
+    return (
+      <Flex
+        vertical
+        className={`${styles['product']} ${styles['product-add-message']}`}
+      >
+        <Flex align="center" gap={10}>
+          <Image
+            src={
+              'http://localhost:1337' + attributes.images.data[0].attributes.url
+            }
+            alt={
+              attributes.images.data[0].attributes.alternativeText ??
+              attributes.slug
+            }
+            width={60}
+            height={60}
+          />
+          <Flex vertical>
+            <Text className={styles['name']}>{attributes.name}</Text>
+            <Text className={styles['add-message']}>
+              se ha agregado a tu carrito!
+            </Text>
+          </Flex>
+        </Flex>
+        <Flex gap={10}>
+          <Button block>Ver</Button>
+          <Button block type="primary">
+            Pagar
+          </Button>
+        </Flex>
+      </Flex>
+    )
+  }
+
   return (
     <ConfigProvider theme={theme}>
+      {contextHolder}
       <Card
         hoverable
         cover={cover({ id: id, attributes: attributes })}

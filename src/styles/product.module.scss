@@ -269,4 +269,16 @@
       }
     }
   }
+
+  &-add-message {
+    .name {
+      font-weight: bold;
+    }
+
+    .add-message {
+      color: $body-text;
+      font-style: italic;
+      font-size: 0.8rem;
+    }
+  }
 }
