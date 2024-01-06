@@ -46,6 +46,7 @@ interface DataType {
 
 export default function ShoppingCart() {
   const cartStore = useCartStore((state) => state.cart)
+  const subtotalStore = useCartStore((state) => state.subtotal)
   const { remove } = useCartStore()
 
   const Variation = ({ value, className }: any) => (
@@ -168,18 +169,22 @@ export default function ShoppingCart() {
           <Card title="TOTALES DEL CARRITO" className={styles2['totals']}>
             <Flex justify="space-between" align="center">
               <Text className={styles2['title']}>Subtotal</Text>
-              <Text className={styles2['price']}>{money.format(100)}</Text>
+              <Text className={styles2['price']}>
+                {money.format(subtotalStore)}
+              </Text>
             </Flex>
             <Divider className={styles2['divider']} />
             <Flex justify="space-between" align="center">
               <Text className={styles2['title']}>ITBMS</Text>
-              <Text className={styles2['price']}>{money.format(100)}</Text>
+              <Text className={styles2['price']}>
+                {money.format(subtotalStore * 0.07)}
+              </Text>
             </Flex>
             <Divider className={styles2['divider']} />
             <Flex justify="space-between" align="center">
               <Text className={styles2['title']}>Total</Text>
               <Text className={`${styles2['price']} ${styles2['total']}`}>
-                {money.format(200)}
+                {money.format(subtotalStore + subtotalStore * 0.07)}
               </Text>
             </Flex>
             <Button

@@ -148,7 +148,14 @@ export default function ProductAdd({ id, attributes }: Product) {
       </Row>
       <Row>
         <Col>
-          <Form form={form} name="productDetailForm" onFinish={onFinish}>
+          <Form
+            form={form}
+            name="productDetailForm"
+            initialValues={{
+              ['qty']: 1,
+            }}
+            onFinish={onFinish}
+          >
             <Flex gap={5}>
               <Form.Item
                 name="qty"
