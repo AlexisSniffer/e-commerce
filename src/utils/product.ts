@@ -19,7 +19,7 @@ export const disableProduct = ({
 }
 
 export const productPrice = (product: Product, selectedVariant?: Variants) => {
-  if (product.attributes.variants.length && selectedVariant) {
+  if (product.attributes.variants && selectedVariant) {
     return getPrice(
       selectedVariant.price,
       selectedVariant.isDiscount,
