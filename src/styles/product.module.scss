@@ -239,10 +239,25 @@
   }
 
   &-carousel,
-  &-cart {
+  &-cart,
+  &-cart-shopping {
     img {
       display: block;
       border: 1px solid lighten($light-text, 50);
+    }
+  }
+
+  &-cart,
+  &-cart-shopping {
+    .remove {
+      width: 80px;
+      position: relative;
+
+      button {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+      }
     }
   }
 
@@ -277,16 +292,6 @@
 
       span {
         font-size: 0.7rem;
-      }
-    }
-
-    .remove {
-      position: relative;
-
-      button {
-        position: absolute;
-        top: -10px;
-        right: -10px;
       }
     }
   }
