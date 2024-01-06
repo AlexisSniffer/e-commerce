@@ -10,8 +10,12 @@ import {
   Row,
   Table,
   ThemeConfig,
+  Typography,
 } from 'antd'
 import Image from 'next/image'
+import React from 'react'
+
+const { Text } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -29,7 +33,7 @@ const theme: ThemeConfig = {
 interface DataType {
   key: React.Key
   image: ProductCart
-  name: string
+  name: ProductCart
   price: number
   qty: number
   subtotal: number
@@ -38,6 +42,12 @@ interface DataType {
 export default function ShoppingCart() {
   const cartStore = useCartStore((state) => state.cart)
   const { remove } = useCartStore()
+
+  const Variation = ({ value, className }: any) => (
+    <span style={{ backgroundColor: value }} className={styles['color']}>
+      {className == 'color' ? '' : value}
+    </span>
+  )
 
   const columns = [
     {
@@ -70,6 +80,29 @@ export default function ShoppingCart() {
       title: 'producto',
       dataIndex: 'name',
       key: 'name',
+      render: (product: ProductCart) => (
+        <Text className={styles['name']}>
+          {product.attributes.name}
+          {product.variant ? (
+            <Text className={styles['variant']}>
+              {Object.entries(product.variant.variant).map(
+                ([key, value], index, array) => (
+                  <React.Fragment key={key}>
+                    <span>{key}</span> :{' '}
+                    <Variation
+                      value={value}
+                      className={key === 'color' ? 'color' : ''}
+                    />
+                    {index < array.length - 1 && ', '}
+                  </React.Fragment>
+                ),
+              )}
+            </Text>
+          ) : (
+            <></>
+          )}
+        </Text>
+      ),
     },
     {
       title: 'precio',
@@ -92,7 +125,7 @@ export default function ShoppingCart() {
     return {
       key: `${product.id}`,
       image: product,
-      name: product.attributes.name,
+      name: product,
       price: product.price,
       qty: product.qty,
       subtotal: product.price * product.qty,

@@ -38,7 +38,6 @@ export default function ProductCart({ product }: { product: ProductCart }) {
           <Link href={`/products/${product.attributes.slug}`}>
             <Text className={styles['name']}>
               {product.attributes.name}
-
               {product.variant ? (
                 <Text className={styles['variant']}>
                   {Object.entries(product.variant.variant).map(

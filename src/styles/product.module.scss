@@ -249,6 +249,21 @@
 
   &-cart,
   &-cart-shopping {
+    .variant {
+      color: $body-text;
+      font-size: 0.8rem;
+      font-weight: normal;
+      text-transform: capitalize;
+      text-wrap: wrap;
+
+      .color {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+    }
+
     .remove {
       width: 80px;
       position: relative;
@@ -267,17 +282,7 @@
 
       .variant {
         margin-left: 5px;
-        color: $body-text;
-        font-size: 0.8rem;
-        font-weight: normal;
-        text-transform: capitalize;
-
-        .color {
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-        }
+        line-height: 1;
 
         &::before {
           content: '-';
@@ -293,6 +298,12 @@
       span {
         font-size: 0.7rem;
       }
+    }
+  }
+
+  &-cart-shopping {
+    .variant {
+      display: block;
     }
   }
 
