@@ -1,11 +1,16 @@
 import useCartStore from '@/store/cartStore'
+import styles2 from '@/styles/cart.module.scss'
 import styles from '@/styles/product.module.scss'
 import { ProductCart } from '@/types/product'
+import { money } from '@/utils/formatters'
 import { CloseOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import {
   Button,
+  Card,
   Col,
   ConfigProvider,
+  Divider,
+  Flex,
   Result,
   Row,
   Table,
@@ -77,7 +82,7 @@ export default function ShoppingCart() {
       ),
     },
     {
-      title: 'producto',
+      title: <Text className={styles2['title-column']}>producto</Text>,
       dataIndex: 'name',
       key: 'name',
       render: (product: ProductCart) => (
@@ -105,17 +110,17 @@ export default function ShoppingCart() {
       ),
     },
     {
-      title: 'precio',
+      title: <Text className={styles2['title-column']}>precio</Text>,
       dataIndex: 'price',
       key: 'price',
     },
     {
-      title: 'cantidad',
+      title: <Text className={styles2['title-column']}>cantidad</Text>,
       dataIndex: 'qty',
       key: 'qty',
     },
     {
-      title: 'subtotal',
+      title: <Text className={styles2['title-column']}>subtotal</Text>,
       dataIndex: 'subtotal',
       key: 'subtotal',
     },
@@ -150,15 +155,43 @@ export default function ShoppingCart() {
 
   return (
     <ConfigProvider theme={theme}>
-      <Row>
+      <Row gutter={16}>
         <Col span={16}>
           <Table
             dataSource={dataSource}
             columns={columns}
             className={`${styles['product']} ${styles['product-cart-shopping']}`}
-          ></Table>
+            pagination={false}
+          />
         </Col>
-        <Col span={8}>Card</Col>
+        <Col span={8}>
+          <Card title="TOTALES DEL CARRITO" className={styles2['totals']}>
+            <Flex justify="space-between" align="center">
+              <Text className={styles2['title']}>Subtotal</Text>
+              <Text className={styles2['price']}>{money.format(100)}</Text>
+            </Flex>
+            <Divider className={styles2['divider']} />
+            <Flex justify="space-between" align="center">
+              <Text className={styles2['title']}>ITBMS</Text>
+              <Text className={styles2['price']}>{money.format(100)}</Text>
+            </Flex>
+            <Divider className={styles2['divider']} />
+            <Flex justify="space-between" align="center">
+              <Text className={styles2['title']}>Total</Text>
+              <Text className={`${styles2['price']} ${styles2['total']}`}>
+                {money.format(200)}
+              </Text>
+            </Flex>
+            <Button
+              type="primary"
+              size="large"
+              block
+              className={styles2['checkout']}
+            >
+              Pasar por la caja
+            </Button>
+          </Card>
+        </Col>
       </Row>
     </ConfigProvider>
   )

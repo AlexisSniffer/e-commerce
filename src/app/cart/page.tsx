@@ -13,7 +13,9 @@ import OrderComplete from './components/order-complete'
 import ShoppingCart from './components/shopping-cart'
 
 const theme: ThemeConfig = {
-  components: {},
+  components: {
+    Steps: {},
+  },
 }
 
 export default function Cart() {
@@ -39,9 +41,11 @@ export default function Cart() {
   return (
     <ConfigProvider theme={theme}>
       <Container>
-        <Row className={styles['steps']}>
+        <Row>
+          <Col span={14} offset={5}>
+            <Steps items={items} current={0} className={styles['steps']} />
+          </Col>
           <Col span={24}>
-            <Steps items={items} current={0} type="navigation" />
             <div>{items[0].content}</div>
           </Col>
         </Row>
