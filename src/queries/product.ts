@@ -58,6 +58,7 @@ export const qsProducts = (filters: {
           fields: ['name', 'slug'],
         },
         images: '*',
+        variants: '*',
       },
       filters: {
         id: {
