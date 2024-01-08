@@ -12,6 +12,7 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import { useRouter } from 'next/navigation'
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -30,6 +31,7 @@ const theme: ThemeConfig = {
 }
 
 export default function CartDrawer(props: CartDrawerProps) {
+  const router = useRouter()
   const cartStore = useCartStore((state) => state.cart)
   const subTotalStore = useCartStore((state) => state.subtotal)
 
@@ -55,7 +57,15 @@ export default function CartDrawer(props: CartDrawerProps) {
                 <Text strong>SUBTOTAL:</Text>
                 <Text strong>{money.format(subTotalStore)}</Text>
               </Flex>
-              <Button size="large">VER</Button>
+              <Button
+                size="large"
+                onClick={() => {
+                  // TODO: cerrar modal al ir a /cart
+                  router.push('/cart')
+                }}
+              >
+                VER
+              </Button>
               <Button size="large" type="primary">
                 VERIFICAR
               </Button>

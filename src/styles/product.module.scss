@@ -302,6 +302,25 @@
   }
 
   &-cart-shopping {
+    .name:hover {
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .name,
+    .price,
+    .qty,
+    .subtotal {
+      font-size: inherit;
+      font-weight: normal;
+      color: $headings-text;
+    }
+
+    .subtotal {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
     .variant {
       display: block;
     }

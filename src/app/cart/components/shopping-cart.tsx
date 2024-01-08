@@ -17,6 +17,7 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
 import Image from 'next/image'
 import React from 'react'
 
@@ -35,15 +36,6 @@ const theme: ThemeConfig = {
   },
 }
 
-interface DataType {
-  key: React.Key
-  image: ProductCart
-  name: ProductCart
-  price: number
-  qty: number
-  subtotal: number
-}
-
 export default function ShoppingCart() {
   const cartStore = useCartStore((state) => state.cart)
   const subtotalStore = useCartStore((state) => state.subtotal)
@@ -55,10 +47,8 @@ export default function ShoppingCart() {
     </span>
   )
 
-  const columns = [
+  const columns: ColumnsType<ProductCart> = [
     {
-      dataIndex: 'image',
-      key: 'image',
       render: (product: ProductCart) => (
         <div className={styles['remove']}>
           <Image
@@ -84,7 +74,6 @@ export default function ShoppingCart() {
     },
     {
       title: <Text className={styles2['title-column']}>producto</Text>,
-      dataIndex: 'name',
       key: 'name',
       render: (product: ProductCart) => (
         <Text className={styles['name']}>
@@ -112,31 +101,28 @@ export default function ShoppingCart() {
     },
     {
       title: <Text className={styles2['title-column']}>precio</Text>,
-      dataIndex: 'price',
       key: 'price',
+      render: (product: ProductCart) => (
+        <Text className={styles['price']}>{money.format(product.price)}</Text>
+      ),
     },
     {
       title: <Text className={styles2['title-column']}>cantidad</Text>,
-      dataIndex: 'qty',
       key: 'qty',
+      render: (product: ProductCart) => (
+        <Text className={styles['qty']}>{product.qty}</Text>
+      ),
     },
     {
       title: <Text className={styles2['title-column']}>subtotal</Text>,
-      dataIndex: 'subtotal',
-      key: 'subtotal',
+      key: 'qty',
+      render: (product: ProductCart) => (
+        <Text className={styles['subtotal']}>
+          {money.format(product.price * product.qty)}
+        </Text>
+      ),
     },
   ]
-
-  const dataSource: DataType[] = cartStore.map((product: ProductCart) => {
-    return {
-      key: `${product.id}`,
-      image: product,
-      name: product,
-      price: product.price,
-      qty: product.qty,
-      subtotal: product.price * product.qty,
-    }
-  })
 
   if (!cartStore.length) {
     return (
@@ -159,7 +145,7 @@ export default function ShoppingCart() {
       <Row gutter={16}>
         <Col span={16}>
           <Table
-            dataSource={dataSource}
+            dataSource={cartStore}
             columns={columns}
             className={`${styles['product']} ${styles['product-cart-shopping']}`}
             pagination={false}
