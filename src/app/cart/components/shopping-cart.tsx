@@ -19,6 +19,7 @@ import {
 } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const { Text } = Typography
@@ -76,27 +77,29 @@ export default function ShoppingCart() {
       title: <Text className={styles2['title-column']}>producto</Text>,
       key: 'name',
       render: (product: ProductCart) => (
-        <Text className={styles['name']}>
-          {product.attributes.name}
-          {product.variant ? (
-            <Text className={styles['variant']}>
-              {Object.entries(product.variant.variant).map(
-                ([key, value], index, array) => (
-                  <React.Fragment key={key}>
-                    <span>{key}</span> :{' '}
-                    <Variation
-                      value={value}
-                      className={key === 'color' ? 'color' : ''}
-                    />
-                    {index < array.length - 1 && ', '}
-                  </React.Fragment>
-                ),
-              )}
-            </Text>
-          ) : (
-            <></>
-          )}
-        </Text>
+        <Link href={`/products/${product.attributes.slug}`}>
+          <Text className={styles['name']}>
+            {product.attributes.name}
+            {product.variant ? (
+              <Text className={styles['variant']}>
+                {Object.entries(product.variant.variant).map(
+                  ([key, value], index, array) => (
+                    <React.Fragment key={key}>
+                      <span>{key}</span> :{' '}
+                      <Variation
+                        value={value}
+                        className={key === 'color' ? 'color' : ''}
+                      />
+                      {index < array.length - 1 && ', '}
+                    </React.Fragment>
+                  ),
+                )}
+              </Text>
+            ) : (
+              <></>
+            )}
+          </Text>
+        </Link>
       ),
     },
     {
