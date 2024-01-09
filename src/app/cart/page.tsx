@@ -1,6 +1,7 @@
 'use client'
 
 import Container from '@/components/utils/container'
+import useCartStore from '@/store/cartStore'
 import styles from '@/styles/cart.module.scss'
 import {
   CheckCircleOutlined,
@@ -19,6 +20,9 @@ const theme: ThemeConfig = {
 }
 
 export default function Cart() {
+  const stepStore = useCartStore((state) => state.step)
+  const { setStep } = useCartStore()
+
   const items = [
     {
       title: 'Carrito',
@@ -43,10 +47,17 @@ export default function Cart() {
       <Container>
         <Row>
           <Col span={14} offset={5}>
-            <Steps items={items} current={0} className={styles['steps']} />
+            <Steps
+              items={items}
+              current={stepStore}
+              className={styles['steps']}
+              onChange={(value: number) => {
+                setStep(value)
+              }}
+            />
           </Col>
           <Col span={24}>
-            <div>{items[0].content}</div>
+            <div>{items[stepStore].content}</div>
           </Col>
         </Row>
       </Container>

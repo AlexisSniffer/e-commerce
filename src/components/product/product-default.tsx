@@ -24,6 +24,7 @@ import { useRouter } from 'next/navigation'
 import Countdown from '../common/countdown'
 import ProductCategories from './components/product-categories'
 import ProductPrices from './components/product-price'
+import ProductAddMessage from './components/product-add-message'
 
 const { Text } = Typography
 
@@ -65,7 +66,7 @@ export default function ProductDefault({ id, attributes }: Product) {
 
     api.open({
       message: null,
-      description: addMessage(),
+      description: <ProductAddMessage id={id} attributes={attributes} />,
       placement: 'bottomRight',
     })
 
@@ -132,41 +133,6 @@ export default function ProductDefault({ id, attributes }: Product) {
           </Tag>
         ) : null}
       </div>
-    )
-  }
-
-  const addMessage = () => {
-    return (
-      <Flex
-        vertical
-        className={`${styles['product']} ${styles['product-add-message']}`}
-      >
-        <Flex align="center" gap={10}>
-          <Image
-            src={
-              'http://localhost:1337' + attributes.images.data[0].attributes.url
-            }
-            alt={
-              attributes.images.data[0].attributes.alternativeText ??
-              attributes.slug
-            }
-            width={60}
-            height={60}
-          />
-          <Flex vertical>
-            <Text className={styles['name']}>{attributes.name}</Text>
-            <Text className={styles['add-message']}>
-              se ha agregado a tu carrito!
-            </Text>
-          </Flex>
-        </Flex>
-        <Flex gap={10}>
-          <Button block>VER</Button>
-          <Button block type="primary">
-            VERIFICAR
-          </Button>
-        </Flex>
-      </Flex>
     )
   }
 

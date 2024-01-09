@@ -16,9 +16,7 @@ import {
   ConfigProvider,
   Divider,
   Flex,
-  Form,
   Input,
-  InputNumber,
   Result,
   Row,
   Space,
@@ -50,27 +48,15 @@ export default function ShoppingCart() {
   const cartStore = useCartStore((state) => state.cart)
   const subtotalStore = useCartStore((state) => state.subtotal)
   const { edit, remove } = useCartStore()
-  const [form] = Form.useForm()
+  const { setStep } = useCartStore()
 
   const handleDecrement = (product: ProductCart) => {
-    form.setFieldsValue({
-      [product.id]: { qty: product.qty },
-    })
-
-    const currentValue = form.getFieldValue([product.id, 'qty'])
-    product.qty = Math.max(currentValue - 1, 1)
-
+    product.qty = Math.max(product.qty - 1, 1)
     edit(product)
   }
 
   const handleIncrement = (product: ProductCart) => {
-    form.setFieldsValue({
-      [product.id]: { qty: product.qty },
-    })
-
-    const currentValue = form.getFieldValue([product.id, 'qty'])
-    product.qty = Math.min(currentValue + 1, 100)
-
+    product.qty = Math.min(product.qty + 1, 100)
     edit(product)
   }
 
@@ -233,6 +219,9 @@ export default function ShoppingCart() {
               size="large"
               block
               className={styles2['checkout']}
+              onClick={() => {
+                setStep(1)
+              }}
             >
               Pasar por la caja
             </Button>

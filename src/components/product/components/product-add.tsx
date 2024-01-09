@@ -2,6 +2,7 @@ import useCartStore from '@/store/cartStore'
 import { Product, ProductCart } from '@/types/product'
 import { Variants } from '@/types/variants'
 import { Variation } from '@/types/variation'
+import { disableProduct, productPrice } from '@/utils/product'
 import {
   Button,
   Col,
@@ -12,14 +13,12 @@ import {
   InputNumber,
   Row,
   ThemeConfig,
-  Typography,
+  notification,
 } from 'antd'
 import { useState } from 'react'
+import ProductAddMessage from './product-add-message'
 import ProductPrices from './product-price'
 import ProductVariants from './product-variants'
-import { disableProduct, productPrice } from '@/utils/product'
-
-const { Text } = Typography
 
 const theme: ThemeConfig = {
   components: {
@@ -35,6 +34,9 @@ const theme: ThemeConfig = {
 export default function ProductAdd({ id, attributes }: Product) {
   const [form] = Form.useForm()
   const { add } = useCartStore()
+  const [api, contextHolder] = notification.useNotification({
+    stack: { threshold: 4 },
+  })
 
   const allVariantOptions = attributes.variants?.map((variant: Variants) => {
     const allOptions: any = {}
@@ -111,11 +113,18 @@ export default function ProductAdd({ id, attributes }: Product) {
         : null),
     }
 
+    api.open({
+      message: null,
+      description: <ProductAddMessage id={id} attributes={attributes} />,
+      placement: 'bottomRight',
+    })
+
     add(product)
   }
 
   return (
     <ConfigProvider theme={theme}>
+      {contextHolder}
       <Row>
         <Col span={24}>
           {options.map(({ type, values }) => (

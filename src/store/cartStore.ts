@@ -5,6 +5,8 @@ interface CartState {
   cart: ProductCart[]
   count: number
   subtotal: number
+  step: number
+  setStep: (step: number) => void
   add: (product: ProductCart) => void
   edit: (product: ProductCart) => void
   remove: (product: ProductCart) => void
@@ -14,6 +16,8 @@ const useCartStore = create<CartState>()((set) => ({
   cart: [],
   count: 0,
   subtotal: 0,
+  step: 0,
+  setStep: (step: number) => set((state) => ({ step: step })),
   add: (product: ProductCart) => {
     set((state) => {
       const existingProduct = state.cart.find(
