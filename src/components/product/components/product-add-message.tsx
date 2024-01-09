@@ -3,6 +3,7 @@ import styles from '@/styles/product.module.scss'
 import { Product } from '@/types/product'
 import { Button, ConfigProvider, Flex, ThemeConfig, Typography } from 'antd'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const theme: ThemeConfig = {
   components: {
@@ -15,6 +16,7 @@ const theme: ThemeConfig = {
 const { Text } = Typography
 
 export default function ProductAddMessage({ id, attributes }: Product) {
+  const router = useRouter()
   const { setStep } = useCartStore()
 
   return (
@@ -47,6 +49,7 @@ export default function ProductAddMessage({ id, attributes }: Product) {
             block
             onClick={() => {
               setStep(0)
+              router.push('/cart')
             }}
           >
             VER
@@ -56,6 +59,7 @@ export default function ProductAddMessage({ id, attributes }: Product) {
             type="primary"
             onClick={() => {
               setStep(1)
+              router.push('/cart')
             }}
           >
             VERIFICAR

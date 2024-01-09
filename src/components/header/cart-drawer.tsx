@@ -12,6 +12,7 @@ import {
   ThemeConfig,
   Typography,
 } from 'antd'
+import { useRouter } from 'next/navigation'
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -30,6 +31,7 @@ const theme: ThemeConfig = {
 }
 
 export default function CartDrawer(props: CartDrawerProps) {
+  const router = useRouter()
   const cartStore = useCartStore((state) => state.cart)
   const subTotalStore = useCartStore((state) => state.subtotal)
   const { setStep } = useCartStore()
@@ -61,6 +63,7 @@ export default function CartDrawer(props: CartDrawerProps) {
                 onClick={() => {
                   // TODO: cerrar modal al ir a /cart
                   setStep(0)
+                  router.push('/cart')
                 }}
               >
                 VER
@@ -70,6 +73,7 @@ export default function CartDrawer(props: CartDrawerProps) {
                 type="primary"
                 onClick={() => {
                   setStep(1)
+                  router.push('/cart')
                 }}
               >
                 VERIFICAR
