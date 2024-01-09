@@ -316,6 +316,12 @@
       color: $headings-text;
     }
 
+    .qty {
+      max-width: 50px;
+      font-weight: bold;
+      text-align: center;
+    }
+
     .subtotal {
       font-size: 1rem;
       font-weight: bold;

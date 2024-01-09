@@ -3,7 +3,12 @@ import styles2 from '@/styles/cart.module.scss'
 import styles from '@/styles/product.module.scss'
 import { ProductCart } from '@/types/product'
 import { money } from '@/utils/formatters'
-import { CloseOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import {
+  CloseOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons'
 import {
   Button,
   Card,
@@ -11,8 +16,12 @@ import {
   ConfigProvider,
   Divider,
   Flex,
+  Form,
+  Input,
+  InputNumber,
   Result,
   Row,
+  Space,
   Table,
   ThemeConfig,
   Typography,
@@ -40,7 +49,30 @@ const theme: ThemeConfig = {
 export default function ShoppingCart() {
   const cartStore = useCartStore((state) => state.cart)
   const subtotalStore = useCartStore((state) => state.subtotal)
-  const { remove } = useCartStore()
+  const { edit, remove } = useCartStore()
+  const [form] = Form.useForm()
+
+  const handleDecrement = (product: ProductCart) => {
+    form.setFieldsValue({
+      [product.id]: { qty: product.qty },
+    })
+
+    const currentValue = form.getFieldValue([product.id, 'qty'])
+    product.qty = Math.max(currentValue - 1, 1)
+
+    edit(product)
+  }
+
+  const handleIncrement = (product: ProductCart) => {
+    form.setFieldsValue({
+      [product.id]: { qty: product.qty },
+    })
+
+    const currentValue = form.getFieldValue([product.id, 'qty'])
+    product.qty = Math.min(currentValue + 1, 100)
+
+    edit(product)
+  }
 
   const Variation = ({ value, className }: any) => (
     <span style={{ backgroundColor: value }} className={styles['color']}>
@@ -113,7 +145,27 @@ export default function ShoppingCart() {
       title: <Text className={styles2['title-column']}>cantidad</Text>,
       key: 'qty',
       render: (product: ProductCart) => (
-        <Text className={styles['qty']}>{product.qty}</Text>
+        <Space.Compact>
+          <Button
+            size="large"
+            htmlType="submit"
+            icon={<MinusOutlined />}
+            onClick={() => handleDecrement(product)}
+          />
+          <Input
+            size="large"
+            min={1}
+            max={100}
+            value={product.qty}
+            className={styles['qty']}
+          />
+          <Button
+            size="large"
+            htmlType="submit"
+            icon={<PlusOutlined />}
+            onClick={() => handleIncrement(product)}
+          />
+        </Space.Compact>
       ),
     },
     {

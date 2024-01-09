@@ -36,14 +36,12 @@ const useCartStore = create<CartState>()((set) => ({
   edit: (product: ProductCart) => {
     set((state) => {
       const existingProductIndex = state.cart.findIndex(
-        (p) => p.id === product.id,
+        (p) => p.id === product.id && p.variant?.id === product.variant?.id,
       )
 
       if (existingProductIndex !== -1) {
         const updatedProduct = { ...state.cart[existingProductIndex] }
-        updatedProduct.qty = product.qty ?? updatedProduct.qty
-        updatedProduct.price = product.price ?? updatedProduct.price
-
+        updatedProduct.qty = product.qty
         state.cart[existingProductIndex] = updatedProduct
       }
 
