@@ -3,12 +3,7 @@ import styles2 from '@/styles/cart.module.scss'
 import styles from '@/styles/product.module.scss'
 import { ProductCart } from '@/types/product'
 import { money } from '@/utils/formatters'
-import {
-  CloseOutlined,
-  MinusOutlined,
-  PlusOutlined,
-  ShoppingCartOutlined,
-} from '@ant-design/icons'
+import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import {
   Button,
   Card,
@@ -17,7 +12,6 @@ import {
   Divider,
   Flex,
   Input,
-  Result,
   Row,
   Space,
   Table,
@@ -165,22 +159,6 @@ export default function ShoppingCart() {
     },
   ]
 
-  if (!cartStore.length) {
-    return (
-      <ConfigProvider theme={theme}>
-        <Result
-          icon={<ShoppingCartOutlined />}
-          subTitle="No se agregaron productos al carrito "
-          extra={
-            <Button type="primary" size="large">
-              IR A COMPRAR
-            </Button>
-          }
-        />
-      </ConfigProvider>
-    )
-  }
-
   return (
     <ConfigProvider theme={theme}>
       <Row gutter={16}>
@@ -218,7 +196,7 @@ export default function ShoppingCart() {
               type="primary"
               size="large"
               block
-              className={styles2['checkout']}
+              className={styles2['btn']}
               onClick={() => {
                 setStep(1)
               }}

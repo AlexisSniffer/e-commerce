@@ -8,7 +8,15 @@ import {
   EyeOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons'
-import { Col, ConfigProvider, Row, Steps, ThemeConfig } from 'antd'
+import {
+  Button,
+  Col,
+  ConfigProvider,
+  Result,
+  Row,
+  Steps,
+  ThemeConfig,
+} from 'antd'
 import Checkout from './components/checkout'
 import OrderComplete from './components/order-complete'
 import ShoppingCart from './components/shopping-cart'
@@ -20,6 +28,7 @@ const theme: ThemeConfig = {
 }
 
 export default function Cart() {
+  const cartStore = useCartStore((state) => state.cart)
   const stepStore = useCartStore((state) => state.step)
   const { setStep } = useCartStore()
 
@@ -41,6 +50,22 @@ export default function Cart() {
       disabled: true,
     },
   ]
+
+  if (!cartStore.length) {
+    return (
+      <ConfigProvider theme={theme}>
+        <Result
+          icon={<ShoppingCartOutlined />}
+          subTitle="No se agregaron productos al carrito "
+          extra={
+            <Button type="primary" size="large">
+              IR A COMPRAR
+            </Button>
+          }
+        />
+      </ConfigProvider>
+    )
+  }
 
   return (
     <ConfigProvider theme={theme}>
