@@ -1,3 +1,5 @@
+'use client'
+
 import useCartStore from '@/store/cartStore'
 import styles2 from '@/styles/cart.module.scss'
 import styles from '@/styles/product.module.scss'
@@ -49,12 +51,9 @@ export default function Checkout() {
   )
 
   const onFinish = async (values: any) => {
-    console.log(values)
     setLoading(true)
 
-    for (let i = 0; i <= 9999; i++) {
-      console.log(i)
-    }
+    await new Promise((resolve) => setTimeout(resolve, 5000))
 
     setLoading(false)
     setStep(2)
@@ -68,11 +67,11 @@ export default function Checkout() {
         layout={'vertical'}
         onFinish={onFinish}
         initialValues={{
-          ['name']: '',
-          ['lastname']: '',
-          ['adress']: '',
-          ['phone']: '',
-          ['email']: '',
+          ['name']: 'Alexis',
+          ['lastname']: 'Sniffer',
+          ['address']: 'Panama',
+          ['phone']: '2551925',
+          ['email']: 'alexis.sniffer@gmail.com',
           ['paymentMethod']: null,
           ['voucher']: null,
         }}
