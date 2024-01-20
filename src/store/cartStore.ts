@@ -17,7 +17,19 @@ const useCartStore = create<CartState>()((set) => ({
   count: 0,
   subtotal: 0,
   step: 0,
-  setStep: (step: number) => set((state) => ({ step: step })),
+  setStep: (step: number) =>
+    set((state) => {
+      const cleanBuy = {
+        cart: [],
+        count: 0,
+        subtotal: 0,
+      }
+
+      return {
+        step: step,
+        ...(step === 2 ? cleanBuy : null),
+      }
+    }),
   add: (product: ProductCart) => {
     set((state) => {
       const existingProduct = state.cart.find(

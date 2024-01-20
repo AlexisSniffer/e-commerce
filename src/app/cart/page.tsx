@@ -51,22 +51,6 @@ export default function Cart() {
     },
   ]
 
-  if (!cartStore.length) {
-    return (
-      <ConfigProvider theme={theme}>
-        <Result
-          icon={<ShoppingCartOutlined />}
-          subTitle="No se agregaron productos al carrito "
-          extra={
-            <Button type="primary" size="large">
-              IR A COMPRAR
-            </Button>
-          }
-        />
-      </ConfigProvider>
-    )
-  }
-
   return (
     <ConfigProvider theme={theme}>
       <Container>

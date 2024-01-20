@@ -3,7 +3,12 @@ import styles2 from '@/styles/cart.module.scss'
 import styles from '@/styles/product.module.scss'
 import { ProductCart } from '@/types/product'
 import { money } from '@/utils/formatters'
-import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  CloseOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons'
 import {
   Button,
   Card,
@@ -12,6 +17,7 @@ import {
   Divider,
   Flex,
   Input,
+  Result,
   Row,
   Space,
   Table,
@@ -43,6 +49,22 @@ export default function ShoppingCart() {
   const subtotalStore = useCartStore((state) => state.subtotal)
   const { edit, remove } = useCartStore()
   const { setStep } = useCartStore()
+
+  if (!cartStore.length) {
+    return (
+      <ConfigProvider theme={theme}>
+        <Result
+          icon={<ShoppingCartOutlined />}
+          subTitle="No se agregaron productos al carrito "
+          extra={
+            <Button type="primary" size="large">
+              IR A COMPRAR
+            </Button>
+          }
+        />
+      </ConfigProvider>
+    )
+  }
 
   const handleDecrement = (product: ProductCart) => {
     product.qty = Math.max(product.qty - 1, 1)
