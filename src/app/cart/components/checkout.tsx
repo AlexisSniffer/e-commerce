@@ -101,10 +101,21 @@ export default function Checkout() {
   const onFinish = async (values: any) => {
     setLoading(true)
 
-    console.log(values)
+    let responseUpload
+    if (values.voucher) {
+      const formData = new FormData()
+      formData.append('files', values.voucher.file.originFileObj)
 
-    const formData = new FormData()
-    formData.append('files', values.voucher.file.originFileObj)
+      const fetchUpload = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+
+      responseUpload = await fetchUpload.json()
+    }
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/orders`,
@@ -123,9 +134,9 @@ export default function Checkout() {
               email: values.email,
             },
             _products: cartStore,
-            _payments: {
-              paymentMethod: values.paymentMethod,
-              voucher: formData,
+            _payment: {
+              payment_method: values.paymentMethod,
+              voucher: responseUpload ? responseUpload[0].id : null,
             },
           },
         }),
