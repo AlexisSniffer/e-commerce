@@ -32,6 +32,7 @@ import {
   message,
   notification,
 } from 'antd'
+import Image from 'next/image'
 import { useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import useSWR from 'swr'
@@ -284,39 +285,41 @@ export default function Checkout() {
                   {money.format(subtotalStore + subtotalStore * 0.07)}
                 </Text>
               </Flex>
-              <Divider className={styles2['divider']} />
-              <Text className={styles2['title']}>Médotos de pago</Text>
-              <Form.Item
-                label="Tipo de pago"
-                name="paymentMethod"
-                rules={[
-                  {
-                    required: true,
-                    message: requiredMessage,
-                  },
-                ]}
-              >
-                {paymentMethods?.data.length ? (
-                  <Radio.Group onChange={onChangePaymentMethods}>
-                    <Flex vertical>
-                      {paymentMethods.data.map(
-                        (paymentMethod: PaymentMethod) => {
-                          return (
-                            <Radio
-                              key={paymentMethod.id}
-                              value={paymentMethod.id}
-                            >
-                              {paymentMethod.attributes.name}
-                            </Radio>
-                          )
-                        },
-                      )}
-                    </Flex>
-                  </Radio.Group>
-                ) : (
-                  <></>
-                )}
-              </Form.Item>
+              {paymentMethods?.data && paymentMethods?.data.length ? (
+                <>
+                  <Divider className={styles2['divider']} />
+                  <Text className={styles2['title']}>Médotos de pago</Text>
+                  <Form.Item
+                    label="Tipo de pago"
+                    name="paymentMethod"
+                    rules={[
+                      {
+                        required: true,
+                        message: requiredMessage,
+                      },
+                    ]}
+                  >
+                    <Radio.Group onChange={onChangePaymentMethods}>
+                      <Flex vertical>
+                        {paymentMethods.data.map(
+                          (paymentMethod: PaymentMethod) => {
+                            return (
+                              <Radio
+                                key={paymentMethod.id}
+                                value={paymentMethod.id}
+                              >
+                                {paymentMethod.attributes.name}
+                              </Radio>
+                            )
+                          },
+                        )}
+                      </Flex>
+                    </Radio.Group>
+                  </Form.Item>
+                </>
+              ) : (
+                <></>
+              )}
               {isUploadVoucher ? (
                 <>
                   <Form.Item
@@ -362,10 +365,13 @@ export default function Checkout() {
                     footer={null}
                     onCancel={() => setPreviewOpen(false)}
                   >
-                    <img
-                      alt="example"
-                      style={{ width: '100%' }}
+                    <Image
+                      alt="voucher"
                       src={previewImage}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: '100%', height: 'auto' }}
                     />
                   </Modal>
                 </>
